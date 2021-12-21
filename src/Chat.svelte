@@ -83,7 +83,7 @@
         <ChatMessage {message} sender={$username} />
       {/each}
 
-      <div class="dummy" bind:this={scrollBottom} />
+      <div class="dummy" style="height: 150px;" bind:this={scrollBottom} />
     </main>
 
     <form style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar">
