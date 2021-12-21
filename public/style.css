@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+* {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+ul,
+li {
+  text-align: left;
+  list-style: none;
+}
+
+p {
+  max-width: 500px;
+  margin-bottom: 0;
+  line-height: 24px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.sent {
+  flex-direction: row-reverse;
+}
+
+.sent p {
+  color: white;
+  background: #0b93f6;
+  align-self: flex-end;
+  text-align: right;
+}
+.received p {
+  background: #e5e5ea;
+  color: black;
+  text-align: left;
+}
+
+.message-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.received .message-text {
+  align-items: flex-start;
+}
+
+time {
+  color: white;
+  font-size: 0.7rem;
+  color: #9a9a9a;
+  margin: 0 1rem;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 2px 5px;
+}
+
+.message:last-child {
+  margin-bottom: 20px;
+}
+
+.img {
+  width: 150px;
+  height: auto;
+  border-radius: 5px;
+}
+
+input[type="text"] {
+  font-family: monospace;
+  backdrop-filter: blur(10px);
+  background: transparent;
+  color: white;
+}
+
+body{
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-size: cover;
+   background-position: top;
+   background-image:url(http://bit.ly/2gPLxZ4);
+}
+
+.card{
+  backdrop-filter: blur(10px);
+  background: transparent;
+}
+.card *, .form-label, .form-text{
+  color: white;
+}
+
+html::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+html::-webkit-scrollbar-thumb {
+  background: #434343;
+  border-radius: 16px;
+  box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, 0.25),
+    inset -2px -2px 2px rgba(0, 0, 0, 0.25);
+}
+html::-webkit-scrollbar-track {
+  background: linear-gradient(90deg, #434343, #434343 1px, #111 0, #111);
+}

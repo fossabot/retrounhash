@@ -86,10 +86,18 @@
       <div class="dummy" bind:this={scrollBottom} />
     </main>
 
-    <form on:submit|preventDefault={sendMessage}>
-      <input type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
-
-      <button type="submit" disabled={!newMessage}>💥</button>
+    <form style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar">
+     <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text" style="height: 38px;" id="basic-addon1">😎</span>
+      </div>
+      <input style="background: white;height: 38px;" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
+      <div class="input-group-append">
+        <button type="submit" style="height: 38px;" class="btn input-group-text" disabled={!newMessage}>
+          <i class="fas fa-angle-double-right fa-2x"></i>
+        </button>
+       </div>
+      </div>
     </form>
 
 
