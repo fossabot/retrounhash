@@ -4,7 +4,7 @@
   import { onMount } from 'svelte';
   import { username, user } from './user';
   import debounce from 'lodash.debounce';
-
+  import 'emoji-picker-element';
   import GUN from 'gun';
   const db = GUN();
 
@@ -74,6 +74,15 @@
     canAutoScroll = true;
     autoScroll();
   }
+  function emoji(){
+    if(document.querySelector('.emoji__').innerHTML == ""){
+     document.querySelector('.emoji__').innerHTML = "<emoji-picker class='light'></emoji-picker>";
+    }else{
+     document.querySelector('.emoji__').innerHTML = "";
+    }
+     document.querySelector('emoji-picker')
+  .addEventListener('emoji-click', event => document.querySelector("#submit__area__main__").value += event.detail.unicode+" ");
+  }
 </script>
 
 <div class="container">
@@ -87,11 +96,12 @@
     </main>
 
     <form style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar">
+    <span class="emoji__"></span>
      <div class="input-group mb-2">
       <div class="input-group-prepend">
-        <span class="input-group-text" style="height: 38px;" id="basic-addon1">😎</span>
+        <span class="input-group-text" style="height: 38px;" id="basic-addon1" on:click={emoji}>😎</span>
       </div>
-      <input style="background: white;height: 38px;" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
+      <input style="background: white;height: 38px;" id="submit__area__main__" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
       <div class="input-group-append">
         <button type="submit" style="height: 38px;" class="btn input-group-text" disabled={!newMessage}>
           <i class="fas fa-angle-double-right fa-2x"></i>
