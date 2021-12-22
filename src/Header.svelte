@@ -33,6 +33,8 @@
     })
     location.reload();
   }
+
+  var channel = localStorage.getItem("channel") || "chat";
 </script>
 <br><br><br><br>
 <nav class="navbar navbar-dark fixed-top bg-primary">
@@ -40,7 +42,7 @@
     <a class="navbar-brand" href="/">
       {#if $username}
         <img
-          src={`https://avatars.dicebear.com/api/big-smile/${$username}.svg`}
+          src={`https://avatars.dicebear.com/api/identicon/${$username}.svg`}
           alt="logo_user"
           width="30"
           height="30"
@@ -56,7 +58,7 @@
         />
       {/if}
     </a>
-      <div class="text-center h5">densewaire</div>
+      <div class="text-center h5">densewaire / {channel}</div>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
    </button>
