@@ -37,9 +37,11 @@
       },
       '-': 1, // filter in reverse
     };
-
+    
+    var channel = localStorage.getItem("channel") || "chat";
+    
     // Get Messages
-    db.get('chat')
+    db.get('densewaire/'+channel)
       .map(match)
       .once(async (data, id) => {
         if (data) {
@@ -66,10 +68,12 @@
   });
 
   async function sendMessage() {
+    var channel = localStorage.getItem("channel") || "chat";
+
     const secret = await SEA.encrypt(newMessage, '#foo');
     const message = user.get('all').set({ what: secret });
     const index = new Date().toISOString();
-    db.get('chat').get(index).put(message);
+    db.get('densewaire/'+channel).get(index).put(message);
     newMessage = '';
     canAutoScroll = true;
     autoScroll();

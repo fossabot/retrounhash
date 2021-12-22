@@ -1,9 +1,37 @@
 <script>
   import { username, user } from './user';
+  import { TextField, Button } from "smelte";
+
 
   function signout() {
     user.leave();
     username.set('');
+  }
+
+  function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+  }
+
+  function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+  }
+
+  async function initRoom(){
+    await Swal.fire({
+      title: 'Enter the room to join or create',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'join',
+      showLoaderOnConfirm: true,
+      preConfirm: (NameOfTheRoom) => {
+        localStorage.setItem("channel", NameOfTheRoom);
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    })
+    location.reload();
   }
 </script>
 <br><br><br><br>
@@ -28,21 +56,36 @@
         />
       {/if}
     </a>
-      <span class="text-center h6">densewaire</span>
+      <div class="text-center h5">densewaire</div>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
    </button>
    <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       {#if $username}
-        <li class="nav-item">
-         <button class="btn btn-danger" on:click={signout}>Sign Out 🚪</button>
+        <li class="nav-item m-2">
+         <button class="btn btn-primary" on:click={openNav}><i class="fas fa-cog"></i> settings</button>
+        </li>
+        <li class="nav-item m-2">
+         <button class="btn btn-info" on:click={initRoom}><i class="fas fa-door-open"></i> join or create room</button>
+        </li>
+        <li class="nav-item m-2">
+         <button class="btn btn-danger" on:click={signout}><i class="fas fa-sign-out-alt"></i> Sign Out</button>
         </li>
       {:else}
-        <li class="nav-item">
-         <a class="btn btn-primary" href="/login">Login 🔐</a>
+        <li class="nav-item m-2">
+         <a class="btn btn-primary" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
         </li>
       {/if}
     </ul>
   </div>
 </nav>
+
+<div id="myNav" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" on:click={closeNav}>&times;</a>
+  <div class="overlay-content">
+    <div class="m-3 p-3">
+       
+    </div>
+  </div>
+</div>

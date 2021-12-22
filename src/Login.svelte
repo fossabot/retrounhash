@@ -5,13 +5,31 @@
   let password;
 
   function login() {
-    user.auth(username, password, ({ err }) => err && alert(err));
+    user.auth(username, password, ({ err }) => {
+     if (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err
+      })
+     }else{
+      Swal.fire({
+        icon: 'success',
+        title: 'yay 🎉',
+        text: "you're now logged in!"
+      })
+     }
+    });
   }
 
   function signup() {
     user.create(username, password, ({ err }) => {
       if (err) {
-        alert(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        })
       } else {
         login();
       }
