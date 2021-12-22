@@ -42,7 +42,7 @@
     <a class="navbar-brand" href="/">
       {#if $username}
         <img
-          src={`https://avatars.dicebear.com/api/identicon/${$username}.svg`}
+          src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
           alt="logo_user"
           width="30"
           height="30"
