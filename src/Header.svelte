@@ -50,7 +50,7 @@
         />
       {:else}
         <img
-          src="/favicon.png"
+          src="/favicon.ico"
           alt="icon"
           width="30"
           height="30"
