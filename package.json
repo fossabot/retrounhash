@@ -24,6 +24,8 @@
     "lodash.throttle": "^4.1.1",
     "sirv-cli": "^1.0.0",
     "smelte": "^1.1.8",
-    "emoji-picker-element": "^1.10.0"
+    "emoji-picker-element": "^1.10.0",
+    "dompurify": "2.3.4",
+    "jquery": "^3.6.0"
   }
 }

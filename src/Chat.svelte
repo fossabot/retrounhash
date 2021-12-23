@@ -46,12 +46,12 @@
       .once(async (data, id) => {
         if (data) {
           // Key for end-to-end encryption
-          const key = '#foo';
+          const key = localStorage.getItem("_secret") || '#foo';
 
           var message = {
             // transform the data
-            who: await db.user(data).get('alias'), // a user might lie who they are! So let the user system detect whose data it is.
-            what: (await SEA.decrypt(data.what, key)) + '', // force decrypt as text.
+            who: await db.user(data).get('alias'),
+            what: (await SEA.decrypt(data.what, key)) || `<span class='text-warning'>protected with custom secret</span>`,
             when: GUN.state.is(data, 'what'), // get the internal timestamp for the what property.
           };
 
@@ -70,7 +70,7 @@
   async function sendMessage() {
     var channel = localStorage.getItem("channel") || "chat";
 
-    const secret = await SEA.encrypt(newMessage, '#foo');
+    const secret = await SEA.encrypt(newMessage, localStorage.getItem("_secret") || '#foo');
     const message = user.get('all').set({ what: secret });
     const index = new Date().toISOString();
     db.get('densewaire/'+channel).get(index).put(message);
@@ -98,8 +98,7 @@
 
       <div class="dummy" style="height: 150px;" bind:this={scrollBottom} />
     </main>
-
-    <form style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar">
+    <form autocomplete="off" style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar">
     <span class="emoji__"></span>
      <div class="input-group mb-2">
       <div class="input-group-prepend">
@@ -107,25 +106,17 @@
       </div>
       <input style="background: white;height: 38px;" id="submit__area__main__" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
       <div class="input-group-append">
+        {#if localStorage.getItem("autoscroll") == "yes"}
+         <button type="button" style="height: 38px;" class="btn input-group-text" on:click={autoScroll}>
+           <i class="fas fa-angle-down fa-lg"></i>
+         </button>
+        {/if}
         <button type="submit" style="height: 38px;" class="btn input-group-text" disabled={!newMessage}>
           <i class="fas fa-angle-double-right fa-2x"></i>
         </button>
        </div>
       </div>
     </form>
-
-
-    {#if !canAutoScroll}
-    <div class="scroll-button">
-      <button on:click={autoScroll} class:red={unreadMessages}>
-        {#if unreadMessages}
-          💬
-        {/if}
-
-        👇
-      </button>
-    </div>
-   {/if}
   {:else}
     <main>
       <Login />

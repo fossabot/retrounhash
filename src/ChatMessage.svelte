@@ -1,4 +1,5 @@
 <script>
+  import DOMPurify from 'dompurify';
   export let message;
   export let sender;
 
@@ -12,7 +13,7 @@
 <div class={`message ${messageClass}`}>
   <img src={avatar} alt="avatar" />
   <div class="message-text">
-    <p>{message.who} <br> {message.what}</p>
+    <p>{message.who} <br> {@html DOMPurify.sanitize(message.what)}</p>
 
     <time>{ts.toLocaleTimeString()}</time>
   </div>

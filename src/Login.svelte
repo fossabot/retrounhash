@@ -49,7 +49,7 @@
         maxlength="16"
         style="backdrop-filter: blur(10px);background: transparent;color: white;"
       />
-      <div class="form-text">we don't need your email.</div>
+      <div class="form-text" style="color: white;">we don't need your email.</div>
     </div>
     <div class="mb-3">
       <label for="Password" class="form-label">Password</label>
@@ -60,8 +60,9 @@
         type="password"
         style="backdrop-filter: blur(10px);background: transparent;color: white;"
       />
-      <div class="form-text">
-        by clicking sign-up, you're agreeing to our <a
+      <div class="form-text" style="color: white;">
+        by clicking sign-up, you're agreeing to our <a 
+          style="color: #0d6efd;"
           href="https://unsign.vercel.app/terms_of_service.html"
           >terms of service</a
         >

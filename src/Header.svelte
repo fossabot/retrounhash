@@ -1,11 +1,42 @@
 <script>
   import { username, user } from './user';
   import { TextField, Button } from "smelte";
-
+  import jq from "jquery";
 
   function signout() {
     user.leave();
     username.set('');
+  }
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+  function share_link() {
+    jq("body").append('<input id="copyURL" type="text" value="" />');
+    jq("#copyURL")
+      .val(
+        window.location.protocol +
+          "//" +
+          window.location.hostname +
+          "/chat/" +
+          localStorage.getItem("db")
+      )
+      .select();
+      document.execCommand("copy");
+      jq("#copyURL").remove();
+      Toast.fire({
+        icon: 'success',
+        title: 'link copied!'
+      })
   }
 
   function openNav() {
@@ -14,6 +45,7 @@
 
   function closeNav() {
     document.getElementById("myNav").style.width = "0%";
+    location.reload();
   }
 
   async function initRoom(){
@@ -28,10 +60,10 @@
       showLoaderOnConfirm: true,
       preConfirm: (NameOfTheRoom) => {
         localStorage.setItem("channel", NameOfTheRoom);
+        location.reload();
       },
       allowOutsideClick: () => !Swal.isLoading()
     })
-    location.reload();
   }
 
   var channel = localStorage.getItem("channel") || "chat";
@@ -72,6 +104,9 @@
          <button class="btn btn-info" on:click={initRoom}><i class="fas fa-door-open"></i> join or create room</button>
         </li>
         <li class="nav-item m-2">
+         <button class="btn btn-info" on:click={share_link}><i class="fas fa-copy"></i> share room link</button>
+        </li>
+        <li class="nav-item m-2">
          <button class="btn btn-danger" on:click={signout}><i class="fas fa-sign-out-alt"></i> Sign Out</button>
         </li>
       {:else}
@@ -83,11 +118,37 @@
   </div>
 </nav>
 
-<div id="myNav" class="overlay">
-  <a href="javascript:void(0)" class="closebtn" on:click={closeNav}>&times;</a>
+<div id="myNav" class="overlay" style="color: white;">
+  <a href="#" class="closebtn" on:click={closeNav}>&times;</a>
   <div class="overlay-content">
+    <div class="m-3 h4 p-3">
+      <i class="fas fa-cog"></i>
+      SETTINGS
+    </div>
     <div class="m-3 p-3">
-       
+     <div class="m-3 h6">
+       Show auto scroll ?
+     </div>
+      {@html
+        `<button class='btn btn-success' onclick="localStorage.setItem('autoscroll', 'yes')">yes</button>
+        <button class='btn btn-danger' onclick="localStorage.setItem('autoscroll', 'no')">no</button>`
+      }
+
+    </div>
+    <div class="m-3 p-3">
+     <div class="m-3 h6">
+       Secret key ?
+     </div>
+      {@html
+        `
+          <input class="form-control" type="text" name="encryption" id="encryption" onchange="localStorage.setItem('_secret', this.value);" placeholder="my_secret" maxlength="12" minlength="3" />
+          <small class="form-text">Someone having the same secret key would be able to see your messages. Other people won't.</small>
+          <button class="btn btn-primary" onclick='localStorage.setItem("_secret", "#foo");location.reload();'>
+            reset and set me visible
+          </button>
+        `
+      }
+
     </div>
   </div>
 </div>
