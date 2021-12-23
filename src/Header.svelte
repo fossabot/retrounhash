@@ -72,6 +72,16 @@
   }else{
     var channel = localStorage.getItem("channel") || "chat";
   }
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').then(function (registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function (err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
 </script>
 <br><br><br><br>
 <nav class="navbar navbar-dark fixed-top bg-primary">

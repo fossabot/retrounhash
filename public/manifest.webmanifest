@@ -1,0 +1,22 @@
+{
+  "name": "densewaire",
+  "short_name": "densewaire",
+  "description": "A decentralised app for communication.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#0d6efd",
+  "background_color": "#0d6efd"
+}
