@@ -61,7 +61,7 @@
       showLoaderOnConfirm: true,
       preConfirm: (NameOfTheRoom) => {
         localStorage.setItem("channel", NameOfTheRoom);
-        location.reload();
+        location.href = "/chat";
       },
       allowOutsideClick: () => !Swal.isLoading()
     })
