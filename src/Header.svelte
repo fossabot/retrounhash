@@ -27,8 +27,8 @@
         window.location.protocol +
           "//" +
           window.location.hostname +
-          "/chat/" +
-          localStorage.getItem("db")
+          "/chat?c=" +
+          localStorage.getItem("channel")
       )
       .select();
       document.execCommand("copy");
