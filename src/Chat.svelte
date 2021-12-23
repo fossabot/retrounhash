@@ -7,6 +7,8 @@
   import 'emoji-picker-element';
   import GUN from 'gun';
   const db = GUN();
+  
+  const urlParams = new URLSearchParams(window.location.search);
 
   let newMessage;
   let messages = [];
@@ -38,8 +40,15 @@
       '-': 1, // filter in reverse
     };
     
-    var channel = localStorage.getItem("channel") || "chat";
-    
+
+    if(urlParams.has('c')){
+      var channel = urlParams.get('c');
+      localStorage.setItem("channel", channel);
+    }else{
+      var channel = localStorage.getItem("channel") || "chat";
+    }
+
+
     // Get Messages
     db.get('densewaire/'+channel)
       .map(match)
