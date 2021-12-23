@@ -2,6 +2,7 @@
   import { username, user } from './user';
   import { TextField, Button } from "smelte";
   import jq from "jquery";
+  const urlParams = new URLSearchParams(window.location.search);
 
   function signout() {
     user.leave();
@@ -65,8 +66,12 @@
       allowOutsideClick: () => !Swal.isLoading()
     })
   }
-
-  var channel = localStorage.getItem("channel") || "chat";
+  if(urlParams.has('c')){
+    var channel = urlParams.get('c');
+    localStorage.setItem("channel", channel);
+  }else{
+    var channel = localStorage.getItem("channel") || "chat";
+  }
 </script>
 <br><br><br><br>
 <nav class="navbar navbar-dark fixed-top bg-primary">
