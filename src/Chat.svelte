@@ -42,7 +42,7 @@
     
 
     if(urlParams.has('c')){
-      var channel = urlParams.get('c');
+      var channel = urlParams.get('c') || "chat";
       localStorage.setItem("channel", channel);
     }else{
       var channel = localStorage.getItem("channel") || "chat";
