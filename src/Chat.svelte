@@ -6,7 +6,8 @@
   import debounce from 'lodash.debounce';
   import 'emoji-picker-element';
   import GUN from 'gun';
-  const db = GUN();
+  const peers = ['https://gun-relay-volcareso.herokuapp.com/gun'];
+  const db = GUN({ peers });
   
   const urlParams = new URLSearchParams(window.location.search);
 
