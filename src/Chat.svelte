@@ -61,7 +61,7 @@
           var message = {
             // transform the data
             who: await db.user(data).get('alias'),
-            what: (await SEA.decrypt(data.what, key)) || `<span class='text-warning'>protected with custom secret</span>`,
+            what: (await SEA.decrypt(data.what, key)) || (await SEA.decrypt(data.what, '#foo')) || `<i class="fas fa-lock fa-xl"></i> PROTECTED WITH CUSTOM SECRET`,
             when: GUN.state.is(data, 'what'), // get the internal timestamp for the what property.
           };
 
@@ -105,14 +105,13 @@
       {#each messages as message (message.when)}
         <ChatMessage {message} sender={$username} />
       {/each}
-
       <div class="dummy" style="height: 150px;" bind:this={scrollBottom} />
     </main>
     <form autocomplete="off" style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar">
     <span class="emoji__"></span>
      <div class="input-group mb-2">
       <div class="input-group-prepend">
-        <span class="input-group-text" style="height: 38px;" id="basic-addon1" on:click={emoji}>😎</span>
+        <span class="input-group-text" style="height: 38px;" id="basic-addon1" on:click={emoji}><i class="fas fa-laugh-wink fa-lg"></i></span>
       </div>
       <input style="background: white;height: 38px;" id="submit__area__main__" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
       <div class="input-group-append">
