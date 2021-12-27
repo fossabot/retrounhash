@@ -11,9 +11,9 @@
 
   const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position: 'bottom-end',
     showConfirmButton: false,
-    timer: 3000,
+    timer: 2000,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -29,7 +29,7 @@
           "//" +
           window.location.hostname +
           "/chat?c=" +
-          localStorage.getItem("channel")
+          localStorage.getItem("channel") || "chat"
       )
       .select();
       document.execCommand("copy");
@@ -48,6 +48,11 @@
     document.getElementById("myNav").style.width = "0%";
     location.reload();
   }
+   
+  function closeNavNoSave() {
+    document.getElementById("myNav").style.width = "0%";
+  }
+
 
   async function initRoom(){
     await Swal.fire({
@@ -69,6 +74,10 @@
   if(urlParams.has('c')){
     var channel = urlParams.get('c');
     localStorage.setItem("channel", channel);
+    Toast.fire({
+        icon: 'success',
+        title: 'joined ' + channel + '!'
+      })
   }else{
     var channel = localStorage.getItem("channel") || "chat";
   }
@@ -126,7 +135,7 @@
         </li>
       {:else}
         <li class="nav-item m-2">
-         <a class="btn btn-primary" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+         <a class="btn btn-primary" href="/chat"><i class="fas fa-sign-in-alt"></i> Login</a>
         </li>
       {/if}
     </ul>
@@ -134,7 +143,7 @@
 </nav>
 
 <div id="myNav" class="overlay" style="color: white;">
-  <a href="#" class="closebtn" on:click={closeNav}>&times;</a>
+  <a href="#" class="closebtn" on:click={closeNavNoSave}>&times;</a>
   <div class="overlay-content">
     <div class="m-3 h4 p-3">
       <i class="fas fa-cog"></i>
@@ -148,11 +157,10 @@
         `<button class='btn btn-success' onclick="localStorage.setItem('autoscroll', 'yes')">yes</button>
         <button class='btn btn-danger' onclick="localStorage.setItem('autoscroll', 'no')">no</button>`
       }
-
     </div>
     <div class="m-3 p-3">
      <div class="m-3 h6">
-       Secret key ?
+      Set custom secret key ?
      </div>
       {@html
         `
@@ -163,7 +171,14 @@
           </button>
         `
       }
-
     </div>
+    
+
+    <div class="m-3 p-3">
+     <div class="m-3 h6" on:click={closeNav}>
+      Save Settings
+     </div>
+    </div>
+
   </div>
 </div>
