@@ -97,6 +97,35 @@
      document.querySelector('emoji-picker')
   .addEventListener('emoji-click', event => document.querySelector("#submit__area__main__").value += event.detail.unicode+" ");
   }
+
+
+
+  let base64String = ""; 
+
+  async function imageUploaded() { 
+    var file = document.querySelector( 
+        'input[type=file]')['files'][0]; 
+
+    var reader = new FileReader(); 
+    console.log("next");
+    reader.onload = async function() { 
+        base64String = reader.result.replace("data:", "") 
+            .replace(/^.+,/, "");
+      
+      var channel = localStorage.getItem("channel") || "chat";
+
+      const _secret = await SEA.encrypt("IMAGE=" + reader.result, localStorage.getItem("_secret") || '#foo');
+      const _message = user.get('all').set({ what: _secret });
+      const _index = new Date().toISOString();
+      db.get('densewaire/'+channel).get(_index).put(_message);
+      newMessage = '';
+      canAutoScroll = true;
+      autoScroll();
+      console.log(reader.result); 
+    } 
+    reader.readAsDataURL(file); 
+}
+
 </script>
 
 <div class="container">
@@ -112,6 +141,10 @@
      <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span class="input-group-text" style="height: 38px;" id="basic-addon1" on:click={emoji}><i class="fas fa-laugh-wink fa-lg"></i></span>
+        <label for="file-upload" class="custom-file-upload input-group-text">
+          <i class="fas fa-image fa-lg"></i>
+        </label>
+        <input type="file" name="" id="file-upload" on:change={imageUploaded} accept="image/*"> 
       </div>
       <input style="background: white;height: 38px;" id="submit__area__main__" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
       <div class="input-group-append">
