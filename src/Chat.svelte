@@ -121,7 +121,6 @@
       newMessage = '';
       canAutoScroll = true;
       autoScroll();
-      console.log(reader.result); 
     } 
     reader.readAsDataURL(file); 
 }
