@@ -80,7 +80,7 @@
   async function sendMessage() {
     var channel = localStorage.getItem("channel") || "chat";
 
-    const secret = await SEA.encrypt(newMessage, localStorage.getItem("_secret") || '#foo');
+    const secret = await SEA.encrypt(newMessage.toString(), localStorage.getItem("_secret") || '#foo');
     const message = user.get('all').set({ what: secret });
     const index = new Date().toISOString();
     db.get('densewaire/'+channel).get(index).put(message);
@@ -114,7 +114,7 @@
       
       var channel = localStorage.getItem("channel") || "chat";
 
-      const _secret = await SEA.encrypt("IMAGE=" + reader.result, localStorage.getItem("_secret") || '#foo');
+      const _secret = await SEA.encrypt("IMAGE=" + reader.result.toString(), localStorage.getItem("_secret") || '#foo');
       const _message = user.get('all').set({ what: _secret });
       const _index = new Date().toISOString();
       db.get('densewaire/'+channel).get(_index).put(_message);

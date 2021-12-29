@@ -1,5 +1,5 @@
 self.addEventListener('install', function (event) {
-  var CACHE_NAME = 'densewaire__cache-v1-0-1';
+  var CACHE_NAME = 'densewaire__cache-v1-0-3';
   var urlsToCache = [
     '/',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
