@@ -70,7 +70,9 @@
       </div>
     </div>
   </div>
+  <div class="text-center p-3">
    <a href="/chat" class="btn btn-primary">Login Or Register</a>
+  </div>
   <div class="text-center" style="padding: 20px;margin: 10px;">
     <div class="h4" style="color: white;"><i class="fas fa-copyright"></i> densewaire 2022</div>
   </div>
