@@ -70,10 +70,8 @@
       </div>
     </div>
   </div>
-
+   <a href="/chat" class="btn btn-primary">Login Or Register</a>
   <div class="text-center" style="padding: 20px;margin: 10px;">
-    <a href="/chat" class="btn btn-primary">Login Or Register</a>
-    <br />
-    <div class="h3" style="padding: 20px;color: white;">(C) Unsign 2021</div>
+    <div class="h4" style="color: white;"><i class="fas fa-copyright"></i> densewaire 2022</div>
   </div>
 </main>
