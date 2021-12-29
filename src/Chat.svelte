@@ -135,7 +135,7 @@
       {/each}
       <div class="dummy" style="height: 150px;" bind:this={scrollBottom} />
     </main>
-    <form autocomplete="off" style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar">
+    <form autocomplete="off" style="backdrop-filter: blur(10px);background: transparent;" on:submit|preventDefault={sendMessage} class="fixed-bottom navbar blur">
     <span class="emoji__"></span>
      <div class="input-group mb-2">
       <div class="input-group-prepend">

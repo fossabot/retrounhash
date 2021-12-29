@@ -33,14 +33,20 @@ p {
 
 .sent p {
   color: white;
-  background: #0b93f6;
   align-self: flex-end;
   text-align: right;
+  background: rgba( 13, 110, 253, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 20px );
+  -webkit-backdrop-filter: blur( 20px );
 }
 .received p {
   background: #e5e5ea;
-  color: black;
   text-align: left;
+  background: rgba( 229, 229, 234, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 20px );
+  -webkit-backdrop-filter: blur( 20px );
 }
 
 .message-text {
@@ -69,7 +75,8 @@ img {
 
 .img-fluid{
   width: 600px;
-  heigh: auto;
+  height: auto;
+  max-height: 800px;
 }
 
 .message:last-child {
@@ -83,17 +90,28 @@ input[type="text"] {
 }
 
 body{
-   background-repeat: no-repeat;
+   background-repeat: repeat;
    background-attachment: fixed;
-   background-size: cover;
    background-position: top;
-   background-image:url(http://bit.ly/2gPLxZ4);
+   background-image: url("./background.svg");
 }
 
 .card{
-  backdrop-filter: blur(10px);
-  background: transparent;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
 }
+
+.blur{
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+}
+
 .card *, .form-label{
   color: white;
 }
@@ -102,12 +120,14 @@ html::-webkit-scrollbar {
   width: 16px;
   height: 16px;
 }
+
 html::-webkit-scrollbar-thumb {
   background: #434343;
   border-radius: 16px;
   box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, 0.25),
     inset -2px -2px 2px rgba(0, 0, 0, 0.25);
 }
+
 html::-webkit-scrollbar-track {
   background: linear-gradient(90deg, #434343, #434343 1px, #111 0, #111);
 }
@@ -157,6 +177,7 @@ html::-webkit-scrollbar-track {
 input[type="file"] {
     display: none;
 }
+
 .custom-file-upload {
     display: inline-block;
     cursor: pointer;

@@ -13,7 +13,6 @@
     toast: true,
     position: 'bottom-end',
     showConfirmButton: false,
-    timer: 2000,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -36,7 +35,8 @@
       jq("#copyURL").remove();
       Toast.fire({
         icon: 'success',
-        title: 'link copied!'
+        title: 'link copied!',
+        timer: 2600,
       })
   }
 
@@ -46,7 +46,7 @@
 
   function closeNav() {
     document.getElementById("myNav").style.width = "0%";
-    location.reload();
+    location.href = "/chat";
   }
    
   function closeNavNoSave() {
@@ -71,15 +71,68 @@
       allowOutsideClick: () => !Swal.isLoading()
     })
   }
+
+  function roomGen(){
+    var secret_channel = Math.random().toString(36).substr(4, 10);
+    var sKEY = Math.random().toString(36).substr(4, 5);
+    jq("body").append('<input id="copyURL" type="text" value="" />');
+    jq("#copyURL")
+      .val(
+        window.location.protocol +
+          "//" +
+          window.location.hostname +
+          "/chat?c=" +
+          secret_channel +
+          "&s=" + sKEY
+      )
+      .select();
+      document.execCommand("copy");
+      jq("#copyURL").remove();
+
+      Swal.fire({
+        title: 'Go there now ?',
+        text: "join the secret room ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!',
+        cancelButtonText: 'i will go later'
+      }).then((result) => {
+        if (result.isConfirmed) {
+         Toast.fire({
+           icon: 'success',
+           title: 'share the copied link with anyone to chat privately!',
+           timer: 4600,
+         }).then(() => {
+           location.href = window.location.protocol + "//" + window.location.hostname + "/chat?c=" + secret_channel + "&s=" + sKEY;
+           })
+        }else{
+          Toast.fire({
+            title: 'canceled',
+            timer: 1500,
+          })
+        }
+      })
+  }
+
   if(urlParams.has('c')){
     var channel = urlParams.get('c');
     localStorage.setItem("channel", channel);
     Toast.fire({
         icon: 'success',
-        title: 'joined ' + channel + '!'
+        title: 'joined ' + channel + '!',
+        timer: 3000,
       })
   }else{
     var channel = localStorage.getItem("channel") || "chat";
+  }
+
+  if(urlParams.has('s')){
+    var secretKey = urlParams.get('s');
+    var current__secret = localStorage.getItem("_secret");
+    localStorage.setItem("prev_secret", current__secret);
+    localStorage.setItem("_secret", secretKey);
   }
 
   if ('serviceWorker' in navigator) {
@@ -91,9 +144,14 @@
       });
     });
   }
+
+  function leaveSecretRoom(){
+    localStorage.setItem("_secret", "#foo");
+    location.href = "/chat?c=chat";
+  }
 </script>
 <br><br><br><br>
-<nav class="navbar navbar-dark fixed-top bg-primary">
+<nav class="navbar navbar-dark fixed-top blur" style="color: white;">
  <div class="container-fluid">
     <a class="navbar-brand" href="/">
       {#if $username}
@@ -121,22 +179,33 @@
    <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       {#if $username}
-        <li class="nav-item m-2">
-         <button class="btn btn-primary" on:click={openNav}><i class="fas fa-cog"></i> settings</button>
-        </li>
-        <li class="nav-item m-2">
-         <button class="btn btn-info" on:click={initRoom}><i class="fas fa-door-open"></i> join or create room</button>
-        </li>
-        <li class="nav-item m-2">
-         <button class="btn btn-info" on:click={share_link}><i class="fas fa-copy"></i> share room link</button>
-        </li>
-        <li class="nav-item m-2">
-         <button class="btn btn-danger" on:click={signout}><i class="fas fa-sign-out-alt"></i> Sign Out</button>
-        </li>
+       {#if !urlParams.has('s')}
+          <li class="nav-item m-2">
+           <button class="btn btn-primary" on:click={openNav}><i class="fas fa-cog"></i> settings</button>
+          </li>
+          <li class="nav-item m-2">
+           <button class="btn btn-success" on:click={initRoom}><i class="fas fa-door-open"></i> join or create room</button>
+          </li>
+          <li class="nav-item m-2">
+           <button class="btn btn-dark" on:click={roomGen}><i class="fas fa-user-secret"></i> create secret room</button>
+          </li>
+          <li class="nav-item m-2">
+           <button class="btn btn-info" on:click={share_link}><i class="fas fa-copy"></i> share room link</button>
+          </li>
+          <li class="nav-item m-2">
+           <button class="btn btn-danger" on:click={signout}><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+          </li>
+       {:else}
+          <li class="nav-item m-2">
+           <button class="btn btn-dark" on:click={leaveSecretRoom}><i class="fas fa-user-secret"></i> leave secret room</button>
+          </li>
+       {/if}
       {:else}
-        <li class="nav-item m-2">
-         <a class="btn btn-primary" href="/chat"><i class="fas fa-sign-in-alt"></i> Login</a>
-        </li>
+        {#if !urlParams.has('s')}
+          <li class="nav-item m-2">
+           <a class="btn btn-primary" href="/chat"><i class="fas fa-sign-in-alt"></i> Login</a>
+          </li>
+        {/if}
       {/if}
     </ul>
   </div>

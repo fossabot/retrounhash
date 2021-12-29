@@ -2,7 +2,7 @@
   <div
     style="display:flex;flex-wrap: wrap;justify-content:center;align-items:center;"
   >
-    <div class="card" style="width: 18rem;height: auto;margin: 15px;">
+    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
       <img
         class="card-img"
         style="height: 100%;width: 100%;"
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="card" style="width: 18rem;height: auto;margin: 15px;">
+    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
       <img
         class="card-img"
         style="height: 100%;width: 100%;"
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="card" style="width: 18rem;height: auto;margin: 15px;">
+    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
       <img
         class="card-img"
         style="height: 100%;width: 100%;"
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="card" style="width: 18rem;height: auto;margin: 15px;">
+    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
       <img
         class="card-img"
         style="height: 100%;width: 100%;"

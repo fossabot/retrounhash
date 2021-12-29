@@ -37,7 +37,7 @@
   }
 </script>
 
-<div class="container" style="padding: 20px;">
+<div class="container blur" style="padding: 20px;">
   <div class="form">
     <div class="mb-3">
       <label for="Username" class="form-label">Username</label>
