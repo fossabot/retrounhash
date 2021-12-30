@@ -6,7 +6,7 @@
   import debounce from 'lodash.debounce';
   import 'emoji-picker-element';
   import GUN from 'gun';
-  const peers = ['https://gunjs.herokuapp.com/gun/'];
+  const peers = ['https://gun--relay.herokuapp.com/gun/'];
   const db = GUN({ peers });
 
   import jq from "jquery";
