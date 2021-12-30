@@ -14,6 +14,10 @@
      var textMarked = text.replace(/IMAGE\=(.*)/, "<img class='img-fluid' src='$1' alt='invalid image' />");
      return textMarked;
     }
+   if(text.match(/AUDIO\=(.*)/)){
+     var textMarked = text.replace(/AUDIO\=(.*)/, '<audio controls><source src="$1" type="audio/mp3">Your browser does not support the audio element.</audio>');
+     return textMarked;
+    }
     return text;
   }
 </script>

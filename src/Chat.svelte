@@ -8,7 +8,9 @@
   import GUN from 'gun';
   const peers = ['https://gun-relay-volcareso.herokuapp.com/gun'];
   const db = GUN({ peers });
-  
+
+  import jq from "jquery";
+
   const urlParams = new URLSearchParams(window.location.search);
 
   let newMessage;
@@ -125,6 +127,60 @@
     reader.readAsDataURL(file); 
 }
 
+async function record(action){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+
+  navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(stream => {
+    const mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start();
+    Toast.fire({
+      title: 'started recording!'
+    })
+    const audioChunks = [];
+    mediaRecorder.addEventListener("dataavailable", event => {
+      audioChunks.push(event.data);
+    });
+
+    mediaRecorder.addEventListener("stop", async function (){
+      const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+      var reader = new window.FileReader();
+      reader.readAsDataURL(audioBlob); 
+      reader.onloadend = async function() {
+         var base64 = reader.result;
+         console.log(base64);
+
+         var channel = localStorage.getItem("channel") || "chat";
+         const __secret = await SEA.encrypt("AUDIO=" + base64.toString(), localStorage.getItem("_secret") || '#foo');
+         const __message = user.get('all').set({ what: __secret });
+         const __index = new Date().toISOString();
+         db.get('densewaire/'+channel).get(__index).put(__message);
+         newMessage = '';
+         base64 = "";
+         canAutoScroll = true;
+         autoScroll();
+      }
+      const audioUrl = URL.createObjectURL(audioBlob);
+    });
+
+    setTimeout(() => {
+      mediaRecorder.stop();
+      Toast.fire({
+      title: 'stopped recording!'
+    })
+    }, 5000);
+  });
+}
 </script>
 
 <div class="container">
@@ -139,7 +195,8 @@
     <span class="emoji__"></span>
      <div class="input-group mb-2">
       <div class="input-group-prepend">
-        <span class="input-group-text" style="height: 38px;" id="basic-addon1" on:click={emoji}><i class="fas fa-laugh-wink fa-lg"></i></span>
+        <span class="input-group-text" style="height: 38px;" id="emoji_add" on:click={emoji}><i class="fas fa-laugh-wink fa-lg"></i></span>
+        <span class="input-group-text" style="height: 38px;" id="record" on:click={record}><i class="fas fa-microphone-alt fa-lg"></i></span>
         <label for="file-upload" class="custom-file-upload input-group-text">
           <i class="fas fa-image fa-lg"></i>
         </label>
@@ -164,3 +221,4 @@
     </main>
   {/if}
 </div>
+<i class="fas fa-microphone-alt"></i>
