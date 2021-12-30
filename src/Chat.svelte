@@ -221,4 +221,3 @@ async function record(action){
     </main>
   {/if}
 </div>
-<i class="fas fa-microphone-alt"></i>

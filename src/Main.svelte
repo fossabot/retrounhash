@@ -23,6 +23,51 @@
       <img
         class="card-img"
         style="height: 100%;width: 100%;"
+        src="Hands - Favorite Image.png"
+        alt="Ce cap"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Send Images!</h5>
+        <p class="card-text">
+          A picture is worth thousand words. Send pics fast, with end to end encryption 🔒!
+        </p>
+      </div>
+    </div>
+
+    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
+      <img
+        class="card-img"
+        style="height: 100%;width: 100%;"
+        src="The Band - Speaker 1.png"
+        alt="5th image here"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Audio messages</h5>
+        <p class="card-text">
+          Send audio messages right from your browser! That too, end to end encrypted 🔒.
+        </p>
+      </div>
+    </div>
+
+    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
+      <img
+        class="card-img"
+        style="height: 100%;width: 100%;"
+        src="Hands - Pinch.png"
+        alt="ninja mode"
+      />
+      <div class="card-body">
+        <h5 class="card-title">secret rooms</h5>
+        <p class="card-text">
+          Want a link based room which no one can use exept you and your friends? We have got you covered!
+        </p>
+      </div>
+    </div>
+
+    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
+      <img
+        class="card-img"
+        style="height: 100%;width: 100%;"
         src="https://imgr.search.brave.com/AiC2YO0DTyHD9Pq4YWQjl3Bmgt-weNxjVvBVfsTFrqM/fit/600/523/ce/1/aHR0cDovL3d3dy5w/bmdhbGwuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE2LzA2/L0NlbnNvcmVkLVN0/YW1wLnBuZw"
         alt="Cd ime cap"
       />
@@ -55,20 +100,9 @@
       </div>
     </div>
 
-    <div class="card blur" style="width: 18rem;height: auto;margin: 15px;">
-      <img
-        class="card-img"
-        style="height: 100%;width: 100%;"
-        src="https://i.ibb.co/1K4SwD1/images-2021-12-19-T141256-851-removebg-preview.png"
-        alt="Ce cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title">Customisable</h5>
-        <p class="card-text">
-          Making it highly customisable is one of our main motives! control blur and even ui components!
-        </p>
-      </div>
-    </div>
+  </div>
+  <div class="text-center">
+   <img class="img-fluid" src="Allura - Staying Home.png" />
   </div>
   <div class="text-center p-3">
    <a href="/chat" class="btn btn-primary">Login Or Register</a>

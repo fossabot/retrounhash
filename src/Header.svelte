@@ -149,6 +149,86 @@
     localStorage.setItem("_secret", "#foo");
     location.href = "/chat?c=chat";
   }
+
+  let deferredPrompt;
+
+  if(/\/chat(.*)/.test(location.pathname)){
+   if(localStorage.getItem('dontShowPopupPwa') !== "true"){
+    window.addEventListener('beforeinstallprompt', (e) => {
+     e.preventDefault();
+     deferredPrompt = e;
+     Swal.fire({
+        title: 'Install as web app',
+        text: "please install this site as a web app for the best experience!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "Let's do it!",
+        cancelButtonText: 'later'
+      }).then((result) => {
+        if (result.isConfirmed) {
+         Toast.fire({
+           icon: 'success',
+           title: 'Click install!',
+           timer: 1000,
+         }).then(() => {
+             deferredPrompt.prompt();
+             // Wait for the user to respond to the prompt
+             deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                Toast.fire({
+                 title: 'Open the application for better experience!',
+                 timer: 3500,
+                })
+              } else {
+                Toast.fire({
+                 title: 'This may result in poor performance!',
+                 timer: 3500,
+                })
+              }
+            });
+           })
+        }else{
+          Toast.fire({
+            title: 'This may result in poor performance!',
+            timer: 1500,
+          })
+        }
+      })
+    })
+  }else{
+    window.removeEventListener('beforeinstallprompt', (e) => {})
+  }
+ }
+
+  function installPwa(){
+      Toast.fire({
+        icon: 'success',
+        title: 'Click install!',
+        timer: 1000,
+      }).then(() => {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+           if (choiceResult.outcome === 'accepted') {
+             Toast.fire({
+              title: 'Open the application for better experience!',
+              timer: 3500,
+             })
+           } else {
+             Toast.fire({
+              title: 'This may result in poor performance!',
+              timer: 3500,
+             })
+           }
+        });
+      })
+  }
+
+  function dontShowPopupPwa(){
+    localStorage.setItem("dontShowPopupPwa", "true");
+    location.reload();
+  }
 </script>
 <br><br><br><br>
 <nav class="navbar navbar-dark fixed-top blur" style="color: white;">
@@ -241,7 +321,21 @@
         `
       }
     </div>
-    
+    {#if !window.matchMedia('(display-mode: standalone)').matches}
+     <div class="m-3 p-3">
+      <div class="m-3 h6">
+        Install as web app!
+      </div>
+        <button class="btn btn-success" on:click={installPwa}>
+           INSTALL
+        </button>
+       {#if localStorage.getItem('dontShowPopupPwa') !== "true"}
+        <button class="btn btn-danger" on:click={dontShowPopupPwa}>
+           Do not show popup again
+        </button>
+       {/if}
+      </div>
+    {/if}
 
     <div class="m-3 p-3">
      <div class="m-3 h6" on:click={closeNav}>
