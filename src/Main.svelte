@@ -68,8 +68,8 @@
       <img
         class="card-img"
         style="height: 100%;width: 100%;"
-        src="https://imgr.search.brave.com/AiC2YO0DTyHD9Pq4YWQjl3Bmgt-weNxjVvBVfsTFrqM/fit/600/523/ce/1/aHR0cDovL3d3dy5w/bmdhbGwuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE2LzA2/L0NlbnNvcmVkLVN0/YW1wLnBuZw"
-        alt="Cd ime cap"
+        src="https://img.search.brave.com/AiC2YO0DTyHD9Pq4YWQjl3Bmgt-weNxjVvBVfsTFrqM/fit/600/523/ce/1/aHR0cDovL3d3dy5w/bmdhbGwuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE2LzA2/L0NlbnNvcmVkLVN0/YW1wLnBuZw"
+        alt="Censorship is bad guys"
       />
       <div class="card-body">
         <h5 class="card-title">No Censorship</h5>
