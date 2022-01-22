@@ -242,7 +242,7 @@
 
 <MaterialApp>
   <br /><br /><br />
-  <nav class="navbar navbar-dark fixed-top blur" style="background: rgba(244, 244, 244, 0.80);">
+  <nav class="navbar navbar-dark fixed-top blur" style="background: rgba(244, 244, 244, 0.90);">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
         {#if $username}
