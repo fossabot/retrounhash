@@ -1,5 +1,10 @@
 <script>
-  import { CardTitle,  Card, CardText, CardActions, Button, MaterialApp } from 'svelte-materialify';
+  import { CardTitle,  Card, CardText, Button, MaterialApp } from 'svelte-materialify';
+  import { username, user } from './user'
+
+  if(username){
+    window.location.replace("/chat");
+  }
 </script>
 <MaterialApp>
   <main style="min-height: 100vh;">

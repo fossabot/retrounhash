@@ -1,6 +1,5 @@
 <script>
   import { username, user } from "./user";
-  import { TextField } from "smelte";
   import jq from "jquery";
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -243,7 +242,7 @@
 
 <MaterialApp>
   <br /><br /><br />
-  <nav class="navbar navbar-dark fixed-top blur" style="color: white;">
+  <nav class="navbar navbar-dark fixed-top blur" style="background: rgba(244, 244, 244, 0.80);">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
         {#if $username}
@@ -274,7 +273,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon" />
+        <i class="fas fa-ellipsis-v"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
@@ -326,8 +325,8 @@
     </div>
   </nav>
 
-  <div id="myNav" class="overlay" style="color: white;">
-    <a href="#" class="closebtn" on:click={closeNavNoSave}>&times;</a>
+  <div id="myNav" class="overlay" style="background: rgba(255, 255, 255, 0.7);">
+    <Button  class="closebtn" on:click={closeNavNoSave}>&times;</Button>
     <div class="overlay-content">
       <div class="m-3 h4 p-3">
         <i class="fas fa-cog" />
@@ -335,35 +334,33 @@
       </div>
       <div class="m-3 p-3">
         <div class="m-3 h6">Show auto scroll ?</div>
-        {@html `<button class='btn btn-success' onclick="localStorage.setItem('autoscroll', 'yes')">yes</button>
-        <button class='btn btn-danger' onclick="localStorage.setItem('autoscroll', 'no')">no</button>`}
+        <Button onclick="localStorage.setItem('autoscroll', 'yes')">yes</Button>
+        <Button onclick="localStorage.setItem('autoscroll', 'no')">no</Button>
       </div>
       <div class="m-3 p-3">
         <div class="m-3 h6">Set custom secret key ?</div>
-        {@html `
           <input class="form-control" type="text" name="encryption" id="encryption" onchange="localStorage.setItem('_secret', this.value);" placeholder="my_secret" maxlength="12" minlength="3" />
           <small class="form-text">Someone having the same secret key would be able to see your messages. Other people won't.</small>
-          <button class="btn btn-primary" onclick='localStorage.setItem("_secret", "#foo");location.reload();'>
+          <Button onclick='localStorage.setItem("_secret", "#foo");location.reload();'>
             reset and set me visible
-          </button>
-        `}
+          </Button>
       </div>
       {#if !window.matchMedia("(display-mode: standalone)").matches}
         <div class="m-3 p-3">
           <div class="m-3 h6">Install as web app!</div>
-          <button class="btn btn-success" on:click={installPwa}>
+          <Button class="btn btn-success" on:click={installPwa}>
             INSTALL
-          </button>
+          </Button>
           {#if localStorage.getItem("dontShowPopupPwa") !== "true"}
-            <button class="btn btn-danger" on:click={dontShowPopupPwa}>
+            <Button class="btn btn-danger" on:click={dontShowPopupPwa}>
               Do not show popup again
-            </button>
+            </Button>
           {/if}
         </div>
       {/if}
 
       <div class="m-3 p-3">
-        <div class="m-3 h6" on:click={closeNav}>Save Settings</div>
+        <Button on:click={closeNav}>Save Settings</Button>
       </div>
     </div>
   </div>
