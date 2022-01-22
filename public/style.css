@@ -3,6 +3,10 @@
   font-family: "Roboto Condensed", sans-serif;
 }
 
+*{
+  color: black !important;
+}
+
 ul,
 li {
   text-align: left;
@@ -90,10 +94,10 @@ input[type="text"] {
 }
 
 body{
-   background-repeat: repeat;
+   /*background-repeat: repeat;
    background-attachment: fixed;
    background-position: top;
-   background-image: url("./background.svg");
+   background-image: url("./background.svg");*/
 }
 
 .card{
@@ -104,13 +108,13 @@ body{
   border-radius: 10px;
 }
 
-.blur{
+/*.blur{
   background: rgba( 255, 255, 255, 0.25 );
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 4px );
   -webkit-backdrop-filter: blur( 4px );
   border-radius: 10px;
-}
+}*/
 
 .card *, .form-label{
   color: white;
@@ -145,10 +149,10 @@ html::-webkit-scrollbar-track {
   overflow-x: hidden;
   transition: 0.5s;
   background: rgba( 0, 0, 0, 0.25 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  /*box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 4px );
   -webkit-backdrop-filter: blur( 4px );
-  border-radius: 10px;
+  border-radius: 10px;*/
 }
 
 .overlay-content {

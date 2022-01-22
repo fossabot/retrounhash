@@ -1,6 +1,7 @@
 <script>
   import { user } from './user';
-
+  import { Button } from 'svelte-materialify'
+  
   let username;
   let password;
 
@@ -64,7 +65,7 @@
         a strong password will help
       </div>
     </div>
-    <button class="btn btn-primary" on:click={login}>Login</button>
-    <button class="btn btn-primary" on:click={signup}>Sign Up</button>
+    <Button on:click={login}>Login</Button>
+    <Button on:click={signup}>Sign Up</Button>
   </div>
 </div>
