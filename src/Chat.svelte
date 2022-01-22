@@ -202,7 +202,7 @@ async function record(action){
         </label>
         <input type="file" name="" id="file-upload" on:change={imageUploaded} accept="image/*"> 
       </div>
-      <input style="background: white;height: 38px;" id="submit__area__main__" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
+      <input style="background: white;" id="submit__area__main__" class="form-control" type="text" placeholder="Type a message..." bind:value={newMessage} maxlength="100" />
       <div class="input-group-append">
         {#if localStorage.getItem("autoscroll") == "yes"}
          <button type="button" style="height: 38px;" class="btn input-group-text" on:click={autoScroll}>
