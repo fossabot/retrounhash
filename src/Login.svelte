@@ -1,6 +1,9 @@
 <script>
   import { user } from './user';
-  import { Button } from 'svelte-materialify'
+  import {
+    Button,
+    TextField
+  } from 'svelte-materialify'
   
   let username;
   let password;
@@ -39,31 +42,30 @@
 </script>
 
 <div class="container blur" style="padding: 20px;">
-  <div class="form">
+  <div class="form m-3 p-2 ">
     <div class="mb-3">
-      <label for="Username" class="form-label">Username</label>
-      <input
+      <TextField
         name="Username"
-        class="form-control"
+        counter="20"
         bind:value={username}
         minlength="3"
-        maxlength="16"
-        style="backdrop-filter: blur(10px);background: transparent;color: white;"
-      />
-      <div class="form-text" style="color: white;">make it unique !</div>
+        maxlength="20"
+        placeholder="JhonDoe1989"
+      >
+        Username
+    </TextField>
     </div>
     <div class="mb-3">
-      <label for="Password" class="form-label">Password</label>
-      <input
+      <TextField
         name="Password"
-        class="form-control"
+        counter="8"
+        minlength="8"
+        placeholder="************"
         bind:value={password}
         type="password"
-        style="backdrop-filter: blur(10px);background: transparent;color: white;"
-      />
-      <div class="form-text" style="color: white;">
-        a strong password will help
-      </div>
+      >
+       Password
+    </TextField>
     </div>
     <Button on:click={login}>Login</Button>
     <Button on:click={signup}>Sign Up</Button>
