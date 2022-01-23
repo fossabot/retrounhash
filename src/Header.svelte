@@ -1,6 +1,7 @@
 <script>
   import { username, user } from "./user";
   import jq from "jquery";
+  import { TextField } from "svelte-materialify";
   const urlParams = new URLSearchParams(window.location.search);
 
   import { Button, MaterialApp } from "svelte-materialify";
@@ -143,7 +144,7 @@
     localStorage.setItem("_secret", secretKey);
   }
 
-  if ('serviceWorker' in navigator) {
+  /*if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
       navigator.serviceWorker.register('/sw.js').then(function (registration) {
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
@@ -151,7 +152,7 @@
         console.log('ServiceWorker registration failed: ', err);
       });
     });
-  }
+  }*/
 
   function leaveSecretRoom() {
     localStorage.setItem("_secret", "#foo");
@@ -242,7 +243,10 @@
 
 <MaterialApp>
   <br /><br /><br />
-  <nav class="navbar navbar-dark fixed-top blur" style="background: rgba(244, 244, 244, 0.95);">
+  <nav
+    class="navbar navbar-dark fixed-top blur"
+    style="background: rgba(244, 244, 244, 0.95);"
+  >
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
         {#if $username}
@@ -273,7 +277,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <i class="fas fa-ellipsis-v"></i>
+        <i class="fas fa-ellipsis-v" />
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
@@ -314,9 +318,7 @@
           {:else if !urlParams.has("s")}
             <li class="nav-item m-2">
               <Button>
-                <a href="/chat"
-                  ><i class="fas fa-sign-in-alt" /> Login</a
-                >
+                <a href="/chat"><i class="fas fa-sign-in-alt" /> Login</a>
               </Button>
             </li>
           {/if}
@@ -325,8 +327,12 @@
     </div>
   </nav>
 
-  <div id="myNav" class="overlay" style="background: rgba(255, 255, 255, 0.95);">
-    <Button  class="closebtn" on:click={closeNavNoSave}>&times;</Button>
+  <div
+    id="myNav"
+    class="overlay"
+    style="background: rgba(255, 255, 255, 0.95);"
+  >
+    <Button class="closebtn" on:click={closeNavNoSave}>&times;</Button>
     <div class="overlay-content">
       <div class="m-3 h4 p-3">
         <i class="fas fa-cog" />
@@ -339,18 +345,32 @@
       </div>
       <div class="m-3 p-3">
         <div class="m-3 h6">Set custom secret key ?</div>
-          <input class="form-control" type="text" name="encryption" id="encryption" onchange="localStorage.setItem('_secret', this.value);" placeholder="my_secret" maxlength="12" minlength="3" />
-          <small class="form-text">Someone having the same secret key would be able to see your messages. Other people won't.</small>
-          <Button onclick='localStorage.setItem("_secret", "#foo");location.reload();'>
-            reset and set me visible
-          </Button>
+        <TextField
+          type="text"
+          name="encryption"
+          counter="20"
+          maxlength="20"
+          id="encryption"
+          onchange="localStorage.setItem('_secret', this.value);"
+          placeholder="my_secret"
+          minlength="3"
+        >
+          Secret Key
+        </TextField>
+        <small class="form-text"
+          >Someone having the same secret key would be able to see your
+          messages. Other people won't.
+        </small>
+        <Button
+          onclick="localStorage.setItem('_secret', '#foo');location.reload();"
+        >
+          reset and set me visible
+        </Button>
       </div>
       {#if !window.matchMedia("(display-mode: standalone)").matches}
         <div class="m-3 p-3">
           <div class="m-3 h6">Install as web app!</div>
-          <Button class="btn btn-success" on:click={installPwa}>
-            INSTALL
-          </Button>
+          <Button class="btn btn-success" on:click={installPwa}>INSTALL</Button>
           {#if localStorage.getItem("dontShowPopupPwa") !== "true"}
             <Button class="btn btn-danger" on:click={dontShowPopupPwa}>
               Do not show popup again
