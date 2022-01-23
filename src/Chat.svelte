@@ -6,7 +6,7 @@
   import debounce from 'lodash.debounce';
   import 'emoji-picker-element';
   import GUN from 'gun';
-  const peers = ['http://localhost:8765/gun', 'https://gun-manhattan.herokuapp.com/gun'];
+  const peers = ['http://localhost:8765/gun', 'https://gun-manhattan.herokuapp.com/gun', 'https://gun--server.herokuapp.com/gun'];
   const db = GUN({ peers });
 
   import jq from "jquery";
