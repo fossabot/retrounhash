@@ -143,7 +143,7 @@
     localStorage.setItem("_secret", secretKey);
   }
 
-  if ('serviceWorker' in navigator) {
+  /*if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
       navigator.serviceWorker.register('/sw.js').then(function (registration) {
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
@@ -151,7 +151,7 @@
         console.log('ServiceWorker registration failed: ', err);
       });
     });
-  }
+  }*/
 
   function leaveSecretRoom() {
     localStorage.setItem("_secret", "#foo");
@@ -325,7 +325,7 @@
     </div>
   </nav>
 
-  <div id="myNav" class="overlay" style="background: rgba(255, 255, 255, 0.7);">
+  <div id="myNav" class="overlay" style="background: rgba(255, 255, 255, 0.95);">
     <Button  class="closebtn" on:click={closeNavNoSave}>&times;</Button>
     <div class="overlay-content">
       <div class="m-3 h4 p-3">
@@ -358,7 +358,7 @@
           {/if}
         </div>
       {/if}
-
+      <hr />
       <div class="m-3 p-3">
         <Button on:click={closeNav}>Save Settings</Button>
       </div>
