@@ -1,7 +1,10 @@
 self.addEventListener('install', function (event) {
-  var CACHE_NAME = 'densewaire__cache-v2-0-0';
+  var CACHE_NAME = 'densewaire__cache-v2-0-1';
   var urlsToCache = [
     '/',
+    '/build/bundle.js',
+    '/build/bundle.css',
+    '/global.css',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
     '/favicon.ico',
     'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js',
