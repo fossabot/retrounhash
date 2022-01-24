@@ -1,6 +1,13 @@
 <script>
-  import { CardTitle,  Card, CardText, Button, MaterialApp } from 'svelte-materialify';
+  import {
+    CardTitle,
+    Card,
+    CardText,
+    Button,
+    MaterialApp,
+  } from "svelte-materialify";
 </script>
+
 <MaterialApp>
   <main style="min-height: 100vh;">
     <div
@@ -20,9 +27,7 @@
             the data of this application.
           </p>
           <Button>
-            <a href="/chat">
-              Get Started
-            </a>
+            <a class="chatLink" href="/chat"> Get Started </a>
           </Button>
         </CardText>
       </Card>
@@ -35,9 +40,7 @@
           alt=""
         />
         <div>
-          <CardTitle>
-            Send Images!
-          </CardTitle>
+          <CardTitle>Send Images!</CardTitle>
           <CardText>
             A picture is worth thousand words. Send pics fast, with end to end
             encryption 🔒!
@@ -54,9 +57,7 @@
           alt=""
         />
         <div>
-          <CardTitle>
-            Audio Message
-          </CardTitle>
+          <CardTitle>Audio Message</CardTitle>
           <CardText>
             Send audio messages right from your browser! That too, end to end
             encrypted 🔒.
@@ -72,9 +73,7 @@
           alt=""
         />
         <div>
-          <CardTitle>
-            Secret Room
-          </CardTitle>
+          <CardTitle>Secret Room</CardTitle>
           <CardText>
             Want a link based room which no one can use exept you and your
             friends? We have got you covered!
@@ -90,9 +89,7 @@
           alt=""
         />
         <div>
-          <CardTitle>
-            No Censorship
-          </CardTitle>
+          <CardTitle>No Censorship</CardTitle>
           <CardText>
             As the application is managed by the users, Censorship is only
             possible if more than half or people agree on it.
@@ -108,19 +105,17 @@
           alt="Card ime cap"
         />
         <div>
-          <CardTitle>
-            Markdown Supporte
-          </CardTitle>
+          <CardTitle>Markdown Supporte</CardTitle>
           <CardText>
             Write formatted text as you write in any other application! *bold*
             _itallic_ `code`
-          <Button>
-            <a href="https://markdownguide.org/basic-syntax/">
-              Markdown guide
-            </a>
-          </Button>
-          <br />
-         </CardText>
+            <Button>
+              <a href="https://markdownguide.org/basic-syntax/">
+                Markdown guide
+              </a>
+            </Button>
+            <br />
+          </CardText>
         </div>
       </Card>
     </div>
@@ -129,9 +124,7 @@
     </div>
     <div class="text-center p-3">
       <Button>
-        <a href="/chat">
-          Login Or Register
-        </a>
+        <a href="/chat"> Login Or Register </a>
       </Button>
     </div>
     <div class="text-center" style="padding: 20px;margin: 10px;">

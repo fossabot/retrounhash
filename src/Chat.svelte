@@ -8,10 +8,9 @@
   import GUN from "gun";
   const peers = [
     "http://localhost:8765/gun",
-    "https://gun-manhattan.herokuapp.com/gun",
     "https://gun--server.herokuapp.com/gun",
   ];
-  const db = GUN({ peers });
+  const db = GUN({ peers, axe: false, radisk: true });
 
   import { ProgressLinear } from "svelte-materialify";
 
@@ -42,7 +41,7 @@
       // lexical queries are kind of like a limited RegEx or Glob.
       ".": {
         // property selector
-        ">": new Date(+new Date() - 1 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
+        ">": new Date(+new Date() - 2 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
       },
       "-": 1, // filter in reverse
     };
@@ -262,7 +261,7 @@
           maxlength="100"
         />
         <div class="input-group-append">
-          {#if localStorage.getItem("autoscroll") == "yes"}
+          {#if localStorage.getItem("autoscroll") == "true"}
             <button
               type="button"
               style="height: 38px;"

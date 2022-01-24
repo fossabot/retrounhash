@@ -4,7 +4,23 @@
   import { TextField } from "svelte-materialify";
   const urlParams = new URLSearchParams(window.location.search);
 
-  import { Button, MaterialApp } from "svelte-materialify";
+  import {
+    NavigationDrawer,
+    List,
+    ListItem,
+    Button,
+    Icon,
+    Overlay,
+    MaterialApp,
+  } from "svelte-materialify";
+  import {
+    mdiAccount,
+    mdiPlus,
+    mdiKey,
+    mdiShare,
+    mdiLogout,
+    mdiCog,
+  } from "@mdi/js";
 
   function signout() {
     user.leave();
@@ -239,6 +255,16 @@
     localStorage.setItem("dontShowPopupPwa", "true");
     location.reload();
   }
+
+  var NavActive = false;
+
+  function ToogleNav() {
+    NavActive = true;
+  }
+
+  function CloseNav() {
+    NavActive = false;
+  }
 </script>
 
 <MaterialApp>
@@ -271,11 +297,8 @@
       <button
         class="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown"
-        aria-expanded="false"
         aria-label="Toggle navigation"
+        on:click={ToogleNav}
       >
         <i class="fas fa-ellipsis-v" />
       </button>
@@ -384,4 +407,53 @@
       </div>
     </div>
   </div>
+</MaterialApp>
+<MaterialApp>
+  <NavigationDrawer
+    style="overflow: auto;height: 100%;position: fixed;z-index: 9999999999;"
+    absolute
+    bind:active={NavActive}
+  >
+    <List>
+      {#if !$username}
+        <div class="text-center">
+          <img width="width: 100px !important; height: 100px;" src="/favicon.ico" alt="" />
+        </div>
+        <a href="/chat"><ListItem>Login</ListItem></a>
+      {/if}
+      {#if $username}
+        <div class="text-center">
+          <img
+            style="width: 100px !important;height: 100px;"
+            src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
+            alt=""
+          />
+        </div>
+        <a href="/Account"
+          ><ListItem><Icon path={mdiAccount} /> Account</ListItem></a
+        >
+        <ListItem on:click={initRoom}
+          ><Icon path={mdiPlus} /> Join Or Create Room</ListItem
+        >
+        <ListItem on:click={roomGen}
+          ><Icon path={mdiKey} /> Create Secret Room</ListItem
+        >
+        <ListItem on:click={share_link}
+          ><Icon path={mdiShare} /> Share Link</ListItem
+        >
+        <ListItem on:click={signout}><Icon path={mdiLogout} />Sign Out</ListItem
+        >
+        <a href="/Settings"
+          ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
+        >
+      {/if}
+    </List>
+  </NavigationDrawer>
+  <Overlay
+    index={99999}
+    style="overflow: auto;position: fixed;height: 100%;z-index: 999999999;"
+    bind:active={NavActive}
+    on:click={CloseNav}
+    absolute
+  />
 </MaterialApp>

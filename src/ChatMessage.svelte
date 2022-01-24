@@ -1,6 +1,6 @@
 <script>
   import DOMPurify from "dompurify";
-  import HtmlFilter from 'html-filter'
+
   export let message;
   export let sender;
 
