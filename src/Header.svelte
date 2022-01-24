@@ -57,7 +57,7 @@
       timer: 2600,
     });
   }
-
+/*
   function openNav() {
     document.getElementById("myNav").style.width = "100%";
   }
@@ -66,10 +66,7 @@
     document.getElementById("myNav").style.width = "0%";
     location.href = "/chat";
   }
-
-  function closeNavNoSave() {
-    document.getElementById("myNav").style.width = "0%";
-  }
+*/
 
   async function initRoom() {
     await Swal.fire({
@@ -228,7 +225,7 @@
     }
   }
 
-  function installPwa() {
+  /*function installPwa() {
     Toast.fire({
       icon: "success",
       title: "Click install!",
@@ -249,12 +246,7 @@
         }
       });
     });
-  }
-
-  function dontShowPopupPwa() {
-    localStorage.setItem("dontShowPopupPwa", "true");
-    location.reload();
-  }
+  }*/
 
   var NavActive = false;
 
@@ -302,111 +294,9 @@
       >
         <i class="fas fa-ellipsis-v" />
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          {#if $username}
-            {#if !urlParams.has("s")}
-              <li class="nav-item m-2">
-                <Button on:click={openNav}
-                  ><i class="fas fa-cog" /> settings</Button
-                >
-              </li>
-              <li class="nav-item m-2">
-                <Button on:click={initRoom}
-                  ><i class="fas fa-door-open" /> join or create room</Button
-                >
-              </li>
-              <li class="nav-item m-2">
-                <Button on:click={roomGen}
-                  ><i class="fas fa-user-secret" /> create secret room</Button
-                >
-              </li>
-              <li class="nav-item m-2">
-                <Button on:click={share_link}
-                  ><i class="fas fa-copy" /> share room link</Button
-                >
-              </li>
-              <li class="nav-item m-2">
-                <Button on:click={signout}
-                  ><i class="fas fa-sign-out-alt" /> Sign Out</Button
-                >
-              </li>
-            {:else}
-              <li class="nav-item m-2">
-                <Button on:click={leaveSecretRoom}
-                  ><i class="fas fa-user-secret" /> leave secret room</Button
-                >
-              </li>
-            {/if}
-          {:else if !urlParams.has("s")}
-            <li class="nav-item m-2">
-              <Button>
-                <a href="/chat"><i class="fas fa-sign-in-alt" /> Login</a>
-              </Button>
-            </li>
-          {/if}
-        </ul>
-      </div>
     </div>
   </nav>
 
-  <div
-    id="myNav"
-    class="overlay"
-    style="background: rgba(255, 255, 255, 0.95);"
-  >
-    <Button class="closebtn" on:click={closeNavNoSave}>&times;</Button>
-    <div class="overlay-content">
-      <div class="m-3 h4 p-3">
-        <i class="fas fa-cog" />
-        SETTINGS
-      </div>
-      <div class="m-3 p-3">
-        <div class="m-3 h6">Show auto scroll ?</div>
-        <Button onclick="localStorage.setItem('autoscroll', 'yes')">yes</Button>
-        <Button onclick="localStorage.setItem('autoscroll', 'no')">no</Button>
-      </div>
-      <div class="m-3 p-3">
-        <div class="m-3 h6">Set custom secret key ?</div>
-        <TextField
-          type="text"
-          name="encryption"
-          counter="20"
-          maxlength="20"
-          id="encryption"
-          onchange="localStorage.setItem('_secret', this.value);"
-          placeholder="my_secret"
-          minlength="3"
-        >
-          Secret Key
-        </TextField>
-        <small class="form-text"
-          >Someone having the same secret key would be able to see your
-          messages. Other people won't.
-        </small>
-        <Button
-          onclick="localStorage.setItem('_secret', '#foo');location.reload();"
-        >
-          reset and set me visible
-        </Button>
-      </div>
-      {#if !window.matchMedia("(display-mode: standalone)").matches}
-        <div class="m-3 p-3">
-          <div class="m-3 h6">Install as web app!</div>
-          <Button class="btn btn-success" on:click={installPwa}>INSTALL</Button>
-          {#if localStorage.getItem("dontShowPopupPwa") !== "true"}
-            <Button class="btn btn-danger" on:click={dontShowPopupPwa}>
-              Do not show popup again
-            </Button>
-          {/if}
-        </div>
-      {/if}
-      <hr />
-      <div class="m-3 p-3">
-        <Button on:click={closeNav}>Save Settings</Button>
-      </div>
-    </div>
-  </div>
 </MaterialApp>
 <MaterialApp>
   <NavigationDrawer
