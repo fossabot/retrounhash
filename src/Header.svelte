@@ -1,7 +1,7 @@
 <script>
   import { username, user } from "./user";
   import jq from "jquery";
-  import { TextField } from "svelte-materialify";
+
   const urlParams = new URLSearchParams(window.location.search);
 
   import {
@@ -20,6 +20,7 @@
     mdiShare,
     mdiLogout,
     mdiCog,
+    mdiExitRun,
   } from "@mdi/js";
 
   function signout() {
@@ -57,16 +58,6 @@
       timer: 2600,
     });
   }
-/*
-  function openNav() {
-    document.getElementById("myNav").style.width = "100%";
-  }
-
-  function closeNav() {
-    document.getElementById("myNav").style.width = "0%";
-    location.href = "/chat";
-  }
-*/
 
   async function initRoom() {
     await Swal.fire({
@@ -169,6 +160,7 @@
 
   function leaveSecretRoom() {
     localStorage.setItem("_secret", "#foo");
+    localStorage.setItem("channel", "chat");
     location.href = "/chat?c=chat";
   }
 
@@ -225,7 +217,7 @@
     }
   }
 
-  /*function installPwa() {
+  function installPwa() {
     Toast.fire({
       icon: "success",
       title: "Click install!",
@@ -246,7 +238,7 @@
         }
       });
     });
-  }*/
+  }
 
   var NavActive = false;
 
@@ -257,6 +249,14 @@
   function CloseNav() {
     NavActive = false;
   }
+
+  document.addEventListener("swiped-right", function (e) {
+    ToogleNav();
+  });
+
+  document.addEventListener("swiped-left", function () {
+    CloseNav();
+  });
 </script>
 
 <MaterialApp>
@@ -296,7 +296,6 @@
       </button>
     </div>
   </nav>
-
 </MaterialApp>
 <MaterialApp>
   <NavigationDrawer
@@ -305,13 +304,7 @@
     bind:active={NavActive}
   >
     <List>
-      {#if !$username}
-        <div class="text-center">
-          <img width="width: 100px !important; height: 100px;" src="/favicon.ico" alt="" />
-        </div>
-        <a href="/chat"><ListItem>Login</ListItem></a>
-      {/if}
-      {#if $username}
+      {#if urlParams.has("s")}
         <div class="text-center">
           <img
             style="width: 100px !important;height: 100px;"
@@ -319,23 +312,47 @@
             alt=""
           />
         </div>
-        <a href="/Account"
-          ><ListItem><Icon path={mdiAccount} /> Account</ListItem></a
+        <ListItem on:click={leaveSecretRoom}
+          ><Icon path={mdiExitRun} /> Leave Secret Room</ListItem
         >
-        <ListItem on:click={initRoom}
-          ><Icon path={mdiPlus} /> Join Or Create Room</ListItem
-        >
-        <ListItem on:click={roomGen}
-          ><Icon path={mdiKey} /> Create Secret Room</ListItem
-        >
-        <ListItem on:click={share_link}
-          ><Icon path={mdiShare} /> Share Link</ListItem
-        >
-        <ListItem on:click={signout}><Icon path={mdiLogout} />Sign Out</ListItem
-        >
-        <a href="/Settings"
-          ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
-        >
+      {:else}
+        {#if !$username}
+          <div class="text-center">
+            <img
+              width="width: 100px !important; height: 100px;"
+              src="/favicon.ico"
+              alt=""
+            />
+          </div>
+          <a href="/chat"><ListItem>Login</ListItem></a>
+        {/if}
+        {#if $username}
+          <div class="text-center">
+            <img
+              style="width: 100px !important;height: 100px;"
+              src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
+              alt=""
+            />
+          </div>
+          <a href="/Account"
+            ><ListItem><Icon path={mdiAccount} /> Account</ListItem></a
+          >
+          <ListItem on:click={initRoom}
+            ><Icon path={mdiPlus} /> Join Or Create Room</ListItem
+          >
+          <ListItem on:click={roomGen}
+            ><Icon path={mdiKey} /> Create Secret Room</ListItem
+          >
+          <ListItem on:click={share_link}
+            ><Icon path={mdiShare} /> Share Link</ListItem
+          >
+          <ListItem on:click={signout}
+            ><Icon path={mdiLogout} />Sign Out</ListItem
+          >
+          <a href="/Settings"
+            ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
+          >
+        {/if}
       {/if}
     </List>
   </NavigationDrawer>
