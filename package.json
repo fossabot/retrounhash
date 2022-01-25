@@ -28,6 +28,7 @@
     "jquery": "^3.6.0",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
+    "overlay": "^1.2.5",
     "sirv-cli": "^1.0.0",
     "smelte": "^1.1.8",
     "svelte-materialify": "^0.3.11",

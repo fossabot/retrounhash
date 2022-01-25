@@ -10,7 +10,6 @@
     ListItem,
     Button,
     Icon,
-    Overlay,
     MaterialApp,
   } from "svelte-materialify";
   import {
@@ -243,7 +242,11 @@
   var NavActive = false;
 
   function ToogleNav() {
-    NavActive = true;
+    if(NavActive == true){
+      NavActive = false;
+    }else{
+      NavActive = true;
+    }
   }
 
   function CloseNav() {
@@ -251,7 +254,7 @@
   }
 
   document.addEventListener("swiped-right", function (e) {
-    ToogleNav();
+    NavActive = true;
   });
 
   document.addEventListener("swiped-left", function () {
@@ -356,11 +359,4 @@
       {/if}
     </List>
   </NavigationDrawer>
-  <Overlay
-    index={99999}
-    style="overflow: auto;position: fixed;height: 100%;z-index: 999999999;"
-    bind:active={NavActive}
-    on:click={CloseNav}
-    absolute
-  />
 </MaterialApp>
