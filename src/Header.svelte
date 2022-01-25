@@ -23,8 +23,18 @@
   } from "@mdi/js";
 
   function signout() {
-    user.leave();
-    username.set("");
+    CloseNav();
+    Swal.fire({
+      title: "signout ?",
+      showCancelButton: true,
+      confirmButtonText: 'signout',
+      cancelButtonText: 'take me in!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        user.leave();
+        username.set("");
+      }
+    });
   }
 
   const Toast = Swal.mixin({
@@ -59,6 +69,7 @@
   }
 
   async function initRoom() {
+    CloseNav();
     await Swal.fire({
       title: "Enter the room to join or create",
       input: "text",
@@ -93,7 +104,7 @@
       .select();
     document.execCommand("copy");
     jq("#copyURL").remove();
-
+    CloseNav();
     Swal.fire({
       title: "Go there now ?",
       text: "join the secret room ?",
@@ -158,6 +169,7 @@
   }*/
 
   function leaveSecretRoom() {
+    CloseNav();
     localStorage.setItem("_secret", "#foo");
     localStorage.setItem("channel", "chat");
     location.href = "/chat?c=chat";
@@ -242,9 +254,9 @@
   var NavActive = false;
 
   function ToogleNav() {
-    if(NavActive == true){
+    if (NavActive == true) {
       NavActive = false;
-    }else{
+    } else {
       NavActive = true;
     }
   }
@@ -312,7 +324,7 @@
           <img
             style="width: 100px !important;height: 100px;"
             src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
-            alt=""
+            alt="your avatar"
           />
         </div>
         <ListItem on:click={leaveSecretRoom}
