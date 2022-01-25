@@ -7,8 +7,8 @@ Please do not:
 - open it in public
 - test it on the application
 
-Report straight to [volcareso@gmail.com](mailto:volcareso@gmail.com)<br>
+Report straight to [atordvairn@gmail.com](mailto:atordvairn@gmail.com)<br>
 Would be of great help.
 
 Regards,<br>
-volcareso
+atordvairn
