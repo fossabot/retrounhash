@@ -4,7 +4,8 @@
   import { Route } from "tinro";
   import Main from "./Main.svelte";
   import Account from "./Account.svelte";
-  import Settings from "./Settings.svelte"
+  import Settings from "./Settings.svelte";
+  import Create from "./Create.svelte";
   import { user } from "./user";
 </script>
 
@@ -28,5 +29,9 @@
   <Route path="/Settings">
     <Header />
     <Settings />
+  </Route>
+  <Route path="/Create">
+    <Header />
+    <Create />
   </Route>
 </div>

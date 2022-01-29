@@ -21,14 +21,15 @@
     mdiCog,
     mdiExitRun,
   } from "@mdi/js";
+  import Gun from "gun";
 
   function signout() {
     CloseNav();
     Swal.fire({
       title: "signout ?",
       showCancelButton: true,
-      confirmButtonText: 'signout',
-      cancelButtonText: 'take me in!'
+      confirmButtonText: "signout",
+      cancelButtonText: "take me in!",
     }).then((result) => {
       if (result.isConfirmed) {
         user.leave();
@@ -68,7 +69,7 @@
     });
   }
 
-  async function initRoom() {
+  /*async function initRoom() {
     CloseNav();
     await Swal.fire({
       title: "Enter the room to join or create",
@@ -81,11 +82,11 @@
       showLoaderOnConfirm: true,
       preConfirm: (NameOfTheRoom) => {
         localStorage.setItem("channel", NameOfTheRoom);
-        location.href = "/chat";
+        location.href = "/";
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
-  }
+  }*/
 
   function roomGen() {
     var secret_channel = Math.random().toString(36).substr(4, 10);
@@ -96,7 +97,7 @@
         window.location.protocol +
           "//" +
           window.location.hostname +
-          "/chat?c=" +
+          "/?c=" +
           secret_channel +
           "&s=" +
           sKEY
@@ -172,7 +173,7 @@
     CloseNav();
     localStorage.setItem("_secret", "#foo");
     localStorage.setItem("channel", "chat");
-    location.href = "/chat?c=chat";
+    location.href = "/";
   }
 
   let deferredPrompt;
@@ -272,6 +273,18 @@
   document.addEventListener("swiped-left", function () {
     CloseNav();
   });
+
+  async function computeName() {
+    var name = await Gun()
+      .get(`~${localStorage.getItem("channel")}`)
+      .get("info")
+      .get("profile")
+      .get("name")
+      .then();
+
+    document.querySelector("#channelName").innerHTML = name;
+  }
+  computeName();
 </script>
 
 <MaterialApp>
@@ -300,7 +313,9 @@
           />
         {/if}
       </a>
-      <div class="text-center h5">densewaire / {channel}</div>
+      <div class="text-center h5">
+        densewaire / <span id="channelName">loading..</span>
+      </div>
       <button
         class="navbar-toggler"
         type="button"
@@ -352,8 +367,8 @@
           <a href="/Account"
             ><ListItem><Icon path={mdiAccount} /> Account</ListItem></a
           >
-          <ListItem on:click={initRoom}
-            ><Icon path={mdiPlus} /> Join Or Create Room</ListItem
+          <a href="/Create"
+            ><ListItem><Icon path={mdiPlus} />Create A Room</ListItem></a
           >
           <ListItem on:click={roomGen}
             ><Icon path={mdiKey} /> Create Secret Room</ListItem

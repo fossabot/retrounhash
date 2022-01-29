@@ -6,11 +6,14 @@
   import debounce from "lodash.debounce";
   import "emoji-picker-element";
   import GUN from "gun";
+  import Gun from "gun";
   const peers = [
-    "http://localhost:8765/gun",
+    "https://gunjs.herokuapp.com/gun",
     "https://gun--server.herokuapp.com/gun",
   ];
-  const db = GUN({ peers, axe: false, radisk: true });
+  const db = new Gun({ peers });
+  const db1 = new Gun({ peers });
+  const db2 = new Gun({ peers });
 
   import { ProgressLinear } from "svelte-materialify";
 
@@ -37,14 +40,14 @@
   $: debouncedWatchScroll = debounce(watchScroll, 1000);
 
   onMount(() => {
-    var match = {
+    /*var match = {
       // lexical queries are kind of like a limited RegEx or Glob.
       ".": {
         // property selector
         ">": new Date(+new Date() - 2 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
       },
       "-": 1, // filter in reverse
-    };
+    };*/
 
     if (urlParams.has("c")) {
       var channel = urlParams.get("c") || "chat";
@@ -54,18 +57,22 @@
     }
 
     // Get Messages
-    db.get("densewaire/" + channel)
-      .map(match)
+    const key = localStorage.getItem("channel");
+
+    db2
+      .get(`~${key}`)
+      .get("chat")
+      .map()//match)
       .once(async (data, id) => {
         if (data) {
           // Key for end-to-end encryption
-          const key = localStorage.getItem("_secret") || "#foo";
+          const ENCkey = localStorage.getItem("_secret") || "#foo";
 
           var message = {
             // transform the data
             who: await db.user(data).get("alias"),
             what:
-              (await SEA.decrypt(data.what, key)) ||
+              (await SEA.decrypt(data.what, ENCkey)) ||
               (await SEA.decrypt(data.what, "#foo")) ||
               `<i class="fas fa-lock fa-xl"></i> PROTECTED WITH CUSTOM SECRET`,
             when: GUN.state.is(data, "what"), // get the internal timestamp for the what property.
@@ -85,6 +92,82 @@
       });
   });
 
+  async function setCert(permission, pass) {
+    permission = '*';
+    pass = '1234';
+    const room = localStorage.getItem("channel") || await SEA.pair();
+    localStorage.setItem("channel", room.pub);
+    console.log(room.pub);
+    db1.user().auth(room, async (dat) => {
+      var userKeys = JSON.parse(sessionStorage.getItem("pair"));
+      console.log("user: " + userKeys.pub);
+      let enc = await SEA.encrypt(room, pass || "thePassDummy");
+      db1.user().get("host").get("key").put(enc);
+      const cert = await SEA.certify(
+        permission || "*",
+        { "*": "chat" }, //, "+": "*" },
+        room,
+        null,
+        {
+          //blacklist: "ban"
+        }
+      );
+      db1.user().get("certs").get("chat").get("certificate").put(cert);
+    });
+  }
+
+  async function getCert(message, index) {
+    async function putInChat(message, index) {
+      const userKeys = JSON.parse(sessionStorage.getItem("pair"));
+
+      const key = localStorage.getItem("channel");
+      const certificate = await db2
+        .get(`~${key}`)
+        .get("certs")
+        .get("chat")
+        .get("certificate")
+        .then();
+
+      console.log(certificate + "cert");
+
+      // let text = "hello!!";
+      // let hash = await SEA.work(text, null, null, { name: 'SHA-256' })
+
+      /*db2
+        .get(`~${key}`)
+        .get("chat")
+        .get(index)
+        .on((data) => {
+          console.log(data);
+        });*/
+        
+      db2
+        .get(`~${key}`)
+        .get("chat")
+        .get(index) //${userKeys.pub}`)
+        .put(
+          message || "no message specified",
+          (ack) => {
+            console.log("callback: " + JSON.stringify(ack));
+          },
+          { opt: { cert: certificate } }
+        );
+      console.log("pub key" + userKeys.pub);
+    }
+    //if (db2.user().is) {
+    //  console.log("no auth");
+    //  console.log(db2.user().is);
+    //  putInChat();
+    //} else {
+
+    const userKeys = JSON.parse(sessionStorage.getItem("pair"));
+
+    db2.user().auth(userKeys, async () => {
+      putInChat(message, index);
+    });
+    //}
+  }
+
   async function sendMessage() {
     var channel = localStorage.getItem("channel") || "chat";
 
@@ -94,9 +177,10 @@
     );
     const message = user.get("all").set({ what: secret });
     const index = new Date().toISOString();
-    db.get("densewaire/" + channel)
-      .get(index)
-      .put(message);
+    getCert(message, index);
+    //db.get("densewaire/" + channel)
+    //  .get(index)
+    //  .put(message);
     newMessage = "";
     canAutoScroll = true;
     autoScroll();
@@ -109,12 +193,12 @@
       document.querySelector(".emoji__").innerHTML = "";
     }
     document
-      .querySelector("emoji-picker")
+      .querySelector(".emoji__")
       .addEventListener(
         "emoji-click",
         (event) =>
           (document.querySelector("#submit__area__main__").value +=
-            event.detail.unicode + " ")
+            event.detail.unicode)
       );
   }
 
@@ -128,17 +212,13 @@
     reader.onload = async function () {
       base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
 
-      var channel = localStorage.getItem("channel") || "chat";
-
       const _secret = await SEA.encrypt(
         "IMAGE=" + reader.result.toString(),
         localStorage.getItem("_secret") || "#foo"
       );
       const _message = user.get("all").set({ what: _secret });
       const _index = new Date().toISOString();
-      db.get("densewaire/" + channel)
-        .get(_index)
-        .put(_message);
+      getCert(_message, _index)
       newMessage = "";
       canAutoScroll = true;
       autoScroll();
@@ -146,7 +226,7 @@
     reader.readAsDataURL(file);
   }
 
-  async function record(action) {
+  async function record() {
     const Toast = Swal.mixin({
       toast: true,
       position: "bottom-end",
@@ -177,22 +257,19 @@
           var base64 = reader.result;
           console.log(base64);
 
-          var channel = localStorage.getItem("channel") || "chat";
           const __secret = await SEA.encrypt(
             "AUDIO=" + base64.toString(),
             localStorage.getItem("_secret") || "#foo"
           );
           const __message = user.get("all").set({ what: __secret });
           const __index = new Date().toISOString();
-          db.get("densewaire/" + channel)
-            .get(__index)
-            .put(__message);
+          getCert(__message, __index)
           newMessage = "";
           base64 = "";
           canAutoScroll = true;
           autoScroll();
         };
-        const audioUrl = URL.createObjectURL(audioBlob);
+        //const audioUrl = URL.createObjectURL(audioBlob);
       });
 
       setTimeout(() => {
