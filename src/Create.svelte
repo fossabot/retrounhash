@@ -32,7 +32,13 @@
                 room,
                 null,
                 {
-                    expiry: new Date(Date.now() + (3600 * 1000 * 24 * parseInt(document.querySelector("#date")))),
+                    expiry: new Date(
+                        Date.now() +
+                            3600 *
+                                1000 *
+                                24 *
+                                parseInt(document.querySelector("#date"))
+                    ),
                     //blacklist: "ban"
                 }
             );
@@ -47,7 +53,24 @@
             //  await db.user().get("certs").get("chat").get(userKeys.pub).then()
             //);
         });
+        addItem(localStorage.getItem("channel"));
+        location.href = "/";
     }
+
+    let items = JSON.parse(localStorage.getItem("items") || "[]");
+    function addItem(pub) {
+        items = [pub, ...items];
+    }
+
+    $: {
+        localStorage.setItem("items", JSON.stringify(items));
+    }
+
+    /*function remove(arr, item) {
+        for (var i = arr.length; i--; ) {
+            if (arr[i] === item) arr.splice(i, 1);
+        }
+    }*/
 </script>
 
 <MaterialApp>

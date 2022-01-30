@@ -6,6 +6,7 @@
   import Account from "./Account.svelte";
   import Settings from "./Settings.svelte";
   import Create from "./Create.svelte";
+  import Dash from "./Dash.svelte";
   import { user } from "./user";
 </script>
 
@@ -13,12 +14,16 @@
   <Route path="/">
     <Header />
     {#if user.is}
-      <Chat />
+      <Dash />
     {:else}
       <Main />
     {/if}
   </Route>
   <Route path="/chat">
+    <Header />
+    <Dash />
+  </Route>
+  <Route path="/room">
     <Header />
     <Chat />
   </Route>

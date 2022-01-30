@@ -1,5 +1,5 @@
 <script>
-  import { username, user } from "./user";
+  import { username, user, db } from "./user";
   import jq from "jquery";
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -19,9 +19,11 @@
     mdiShare,
     mdiLogout,
     mdiCog,
-    mdiExitRun,
+    mdiContentSave,
+    mdiEject,
   } from "@mdi/js";
   import Gun from "gun";
+  
 
   function signout() {
     CloseNav();
@@ -56,7 +58,7 @@
         window.location.protocol +
           "//" +
           window.location.hostname +
-          "/chat?c=" +
+          "/room?c=" +
           localStorage.getItem("channel") || "chat"
       )
       .select();
@@ -88,76 +90,31 @@
     });
   }*/
 
-  function roomGen() {
-    var secret_channel = Math.random().toString(36).substr(4, 10);
-    var sKEY = Math.random().toString(36).substr(4, 5);
-    jq("body").append('<input id="copyURL" type="text" value="" />');
-    jq("#copyURL")
-      .val(
-        window.location.protocol +
-          "//" +
-          window.location.hostname +
-          "/?c=" +
-          secret_channel +
-          "&s=" +
-          sKEY
-      )
-      .select();
-    document.execCommand("copy");
-    jq("#copyURL").remove();
-    CloseNav();
-    Swal.fire({
-      title: "Go there now ?",
-      text: "join the secret room ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes!",
-      cancelButtonText: "i will go later",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Toast.fire({
-          icon: "success",
-          title: "share the copied link with anyone to chat privately!",
-          timer: 4600,
-        }).then(() => {
-          location.href =
-            window.location.protocol +
-            "//" +
-            window.location.hostname +
-            "/chat?c=" +
-            secret_channel +
-            "&s=" +
-            sKEY;
-        });
-      } else {
-        Toast.fire({
-          title: "canceled",
-          timer: 1500,
-        });
-      }
-    });
-  }
-
   if (urlParams.has("c")) {
-    var channel = urlParams.get("c");
-    localStorage.setItem("channel", channel);
-    Toast.fire({
-      icon: "success",
-      title: "joined " + channel + "!",
-      timer: 3000,
-    });
-  } else {
-    var channel = localStorage.getItem("channel") || "chat";
+    async function greetAtEnter() {
+      var name = await db
+        .get(`~${urlParams.get("c")}`)
+        .get("info")
+        .get("profile")
+        .get("name")
+        .then();
+
+      localStorage.setItem("channel", urlParams.get("c"));
+      Toast.fire({
+        icon: "success",
+        title: "joined " + name + "!",
+        timer: 1000,
+      });
+    }
+    greetAtEnter();
   }
 
-  if (urlParams.has("s")) {
+  /*if (urlParams.has("s")) {
     var secretKey = urlParams.get("s");
     var current__secret = localStorage.getItem("_secret");
     localStorage.setItem("prev_secret", current__secret);
     localStorage.setItem("_secret", secretKey);
-  }
+  }*/
 
   /*if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
@@ -169,89 +126,6 @@
     });
   }*/
 
-  function leaveSecretRoom() {
-    CloseNav();
-    localStorage.setItem("_secret", "#foo");
-    localStorage.setItem("channel", "chat");
-    location.href = "/";
-  }
-
-  let deferredPrompt;
-
-  if (/\/chat(.*)/.test(location.pathname)) {
-    if (localStorage.getItem("dontShowPopupPwa") !== "true") {
-      window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        Swal.fire({
-          title: "Install as web app",
-          text:
-            "please install this site as a web app for the best experience!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Let's do it!",
-          cancelButtonText: "later",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Toast.fire({
-              icon: "success",
-              title: "Click install!",
-              timer: 1000,
-            }).then(() => {
-              deferredPrompt.prompt();
-              // Wait for the user to respond to the prompt
-              deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === "accepted") {
-                  Toast.fire({
-                    title: "Open the application for better experience!",
-                    timer: 3500,
-                  });
-                } else {
-                  Toast.fire({
-                    title: "This may result in poor performance!",
-                    timer: 3500,
-                  });
-                }
-              });
-            });
-          } else {
-            Toast.fire({
-              title: "This may result in poor performance!",
-              timer: 1500,
-            });
-          }
-        });
-      });
-    } else {
-      window.removeEventListener("beforeinstallprompt", (e) => {});
-    }
-  }
-
-  function installPwa() {
-    Toast.fire({
-      icon: "success",
-      title: "Click install!",
-      timer: 1000,
-    }).then(() => {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          Toast.fire({
-            title: "Open the application for better experience!",
-            timer: 3500,
-          });
-        } else {
-          Toast.fire({
-            title: "This may result in poor performance!",
-            timer: 3500,
-          });
-        }
-      });
-    });
-  }
-
   var NavActive = false;
 
   function ToogleNav() {
@@ -259,6 +133,14 @@
       NavActive = false;
     } else {
       NavActive = true;
+    }
+  }
+
+  function ToogleInfo() {
+    if (InfoState == true) {
+      InfoState = false;
+    } else {
+      InfoState = true;
     }
   }
 
@@ -275,16 +157,48 @@
   });
 
   async function computeName() {
-    var name = await Gun()
+    var name = await db
       .get(`~${localStorage.getItem("channel")}`)
       .get("info")
       .get("profile")
       .get("name")
       .then();
 
-    document.querySelector("#channelName").innerHTML = name;
+    document.querySelector("#channelName").innerHTML = " / " + name;
+    document.querySelector("#InfoRoomName").innerHTML = name;
   }
-  computeName();
+  if (/\/room(.*)/.test(location.pathname)) {
+    computeName();
+  }
+
+  let items = JSON.parse(localStorage.getItem("items") || "[]");
+  function addItem(pub) {
+    items = [...items, pub]; //{ name: name, pubKeyRoom: pub}];
+  }
+
+  $: {
+    localStorage.setItem("items", JSON.stringify(items));
+  }
+
+  function remove(arr, item) {
+    for (var i = arr.length; i--; ) {
+      if (arr[i] === item) arr.splice(i, 1);
+    }
+  }
+
+  let InfoState = false;
+
+  function JoinCurrentRoom() {
+    addItem(localStorage.getItem("channel"));
+  }
+
+  function LeaveCurrentRoom() {
+    remove(items, localStorage.getItem("channel"));
+  }
+
+  var joinRoomValidator = localStorage.getItem("items") || [];
+
+  var isChat = /\/room(.*)/.test(location.pathname);
 </script>
 
 <MaterialApp>
@@ -314,8 +228,13 @@
         {/if}
       </a>
       <div class="text-center h5">
-        densewaire / <span id="channelName">loading..</span>
+        densewaire<span id="channelName" />
       </div>
+      {#if isChat}
+        <button class="navbar-toggler" type="button" on:click={ToogleInfo}>
+          <i class="fas fa-info" />
+        </button>
+      {/if}
       <button
         class="navbar-toggler"
         type="button"
@@ -334,17 +253,15 @@
     bind:active={NavActive}
   >
     <List>
-      {#if urlParams.has("s")}
-        <div class="text-center">
-          <img
-            style="width: 100px !important;height: 100px;"
-            src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
-            alt="your avatar"
-          />
-        </div>
-        <ListItem on:click={leaveSecretRoom}
-          ><Icon path={mdiExitRun} /> Leave Secret Room</ListItem
-        >
+      {#if /\/room(.*)/.test(location.pathname)}
+        <div class="m-2 h3 text-center">Chats</div>
+        {#each items as item, i (item)}
+          <a href={`/room?c=${item}`}>
+            <ListItem>
+              {item}
+            </ListItem>
+          </a>
+        {/each}
       {:else}
         {#if !$username}
           <div class="text-center">
@@ -370,12 +287,6 @@
           <a href="/Create"
             ><ListItem><Icon path={mdiPlus} />Create A Room</ListItem></a
           >
-          <ListItem on:click={roomGen}
-            ><Icon path={mdiKey} /> Create Secret Room</ListItem
-          >
-          <ListItem on:click={share_link}
-            ><Icon path={mdiShare} /> Share Link</ListItem
-          >
           <ListItem on:click={signout}
             ><Icon path={mdiLogout} />Sign Out</ListItem
           >
@@ -383,6 +294,27 @@
             ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
           >
         {/if}
+      {/if}
+    </List>
+  </NavigationDrawer>
+  <NavigationDrawer
+    style="overflow: auto;height: 100%;position: fixed;z-index: 9999999999;"
+    absolute
+    bind:active={InfoState}
+  >
+    <List>
+      <div id="InfoRoomName" class="m-2 h3 text-center">loading..</div>
+      <ListItem on:click={share_link}
+        ><Icon path={mdiShare} /> Share Link</ListItem
+      >
+      {#if !joinRoomValidator.includes(localStorage.getItem("channel"))}
+        <ListItem id="JoinRoomButton" on:Click={JoinCurrentRoom}>
+          <Icon path={mdiContentSave} /> Join This Room
+        </ListItem>
+      {:else}
+        <ListItem id="LeaveRoomButton" on:click={LeaveCurrentRoom}>
+          <Icon path={mdiEject} /> Leave This Room
+        </ListItem>
       {/if}
     </List>
   </NavigationDrawer>

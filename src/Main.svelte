@@ -27,7 +27,7 @@
             the data of this application.
           </p>
           <Button>
-            <a class="chatLink" href="/chat"> Get Started </a>
+            <a href="/chat"> Get Started </a>
           </Button>
         </CardText>
       </Card>

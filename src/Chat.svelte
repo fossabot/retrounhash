@@ -1,5 +1,4 @@
 <script>
-  import Login from "./Login.svelte";
   import ChatMessage from "./ChatMessage.svelte";
   import { onMount } from "svelte";
   import { username, user } from "./user";
@@ -361,7 +360,7 @@
     </form>
   {:else}
     <main>
-      <Login />
+      please login :)
     </main>
   {/if}
 </div>
