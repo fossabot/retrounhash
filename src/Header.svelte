@@ -15,7 +15,6 @@
   import {
     mdiAccount,
     mdiPlus,
-    mdiKey,
     mdiShare,
     mdiLogout,
     mdiCog,
@@ -23,7 +22,13 @@
     mdiEject,
   } from "@mdi/js";
   import Gun from "gun";
-  
+
+  const db3 = new Gun({
+    peers: [
+      "https://gunjs.herokuapp.com/gun",
+      "https://gun--server.herokuapp.com/gun",
+    ],
+  });
 
   function signout() {
     CloseNav();
@@ -92,19 +97,19 @@
 
   if (urlParams.has("c")) {
     async function greetAtEnter() {
-      var name = await db
+      /*var name = await db3
         .get(`~${urlParams.get("c")}`)
         .get("info")
         .get("profile")
         .get("name")
-        .then();
+        .then();*/
 
       localStorage.setItem("channel", urlParams.get("c"));
-      Toast.fire({
+      /*Toast.fire({
         icon: "success",
         title: "joined " + name + "!",
         timer: 1000,
-      });
+      });*/
     }
     greetAtEnter();
   }
@@ -156,16 +161,16 @@
     CloseNav();
   });
 
-  async function computeName() {
-    var name = await db
-      .get(`~${localStorage.getItem("channel")}`)
-      .get("info")
-      .get("profile")
-      .get("name")
-      .then();
+  let NameOfTheRecentRoom;
 
-    document.querySelector("#channelName").innerHTML = " / " + name;
-    document.querySelector("#InfoRoomName").innerHTML = name;
+  async function computeName() {
+    NameOfTheRecentRoom = await db3.get(`~${localStorage.getItem("channel")}`).get("info").get("profile").get("name").then();
+
+    setTimeout(()=>{
+    document.querySelector("#channelName").innerHTML =
+      " / " + NameOfTheRecentRoom;
+    document.querySelector("#InfoRoomName").innerHTML = NameOfTheRecentRoom;
+    }, 1000)
   }
   if (/\/room(.*)/.test(location.pathname)) {
     computeName();
