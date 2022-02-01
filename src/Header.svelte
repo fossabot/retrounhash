@@ -157,6 +157,7 @@
 
   document.addEventListener("swiped-right", function (e) {
     NavActive = true;
+    
   });
 
   document.addEventListener("swiped-left", function () {
@@ -164,6 +165,7 @@
   });
 
   let NameOfTheRecentRoom;
+  let roomDescription;
 
   async function computeName() {
     NameOfTheRecentRoom = await db3
@@ -173,11 +175,30 @@
       .get("name")
       .then();
 
+    roomDescription = await db3
+      .get(`~${localStorage.getItem("channel")}`)
+      .get("info")
+      .get("profile")
+      .get("description")
+      .then();
+
+    roomImage = await db3
+      .get(`~${localStorage.getItem("channel")}`)
+      .get("info")
+      .get("profile")
+      .get("avatar")
+      .then();
+
     setTimeout(() => {
       document.querySelector("#channelName").innerHTML =
         " / " + NameOfTheRecentRoom;
-      document.querySelector("#InfoRoomName").innerHTML = NameOfTheRecentRoom;
-    }, 1000);
+      //document.querySelector("#InfoeRoomName").innerHTML = NameOfTheRecentRoom;
+      //document.querySelector("#InfoDescription").innerHTML = roomDescription;
+
+      roomNameText = NameOfTheRecentRoom;
+      roomDescriptionText = roomDescription;
+      document.querySelector("#roomImage").src = roomImage;
+    }, 2000);
   }
   if (/\/room(.*)/.test(location.pathname)) {
     computeName();
@@ -211,6 +232,11 @@
   var joinRoomValidator = localStorage.getItem("items") || [];
 
   var isChat = /\/room(.*)/.test(location.pathname);
+
+  // initialisation
+  let roomNameText;
+  let roomDescriptionText;
+  let roomImage;
 </script>
 
 <MaterialApp>
@@ -323,7 +349,23 @@
     bind:active={InfoState}
   >
     <List>
-      <div id="InfoRoomName" class="m-2 h3 text-center">loading..</div>
+      <div class="text-center">
+        <img
+          src=""
+          id="roomImage"
+          alt=""
+          style="width: 100px !important;border-radius: 5px;"
+          class="img-fluid"
+        />
+      </div>
+      <div id="InfoRoomName" class="m-2 h3 text-center">
+        {roomNameText || "not specified!"}
+      </div>
+      <hr />
+      <div class="m-2 h4">About:</div>
+      <div id="InfoDescription" class="m-2 h5">
+        {roomDescriptionText || "not specified !"}
+      </div>
       <ListItem on:click={share_link}
         ><Icon path={mdiShare} /> Share Link</ListItem
       >
