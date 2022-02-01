@@ -37,7 +37,7 @@
                             3600 *
                                 1000 *
                                 24 *
-                                parseInt(document.querySelector("#date"))
+                                parseInt(document.querySelector("#date")) || 1000000 //well, 
                     ),
                     //blacklist: "ban"
                 }
@@ -75,7 +75,7 @@
 
 <MaterialApp>
     <main>
-        <div class="display-2 m-2 text-center">Account</div>
+        <div class="h2 m-2 text-center">Manage Room</div>
         <Card class="m-2">
             <CardTitle>Create a chat room</CardTitle>
             <CardText>

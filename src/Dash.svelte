@@ -7,7 +7,9 @@
         ListItemGroup,
         ListItem,
         MaterialApp,
+        Icon,
     } from "svelte-materialify";
+    import { mdiChat } from "@mdi/js";
     import { user, username, db } from "./user.js";
 
     let items = JSON.parse(localStorage.getItem("items") || "[]");
@@ -36,7 +38,7 @@
                 data = _data;
             });
 
-            return data;
+        return data;
     }
 </script>
 
@@ -44,7 +46,10 @@
     <MaterialApp>
         <div class="display-2 m-2 text-center" />
         <Card class="m-2">
-            <CardTitle class="h2">Chats</CardTitle>
+            <CardTitle class="h2">
+                <Icon path={mdiChat} size="30px" />
+                Chats
+            </CardTitle>
             <CardText>
                 <ListItemGroup>
                     <div>

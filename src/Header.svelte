@@ -20,6 +20,8 @@
     mdiCog,
     mdiContentSave,
     mdiEject,
+    mdiInformation,
+    mdiLogin,
   } from "@mdi/js";
   import Gun from "gun";
 
@@ -164,13 +166,18 @@
   let NameOfTheRecentRoom;
 
   async function computeName() {
-    NameOfTheRecentRoom = await db3.get(`~${localStorage.getItem("channel")}`).get("info").get("profile").get("name").then();
+    NameOfTheRecentRoom = await db3
+      .get(`~${localStorage.getItem("channel")}`)
+      .get("info")
+      .get("profile")
+      .get("name")
+      .then();
 
-    setTimeout(()=>{
-    document.querySelector("#channelName").innerHTML =
-      " / " + NameOfTheRecentRoom;
-    document.querySelector("#InfoRoomName").innerHTML = NameOfTheRecentRoom;
-    }, 1000)
+    setTimeout(() => {
+      document.querySelector("#channelName").innerHTML =
+        " / " + NameOfTheRecentRoom;
+      document.querySelector("#InfoRoomName").innerHTML = NameOfTheRecentRoom;
+    }, 1000);
   }
   if (/\/room(.*)/.test(location.pathname)) {
     computeName();
@@ -271,12 +278,17 @@
         {#if !$username}
           <div class="text-center">
             <img
-              width="width: 100px !important; height: 100px;"
+              style="width: 100px !important;"
+              class="img-fluid"
               src="/favicon.ico"
-              alt=""
+              alt="site logo"
             />
           </div>
-          <a href="/chat"><ListItem>Login</ListItem></a>
+          <a href="/chat"><ListItem><Icon path={mdiLogin} /> Login</ListItem></a
+          >
+          <a href="/About"
+            ><ListItem><Icon path={mdiInformation} /> About</ListItem></a
+          >
         {/if}
         {#if $username}
           <div class="text-center">
@@ -292,11 +304,14 @@
           <a href="/Create"
             ><ListItem><Icon path={mdiPlus} />Create A Room</ListItem></a
           >
+          <a href="/Settings"
+            ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
+          >
           <ListItem on:click={signout}
             ><Icon path={mdiLogout} />Sign Out</ListItem
           >
-          <a href="/Settings"
-            ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
+          <a href="/About"
+            ><ListItem><Icon path={mdiInformation} /> About</ListItem></a
           >
         {/if}
       {/if}

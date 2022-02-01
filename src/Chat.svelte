@@ -4,6 +4,16 @@
   import { username, user } from "./user";
   import debounce from "lodash.debounce";
   import "emoji-picker-element";
+  import { Icon } from "svelte-materialify";
+
+  import {
+    mdiArrowDownCircleOutline,
+    mdiEmoticonWinkOutline,
+    mdiImageOutline,
+    mdiMicrophoneOutline,
+    mdiSendOutline,
+  } from "@mdi/js";
+
   import GUN from "gun";
   import Gun from "gun";
   const peers = [
@@ -61,7 +71,7 @@
     db2
       .get(`~${key}`)
       .get("chat")
-      .map()//match)
+      .map() //match)
       .once(async (data, id) => {
         if (data) {
           // Key for end-to-end encryption
@@ -92,9 +102,9 @@
   });
 
   async function setCert(permission, pass) {
-    permission = '*';
-    pass = '1234';
-    const room = localStorage.getItem("channel") || await SEA.pair();
+    permission = "*";
+    pass = "1234";
+    const room = localStorage.getItem("channel") || (await SEA.pair());
     localStorage.setItem("channel", room.pub);
     console.log(room.pub);
     db1.user().auth(room, async (dat) => {
@@ -139,7 +149,7 @@
         .on((data) => {
           console.log(data);
         });*/
-        
+
       db2
         .get(`~${key}`)
         .get("chat")
@@ -217,7 +227,7 @@
       );
       const _message = user.get("all").set({ what: _secret });
       const _index = new Date().toISOString();
-      getCert(_message, _index)
+      getCert(_message, _index);
       newMessage = "";
       canAutoScroll = true;
       autoScroll();
@@ -262,7 +272,7 @@
           );
           const __message = user.get("all").set({ what: __secret });
           const __index = new Date().toISOString();
-          getCert(__message, __index)
+          getCert(__message, __index);
           newMessage = "";
           base64 = "";
           canAutoScroll = true;
@@ -308,16 +318,27 @@
             class="input-group-text"
             style="height: 38px;"
             id="emoji_add"
-            on:click={emoji}><i class="fas fa-laugh-wink fa-lg" /></span
+            on:click={emoji}
           >
+            <Icon path={mdiEmoticonWinkOutline} />
+            <!--i class="fas fa-laugh-wink fa-lg" /-->
+          </span>
           <span
             class="input-group-text"
             style="height: 38px;"
             id="record"
-            on:click={record}><i class="fas fa-microphone-alt fa-lg" /></span
+            on:click={record}
           >
-          <label for="file-upload" class="custom-file-upload input-group-text">
-            <i class="fas fa-image fa-lg" />
+            <Icon path={mdiMicrophoneOutline} />
+            <!--i class="fas fa-microphone-alt fa-lg" /-->
+          </span>
+          <label
+            style="height: 38px;"
+            for="file-upload"
+            class="custom-file-upload input-group-text"
+          >
+            <Icon path={mdiImageOutline} />
+            <!--i class="fas fa-image fa-lg" /-->
           </label>
           <input
             type="file"
@@ -344,7 +365,8 @@
               class="btn input-group-text"
               on:click={autoScroll}
             >
-              <i class="fas fa-angle-down fa-lg" />
+              <Icon path={mdiArrowDownCircleOutline} />
+              <!--i class="fas fa-angle-down fa-lg" /-->
             </button>
           {/if}
           <button
@@ -353,14 +375,13 @@
             class="btn input-group-text"
             disabled={!newMessage}
           >
-            <i class="fas fa-angle-double-right fa-2x" />
+            <Icon path={mdiSendOutline} />
+            <!--i class="fas fa-angle-double-right fa-2x" /-->
           </button>
         </div>
       </div>
     </form>
   {:else}
-    <main>
-      please login :)
-    </main>
+    <main>please login :)</main>
   {/if}
 </div>

@@ -7,6 +7,7 @@
   import Settings from "./Settings.svelte";
   import Create from "./Create.svelte";
   import Dash from "./Dash.svelte";
+  import About from "./About.svelte";
   import { user } from "./user";
 </script>
 
@@ -38,5 +39,9 @@
   <Route path="/Create">
     <Header />
     <Create />
+  </Route>
+  <Route path="/About">
+    <Header />
+    <About />
   </Route>
 </div>
