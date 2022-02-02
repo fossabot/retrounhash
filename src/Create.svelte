@@ -7,13 +7,9 @@
         CardTitle,
         TextField,
         Button,
-        Icon,
         MaterialApp,
         Textarea,
     } from "svelte-materialify";
-
-    import { mdiImageOutline } from "@mdi/js";
-
     import { user, username } from "./user.js";
 
     const db = new Gun({
@@ -121,11 +117,11 @@
         var file = document.querySelector("#avatar-chooser").files[0];
 
         var reader = new FileReader();
-        console.log("next");
         reader.onload = async function () {
-            base64String = reader.result
-                //.replace("data:", "")
-                //.replace(/^.+,/, "");
+            base64String = reader.result;
+            //.replace("data:", "")
+            //.replace(/^.+,/, "");
+            document.getElementById("avatarDisplay").src = base64String;
         };
         reader.readAsDataURL(file);
     }
@@ -140,10 +136,18 @@
                 Make a chat room where you are the moderator.
                 <br />
                 <br />
-                <label style="height: 38px;" for="avatar-chooser">
-                    <Icon size="50px" path={mdiImageOutline} />
-                    <!--i class="fas fa-image fa-lg" /-->
-                </label>
+                <div class="text-center">
+                    <label for="avatar-chooser">
+                        <img
+                            style="border-radius: 5px;width: 100px !important;height: 100px;"
+                            id="avatarDisplay"
+                            src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
+                            alt="choose your avatar"
+                        />
+                        <br />
+                        Choose The Pic For your Room
+                    </label>
+                </div>
                 <input
                     type="file"
                     name="avatar-chooser"
@@ -158,8 +162,9 @@
                     counter="30"
                     maxLength="30"
                     minLength="3"
+                    placeholder={`${$username}'s space`}
                 >
-                    {$username}'s space
+                    Name Of The Room 
                 </TextField>
                 <Textarea
                     id="description"

@@ -8,7 +8,7 @@
     NavigationDrawer,
     List,
     ListItem,
-    Button,
+    Divider,
     Icon,
     MaterialApp,
   } from "svelte-materialify";
@@ -157,7 +157,6 @@
 
   document.addEventListener("swiped-right", function (e) {
     NavActive = true;
-    
   });
 
   document.addEventListener("swiped-left", function () {
@@ -361,7 +360,7 @@
       <div id="InfoRoomName" class="m-2 h3 text-center">
         {roomNameText || "not specified!"}
       </div>
-      <hr />
+      <Divider />
       <div class="m-2 h4">About:</div>
       <div id="InfoDescription" class="m-2 h5">
         {roomDescriptionText || "not specified !"}
