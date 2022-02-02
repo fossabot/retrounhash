@@ -211,7 +211,7 @@
   let base64String = "";
 
   async function imageUploaded() {
-    var file = document.querySelector("input[type=file]")["files"][0];
+    var file = document.querySelector("#image-send-picker")["files"][0];
 
     var reader = new FileReader();
     reader.onload = async function () {
@@ -329,7 +329,7 @@
           </span>
           <label
             style="height: 38px;"
-            for="file-upload"
+            for="image-send-picker"
             class="custom-file-upload input-group-text"
           >
             <Icon path={mdiImageOutline} />
@@ -338,7 +338,7 @@
           <input
             type="file"
             name=""
-            id="file-upload"
+            id="image-send-picker"
             on:change={imageUploaded}
             accept="image/*"
           />

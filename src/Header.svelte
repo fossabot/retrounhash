@@ -23,8 +23,8 @@
     mdiEject,
     mdiInformation,
     mdiLogin,
-mdiMenu,
-mdiInformationOutline,
+    mdiMenu,
+    mdiInformationOutline,
   } from "@mdi/js";
   import Gun from "gun";
 
@@ -241,6 +241,52 @@ mdiInformationOutline,
   let roomNameText;
   let roomDescriptionText;
   let roomImage;
+  let changedImage;
+
+  function imageUploaded() {
+    var file = document.querySelector("#avatar-changer").files[0];
+    var _reader = new FileReader();
+    _reader.onload = async function () {
+      changedImage = _reader.result;
+
+      try {
+        await db
+          .get(`~${localStorage.getItem("channel")}`)
+          .get("host")
+          .get("key")
+          .then(async (keyPair) => {
+            const keys = await SEA.decrypt(
+              keyPair,
+              JSON.parse(sessionStorage.getItem("pair")).priv
+            );
+            console.log(keys);
+            db.user().auth(keys, async () => {
+              await db
+                .user()
+                .get("info")
+                .get("profile")
+                .get("avatar")
+                .put(changedImage)
+                .then(() => {
+                  changedImage = "";
+                  Swal.fire({
+                    icon: "success",
+                    title: "done! 🎉",
+                    text: "successfully updated icon",
+                  });
+                });
+            });
+          });
+      } catch (e) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: e,
+        });
+      }
+    };
+    _reader.readAsDataURL(file);
+  }
 </script>
 
 <MaterialApp>
@@ -354,12 +400,21 @@ mdiInformationOutline,
   >
     <List>
       <div class="text-center">
-        <img
-          src=""
-          id="roomImage"
-          alt=""
-          style="object-fit: cover;width: 100px !important;height: 100px !important;border-radius: 5px;"
-          class="img-fluid"
+        <label for="avatar-changer">
+          <img
+            src=""
+            id="roomImage"
+            alt=""
+            style="object-fit: cover;width: 100px !important;height: 100px !important;border-radius: 5px;"
+            class="img-fluid"
+          />
+        </label>
+        <input
+          type="file"
+          name="avatar-changer"
+          id="avatar-changer"
+          on:change={imageUploaded}
+          accept="image/*"
         />
       </div>
       <div id="InfoRoomName" class="m-2 h3 text-center">
