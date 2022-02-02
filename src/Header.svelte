@@ -12,6 +12,7 @@
     Icon,
     MaterialApp,
   } from "svelte-materialify";
+
   import {
     mdiAccount,
     mdiPlus,
@@ -22,6 +23,8 @@
     mdiEject,
     mdiInformation,
     mdiLogin,
+mdiMenu,
+mdiInformationOutline,
   } from "@mdi/js";
   import Gun from "gun";
 
@@ -271,7 +274,7 @@
       </div>
       {#if isChat}
         <button class="navbar-toggler" type="button" on:click={ToogleInfo}>
-          <i class="fas fa-info" />
+          <Icon path={mdiInformationOutline} />
         </button>
       {/if}
       <button
@@ -280,7 +283,7 @@
         aria-label="Toggle navigation"
         on:click={ToogleNav}
       >
-        <i class="fas fa-ellipsis-v" />
+        <Icon path={mdiMenu} />
       </button>
     </div>
   </nav>

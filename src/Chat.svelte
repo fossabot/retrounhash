@@ -1,7 +1,7 @@
 <script>
   import ChatMessage from "./ChatMessage.svelte";
   import { onMount } from "svelte";
-  import Login from "./Login svelte";
+  import Login from "./Login.svelte";
   import { username, user } from "./user";
   import debounce from "lodash.debounce";
   import "emoji-picker-element";
