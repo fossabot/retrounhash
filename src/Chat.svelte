@@ -1,6 +1,7 @@
 <script>
   import ChatMessage from "./ChatMessage.svelte";
   import { onMount } from "svelte";
+  import Login from "./Login svelte";
   import { username, user } from "./user";
   import debounce from "lodash.debounce";
   import "emoji-picker-element";
@@ -156,12 +157,10 @@
         .get(index) //${userKeys.pub}`)
         .put(
           message || "no message specified",
-          (ack) => {
-            console.log("callback: " + JSON.stringify(ack));
-          },
+          null,
           { opt: { cert: certificate } }
         );
-      console.log("pub key" + userKeys.pub);
+      //console.log("pub key" + userKeys.pub);
     }
     //if (db2.user().is) {
     //  console.log("no auth");
@@ -178,8 +177,6 @@
   }
 
   async function sendMessage() {
-    var channel = localStorage.getItem("channel") || "chat";
-
     const secret = await SEA.encrypt(
       newMessage.toString(),
       localStorage.getItem("_secret") || "#foo"
@@ -217,7 +214,6 @@
     var file = document.querySelector("input[type=file]")["files"][0];
 
     var reader = new FileReader();
-    console.log("next");
     reader.onload = async function () {
       base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
 
@@ -264,7 +260,6 @@
         reader.readAsDataURL(audioBlob);
         reader.onloadend = async function () {
           var base64 = reader.result;
-          console.log(base64);
 
           const __secret = await SEA.encrypt(
             "AUDIO=" + base64.toString(),
@@ -382,6 +377,8 @@
       </div>
     </form>
   {:else}
-    <main>please login :)</main>
+    <main>
+      <Login />
+    </main>
   {/if}
 </div>

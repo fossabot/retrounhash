@@ -50,49 +50,49 @@
                 .get("chat")
                 .get("certificate")
                 .put(cert)
-                .then(() => {
-                    console.log("dane1");
-                });
-
-            await db
-                .user()
-                .get("info")
-                .get("profile")
-                .get("name")
-                .put(document.querySelector("#roomName").value)
-                .then(() => {
-                    console.log("done");
-                });
-
-            await db
-                .user()
-                .get("info")
-                .get("profile")
-                .get("description")
-                .put(document.querySelector("#description").value)
-                .then(() => {
-                    console.log("dooone !");
-                });
-
-            await db
-                .user()
-                .user()
-                .get("info")
-                .get("profile")
-                .get("avatar")
-                .put(base64String)
-                .then(() => {
-                    console.log("avatar uploaded");
+                .then(async () => {
+                    console.log("certificate uploaded")
+                    await db
+                        .user()
+                        .get("info")
+                        .get("profile")
+                        .get("name")
+                        .put(document.querySelector("#roomName").value)
+                        .then(async () => {
+                            console.log("name added")
+                            await db
+                                .user()
+                                .get("info")
+                                .get("profile")
+                                .get("description")
+                                .put(
+                                    document.querySelector("#description").value
+                                )
+                                .then(async () => {
+                                    console.log("description added")
+                                    await db
+                                        .user()
+                                        .user()
+                                        .get("info")
+                                        .get("profile")
+                                        .get("avatar")
+                                        .put(base64String)
+                                        .then(() => {
+                                            base64String = "";
+                                            console.log("avatar uploaded");
+                                            addItem(
+                                                localStorage.getItem("channel")
+                                            );
+                                            location.href = "/";
+                                        });
+                                });
+                        });
                 });
 
             //console.log(
             //  await db.user().get("certs").get("chat").get(userKeys.pub).then()
             //);
         });
-        setTimeout(() => {
-            addItem(localStorage.getItem("channel"));
-            location.href = "/";
-        }, 3000);
     }
 
     let items = JSON.parse(localStorage.getItem("items") || "[]");
@@ -139,7 +139,7 @@
                 <div class="text-center">
                     <label for="avatar-chooser">
                         <img
-                            style="border-radius: 5px;width: 100px !important;height: 100px;"
+                            style="border-radius: 5px;width: 100px !important;height: 100px;object-fit: cover;"
                             id="avatarDisplay"
                             src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
                             alt="choose your avatar"
@@ -164,7 +164,7 @@
                     minLength="3"
                     placeholder={`${$username}'s space`}
                 >
-                    Name Of The Room 
+                    Name Of The Room
                 </TextField>
                 <Textarea
                     id="description"

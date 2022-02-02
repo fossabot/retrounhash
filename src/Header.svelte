@@ -159,7 +159,8 @@
     NavActive = true;
   });
 
-  document.addEventListener("swiped-left", function () {
+  document.addEventListener("swiped-left", function (e) {
+    InfoState = false;
     CloseNav();
   });
 
@@ -197,6 +198,7 @@
       roomNameText = NameOfTheRecentRoom;
       roomDescriptionText = roomDescription;
       document.querySelector("#roomImage").src = roomImage;
+      roomImage = "";
     }, 2000);
   }
   if (/\/room(.*)/.test(location.pathname)) {
@@ -353,7 +355,7 @@
           src=""
           id="roomImage"
           alt=""
-          style="width: 100px !important;border-radius: 5px;"
+          style="object-fit: cover;width: 100px !important;height: 100px !important;border-radius: 5px;"
           class="img-fluid"
         />
       </div>
