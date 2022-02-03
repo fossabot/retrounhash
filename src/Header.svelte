@@ -286,7 +286,7 @@
                 .get("info")
                 .get("profile")
                 .get("avatar")
-                .put(downscaleImage(changedImage, 400))
+                .put(changedImage)
                 .then(() => {
                   changedImage = "";
                   Swal.fire({
