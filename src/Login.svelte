@@ -2,7 +2,9 @@
   import { user } from './user';
   import {
     Button,
-    TextField
+    TextField,
+    Icon, 
+    MaterialApp
   } from 'svelte-materialify'
   
   let username;
@@ -40,7 +42,7 @@
     });
   }
 </script>
-
+<MaterialApp>
 <div class="container blur" style="padding: 20px;">
   <div class="form m-3 p-2 ">
     <div class="mb-3">
@@ -67,7 +69,11 @@
        Password
     </TextField>
     </div>
+    <Alert class="primary-text" text border="left">
+      By signing up or login in you agree to our <a href="/termsOfUse.html">terms of service</a>
+    </Alert>
     <Button on:click={login}>Login</Button>
     <Button on:click={signup}>Sign Up</Button>
   </div>
 </div>
+</MaterialApp>
