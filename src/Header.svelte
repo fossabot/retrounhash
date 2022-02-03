@@ -1,6 +1,9 @@
 <script>
   import { username, user, db } from "./user";
   import jq from "jquery";
+  import {
+    downscaleImage
+  } from "./utils"
 
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -27,12 +30,15 @@
     mdiInformationOutline,
   } from "@mdi/js";
   import Gun from "gun";
+  import "gun/lib/rindexed";
+  import { writable } from "svelte/store";
 
   const db3 = new Gun({
     peers: [
       "https://gunjs.herokuapp.com/gun",
       "https://gun--server.herokuapp.com/gun",
     ],
+    localStorage: false,
   });
 
   function signout() {
@@ -169,68 +175,82 @@
 
   let NameOfTheRecentRoom;
   let roomDescription;
+  let roomName;
 
-  async function computeName() {
-    NameOfTheRecentRoom = await db3
-      .get(`~${localStorage.getItem("channel")}`)
-      .get("info")
-      .get("profile")
-      .get("name")
-      .then();
+  //async function computeName() {
+  db3
+    .get(`~${localStorage.getItem("channel")}`)
+    .get("info")
+    .get("profile")
+    .get("name")
+    .on(async (data) => {
+      roomName = data;
+      if (/\/room(.*)/.test(location.pathname)) {
+        document.querySelector("#channelName").innerHTML = " / " + data;
+      }
+    });
 
-    roomDescription = await db3
-      .get(`~${localStorage.getItem("channel")}`)
-      .get("info")
-      .get("profile")
-      .get("description")
-      .then();
+  db3
+    .get(`~${localStorage.getItem("channel")}`)
+    .get("info")
+    .get("profile")
+    .get("description")
+    .on(async (data) => {
+      roomDescription = data;
+    });
 
-    roomImage = await db3
-      .get(`~${localStorage.getItem("channel")}`)
-      .get("info")
-      .get("profile")
-      .get("avatar")
-      .then();
+  db3
+    .get(`~${localStorage.getItem("channel")}`)
+    .get("info")
+    .get("profile")
+    .get("avatar")
+    .on(async (data) => {
+      document.querySelector("#roomImage").src =
+        data ||
+        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    });
 
-    setTimeout(() => {
+  /*setTimeout(() => {
       document.querySelector("#channelName").innerHTML =
         " / " + NameOfTheRecentRoom;
       //document.querySelector("#InfoeRoomName").innerHTML = NameOfTheRecentRoom;
       //document.querySelector("#InfoDescription").innerHTML = roomDescription;
 
       roomNameText = NameOfTheRecentRoom;
-      roomDescriptionText = roomDescription;
-      document.querySelector("#roomImage").src = roomImage;
+      //roomDescriptionText = roomDescription;
+      //document.querySelector("#roomImage").src = roomImage;
       roomImage = "";
-    }, 2000);
-  }
-  if (/\/room(.*)/.test(location.pathname)) {
-    computeName();
-  }
+    }, 2000);*/
+  //}
 
   let items = JSON.parse(localStorage.getItem("items") || "[]");
   function addItem(pub) {
-    items = [...items, pub]; //{ name: name, pubKeyRoom: pub}];
+    items.push(pub); //{ name: name, pubKeyRoom: pub}]
+    //localStorage.setItem("items", JSON.stringify(items))
   }
 
   $: {
     localStorage.setItem("items", JSON.stringify(items));
   }
 
-  function remove(arr, item) {
-    for (var i = arr.length; i--; ) {
-      if (arr[i] === item) arr.splice(i, 1);
+  function remove(value) {
+    var index = items.indexOf(value);
+    if (index > -1) {
+      items.splice(index, 1);
     }
+    localStorage.setItem("items", JSON.stringify(items));
   }
 
   let InfoState = false;
 
   function JoinCurrentRoom() {
     addItem(localStorage.getItem("channel"));
+    isJoinedRoom.set(true);
   }
 
   function LeaveCurrentRoom() {
-    remove(items, localStorage.getItem("channel"));
+    remove(localStorage.getItem("channel"));
+    isJoinedRoom.set(false);
   }
 
   var joinRoomValidator = localStorage.getItem("items") || [];
@@ -250,7 +270,7 @@
       changedImage = _reader.result;
 
       try {
-        await db
+        await db3
           .get(`~${localStorage.getItem("channel")}`)
           .get("host")
           .get("key")
@@ -260,13 +280,13 @@
               JSON.parse(sessionStorage.getItem("pair")).priv
             );
             console.log(keys);
-            db.user().auth(keys, async () => {
-              await db
+            db3.user().auth(keys, async () => {
+              await db3
                 .user()
                 .get("info")
                 .get("profile")
                 .get("avatar")
-                .put(changedImage)
+                .put(downscaleImage(changedImage, 200))
                 .then(() => {
                   changedImage = "";
                   Swal.fire({
@@ -287,6 +307,10 @@
     };
     _reader.readAsDataURL(file);
   }
+
+  const isJoinedRoom = writable(
+    joinRoomValidator.includes(localStorage.getItem("channel"))
+  );
 </script>
 
 <MaterialApp>
@@ -414,21 +438,21 @@
           name="avatar-changer"
           id="avatar-changer"
           on:change={imageUploaded}
-          accept="image/*"
+          accept="image/jpeg"
         />
       </div>
       <div id="InfoRoomName" class="m-2 h3 text-center">
-        {roomNameText || "not specified!"}
+        {roomName || "not specified!"}
       </div>
       <Divider />
       <div class="m-2 h4">About:</div>
       <div id="InfoDescription" class="m-2 h5">
-        {roomDescriptionText || "not specified !"}
+        {roomDescription || "not specified !"}
       </div>
       <ListItem on:click={share_link}
         ><Icon path={mdiShare} /> Share Link</ListItem
       >
-      {#if !joinRoomValidator.includes(localStorage.getItem("channel"))}
+      {#if !$isJoinedRoom}
         <ListItem id="JoinRoomButton" on:Click={JoinCurrentRoom}>
           <Icon path={mdiContentSave} /> Join This Room
         </ListItem>

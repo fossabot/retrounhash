@@ -7,10 +7,15 @@
   import "emoji-picker-element";
   import { Icon } from "svelte-materialify";
 
+  import "gun/lib/radisk";
+  import "gun/lib/radix";
+  import "gun/lib/rindexed";
+
   import {
     mdiArrowDownCircleOutline,
     mdiEmoticonWinkOutline,
-    mdiImageOutline,
+mdiFormatListText,
+        mdiImageOutline,
     mdiMicrophoneOutline,
     mdiSendOutline,
   } from "@mdi/js";
@@ -21,9 +26,27 @@
     "https://gunjs.herokuapp.com/gun",
     "https://gun--server.herokuapp.com/gun",
   ];
-  const db = new Gun({ peers });
-  const db1 = new Gun({ peers });
-  const db2 = new Gun({ peers });
+  const db = new Gun({
+    peers: peers,
+    radisk: true,
+    axe: true,
+    rindexed: true,
+    localStorage: false 
+  });
+  const db1 = new Gun({
+    peers: peers,
+    radisk: true,
+    axe: true,
+    rindexed: true,
+    localStorage: false 
+  });
+  const db2 = new Gun({
+    peers: peers,
+    radisk: true,
+    axe: true,
+    rindexed: true,
+    localStorage: false 
+  });
 
   import { ProgressLinear } from "svelte-materialify";
 
@@ -155,11 +178,9 @@
         .get(`~${key}`)
         .get("chat")
         .get(index) //${userKeys.pub}`)
-        .put(
-          message || "no message specified",
-          null,
-          { opt: { cert: certificate } }
-        );
+        .put(message || "no message specified", null, {
+          opt: { cert: certificate },
+        });
       //console.log("pub key" + userKeys.pub);
     }
     //if (db2.user().is) {

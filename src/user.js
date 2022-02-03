@@ -1,10 +1,10 @@
 import GUN from 'gun';
 import 'gun/sea';
 
-//import 'gun/lib/radisk2';
-//import 'gun/lib/radix2';
+import 'gun/lib/radisk';
+import "gun/lib/rindexed";
+import 'gun/lib/radix';
 
-import 'gun/axe';
 import { writable } from 'svelte/store';
 
 // Database
@@ -13,7 +13,11 @@ const peers = [
     "https://gun--server.herokuapp.com/gun",
 ];
 export const db = GUN(
-//    {peers}
+    {
+        peers: peers,
+        rindexed: true,
+        localStorage: false
+    }
 );
 
 // Gun User

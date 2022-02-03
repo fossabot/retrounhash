@@ -1,6 +1,14 @@
 <script>
     import Gun from "gun";
     import {
+        downscaleImage
+    } from "./utils"
+    import "gun/lib/rindexed";
+    import "gun/sea";
+    import "gun/lib/radisk";
+    import "gun/lib/radix";
+
+    import {
         Card,
         CardText,
         CardActions,
@@ -17,7 +25,12 @@
             "https://gunjs.herokuapp.com/gun",
             "https://gun--server.herokuapp.com/gun",
         ],
+        axe: true,
+        rindexed: true,
+        radisk: true,
+        localStorage: false,
     });
+
     async function createRoom() {
         const room = await SEA.pair();
         localStorage.setItem("channel", room.pub);
@@ -51,7 +64,7 @@
                 .get("certificate")
                 .put(cert)
                 .then(async () => {
-                    console.log("certificate uploaded")
+                    console.log("certificate uploaded");
                     await db
                         .user()
                         .get("info")
@@ -59,7 +72,7 @@
                         .get("name")
                         .put(document.querySelector("#roomName").value)
                         .then(async () => {
-                            console.log("name added")
+                            console.log("name added");
                             await db
                                 .user()
                                 .get("info")
@@ -69,14 +82,13 @@
                                     document.querySelector("#description").value
                                 )
                                 .then(async () => {
-                                    console.log("description added")
+                                    console.log("description added");
                                     await db
-                                        .user()
                                         .user()
                                         .get("info")
                                         .get("profile")
                                         .get("avatar")
-                                        .put(base64String)
+                                        .put(downscaleImage(base64String, 200))
                                         .then(() => {
                                             base64String = "";
                                             console.log("avatar uploaded");
@@ -153,7 +165,7 @@
                     name="avatar-chooser"
                     id="avatar-chooser"
                     on:change={imageUploaded}
-                    accept="image/*"
+                    accept="image/jpeg"
                 />
                 <br /><br />
                 <TextField
