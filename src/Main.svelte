@@ -4,6 +4,7 @@
     Card,
     CardText,
     Button,
+    CardActions,
     MaterialApp,
   } from "svelte-materialify";
 </script>
@@ -26,10 +27,12 @@
             Your data in your hands. Synced among peers in real time. No one own
             the data of this application.
           </p>
-          <Button>
-            <a href="/chat"> Get Started </a>
-          </Button>
         </CardText>
+        <CardActions>
+          <a href="/chat">
+            <Button>Get Started</Button>
+          </a>
+        </CardActions>
       </Card>
 
       <Card outlined style="max-width:300px;margin: .6rem;">
@@ -49,7 +52,6 @@
       </Card>
 
       <Card outlined style="max-width:300px;margin: .6rem;">
-        <!-- svelte-ignore a11y-img-redundant-alt -->
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
@@ -85,15 +87,23 @@
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
-          src="https://img.search.brave.com/AiC2YO0DTyHD9Pq4YWQjl3Bmgt-weNxjVvBVfsTFrqM/fit/600/523/ce/1/aHR0cDovL3d3dy5w/bmdhbGwuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE2LzA2/L0NlbnNvcmVkLVN0/YW1wLnBuZw"
+          src="https://opensource.org/files/osi_symbol_0.png"
           alt=""
         />
         <div>
-          <CardTitle>No Censorship</CardTitle>
+          <CardTitle>Open Source</CardTitle>
           <CardText>
-            As the application is managed by the users, Censorship is only
-            possible if more than half or people agree on it.
+            The soutce code of this website is open to everyone! Protected by
+            the GNU GPLv3.0. everyone is free to modify and distribute the
+            software under certian conditions.
           </CardText>
+          <CardActions>
+            <Button>
+              <a href="//github.com/atordvairn/retrounhash">
+                See Source On GitHub
+              </a>
+            </Button>
+          </CardActions>
         </div>
       </Card>
 
@@ -105,17 +115,18 @@
           alt="Card ime cap"
         />
         <div>
-          <CardTitle>Markdown Supporte</CardTitle>
+          <CardTitle>Markdown Supported</CardTitle>
           <CardText>
             Write formatted text as you write in any other application! *bold*
             _itallic_ `code`
+          </CardText>
+          <CardActions>
             <Button>
               <a href="https://markdownguide.org/basic-syntax/">
-                Markdown guide
+                Markdown Guide
               </a>
             </Button>
-            <br />
-          </CardText>
+          </CardActions>
         </div>
       </Card>
     </div>
@@ -123,12 +134,12 @@
       <img alt="" class="img-fluid" src="Allura - Staying Home.png" />
     </div>
     <div class="text-center p-3">
-      <Button>
-        <a href="/chat"> Login Or Register </a>
-      </Button>
+      <a href="/chat">
+        <Button>Login Or Register</Button>
+      </a>
     </div>
-    <div class="text-center" style="padding: 20px;margin: 10px;">
-      <div class="h4" style="color: white;">
+    <div class="text-center footer" style="padding: 20px;margin: 10px;">
+      <div class="h5" style="color: white;">
         <i class="far fa-copyright" /> retrounhash 2022
       </div>
     </div>

@@ -7,7 +7,6 @@
         CardTitle,
         Button,
         Switch,
-        Dialog,
         MaterialApp,
     } from "svelte-materialify";
     import { user, username } from "./user.js";
@@ -35,7 +34,7 @@
         <Card class="m-2">
             <CardTitle>Show autoscroll?</CardTitle>
             <CardText>
-                the autoscroll button apears next ti the send button and help in
+                the autoscroll button apears next to the send button and help in
                 going down the message list quickly.
             </CardText>
             <CardActions>
