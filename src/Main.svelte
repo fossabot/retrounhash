@@ -129,7 +129,7 @@
     </div>
     <div class="text-center" style="padding: 20px;margin: 10px;">
       <div class="h4" style="color: white;">
-        <i class="far fa-copyright" /> densewaire 2022
+        <i class="far fa-copyright" /> retrounhash 2022
       </div>
     </div>
   </main>

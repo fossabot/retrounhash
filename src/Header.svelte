@@ -340,7 +340,7 @@
         {/if}
       </a>
       <div class="text-center h5">
-        densewaire<span id="channelName" />
+        retrounhash<span id="channelName" />
       </div>
       {#if isChat}
         <button class="navbar-toggler" type="button" on:click={ToogleInfo}>

@@ -1,5 +1,5 @@
 self.addEventListener('install', function (event) {
-  var CACHE_NAME = 'densewaire__cache-v2-0-2';
+  var CACHE_NAME = 'retrounhash__cache-v2-0-2';
   var urlsToCache = [
     '/',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',

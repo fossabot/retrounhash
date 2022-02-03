@@ -205,7 +205,7 @@ mdiFormatListText,
     const message = user.get("all").set({ what: secret });
     const index = new Date().toISOString();
     getCert(message, index);
-    //db.get("densewaire/" + channel)
+    //db.get("retrounhash/" + channel)
     //  .get(index)
     //  .put(message);
     newMessage = "";
