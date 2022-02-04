@@ -28,13 +28,13 @@
     }
 
     let data;
-    function returnNull(pubb) {
-        db.get(`~${pubb}`)
+    async function returnNull(pubb) {
+        await db
+            .get(`~${pubb}`)
             .get("info")
             .get("profile")
             .get("name")
-            .once((_data) => {
-                console.log(_data);
+            .then(async (_data) => {
                 data = _data;
             });
 
@@ -66,11 +66,15 @@
                             </div>
                         {/if}
                         {#each items as item, i (item)}
-                            <a href={`/room?c=${item}`}>
-                                <ListItem>
-                                    {returnNull(item)}
-                                </ListItem>
-                            </a>
+                            {#await returnNull(item)}
+                                <ListItem>loading....</ListItem>
+                            {:then name}
+                                <a href={`/room?c=${item}`}>
+                                    <ListItem>
+                                        {name}
+                                    </ListItem>
+                                </a>
+                            {/await}
                         {/each}
                     </div>
                 </ListItemGroup>

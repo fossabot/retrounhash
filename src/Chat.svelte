@@ -14,8 +14,7 @@
   import {
     mdiArrowDownCircleOutline,
     mdiEmoticonWinkOutline,
-mdiFormatListText,
-        mdiImageOutline,
+    mdiImageOutline,
     mdiMicrophoneOutline,
     mdiSendOutline,
   } from "@mdi/js";
@@ -31,21 +30,21 @@ mdiFormatListText,
     radisk: true,
     axe: true,
     rindexed: true,
-    localStorage: false 
+    localStorage: false,
   });
   const db1 = new Gun({
     peers: peers,
     radisk: true,
     axe: true,
     rindexed: true,
-    localStorage: false 
+    localStorage: false,
   });
   const db2 = new Gun({
     peers: peers,
     radisk: true,
     axe: true,
     rindexed: true,
-    localStorage: false 
+    localStorage: false,
   });
 
   import { ProgressLinear } from "svelte-materialify";
