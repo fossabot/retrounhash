@@ -1,9 +1,7 @@
 <script>
   import { username, user, db } from "./user";
   import jq from "jquery";
-  import {
-    downscaleImage
-  } from "./utils"
+  import { downscaleImage } from "./utils";
 
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -13,6 +11,8 @@
     ListItem,
     Divider,
     Icon,
+    Badge,
+    Avatar,
     MaterialApp,
   } from "svelte-materialify";
 
@@ -31,7 +31,7 @@
   } from "@mdi/js";
   import Gun from "gun";
   import "gun/lib/rindexed";
-  import { writable } from "svelte/store";
+import { writable } from "svelte/store";
 
   const db3 = new Gun({
     peers: [
@@ -225,8 +225,8 @@
 
   let items = JSON.parse(localStorage.getItem("items") || "[]");
   function addItem(pub) {
-    items.push(pub); //{ name: name, pubKeyRoom: pub}]
-    //localStorage.setItem("items", JSON.stringify(items))
+    items = [...items, pub];
+    isInList.set(true)
   }
 
   $: {
@@ -239,29 +239,27 @@
       items.splice(index, 1);
     }
     localStorage.setItem("items", JSON.stringify(items));
+    isInList.set(false)
   }
 
   let InfoState = false;
 
   function JoinCurrentRoom() {
     addItem(localStorage.getItem("channel"));
-    isJoinedRoom.set(true);
   }
 
   function LeaveCurrentRoom() {
     remove(localStorage.getItem("channel"));
-    isJoinedRoom.set(false);
+    
   }
 
-  var joinRoomValidator = localStorage.getItem("items") || [];
+  //var joinRoomValidator = localStorage.getItem("items") || [];
 
   var isChat = /\/room(.*)/.test(location.pathname);
 
   // initialisation
-  let roomNameText;
-  let roomDescriptionText;
-  let roomImage;
   let changedImage;
+  const isInList = writable(items.includes(localStorage.getItem("channel")))
 
   function imageUploaded() {
     var file = document.querySelector("#avatar-changer").files[0];
@@ -308,9 +306,64 @@
     _reader.readAsDataURL(file);
   }
 
-  const isJoinedRoom = writable(
-    joinRoomValidator.includes(localStorage.getItem("channel"))
-  );
+  let isJoinedRoom; //items.includes(localStorage.getItem("channel"));
+  async function changeRoomName() {
+    await db3
+      .get(`~${localStorage.getItem("channel")}`)
+      .get("host")
+      .get("key")
+      .then(async (keyPair) => {
+        const keys = await SEA.decrypt(
+          keyPair,
+          JSON.parse(sessionStorage.getItem("pair")).priv
+        );
+        console.log(keys);
+        db3.user().auth(keys, async () => {
+          await db3
+            .user()
+            .get("info")
+            .get("profile")
+            .get("name")
+            .put(prompt("enter new name"))
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "done! 🎉",
+                text: "successfully updated room name",
+              });
+            });
+        });
+      });
+  }
+
+  async function changeRoomDescription() {
+    await db3
+      .get(`~${localStorage.getItem("channel")}`)
+      .get("host")
+      .get("key")
+      .then(async (keyPair) => {
+        const keys = await SEA.decrypt(
+          keyPair,
+          JSON.parse(sessionStorage.getItem("pair")).priv
+        );
+        console.log(keys);
+        db3.user().auth(keys, async () => {
+          await db3
+            .user()
+            .get("info")
+            .get("profile")
+            .get("description")
+            .put(prompt("enter new description"))
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "done! 🎉",
+                text: "successfully updated description",
+              });
+            });
+        });
+      });
+  }
 </script>
 
 <MaterialApp>
@@ -441,24 +494,35 @@
           accept="image/jpeg"
         />
       </div>
-      <div id="InfoRoomName" class="m-2 h3 text-center">
+      <div
+        on:dblclick={changeRoomName}
+        id="InfoRoomName"
+        class="m-2 h3 text-center"
+      >
         {roomName || "not specified!"}
       </div>
       <Divider />
       <div class="m-2 h4">About:</div>
-      <div id="InfoDescription" class="m-2 h5">
+      <div
+        on:dblclick={changeRoomDescription}
+        id="InfoDescription"
+        class="m-2 h5"
+      >
         {roomDescription || "not specified !"}
       </div>
       <ListItem on:click={share_link}
-        ><Icon path={mdiShare} /> Share Link</ListItem
-      >
-      {#if !$isJoinedRoom}
-        <ListItem id="JoinRoomButton" on:Click={JoinCurrentRoom}>
-          <Icon path={mdiContentSave} /> Join This Room
+        ><Icon path={mdiShare} />
+        Share Link
+      </ListItem>
+      {#if !$isInList}
+        <ListItem on:click={JoinCurrentRoom}>
+          <Icon path={mdiContentSave} />
+          Join This Room
         </ListItem>
       {:else}
-        <ListItem id="LeaveRoomButton" on:click={LeaveCurrentRoom}>
-          <Icon path={mdiEject} /> Leave This Room
+        <ListItem on:click={LeaveCurrentRoom}>
+          <Icon path={mdiEject} />
+          Leave This Room
         </ListItem>
       {/if}
     </List>
