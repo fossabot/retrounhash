@@ -205,9 +205,11 @@ import { writable } from "svelte/store";
     .get("profile")
     .get("avatar")
     .on(async (data) => {
+      if(data == undefined || data == "" || !/data:image\/(.*)/.test(data)){
+        data = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      }
       document.querySelector("#roomImage").src =
-        data ||
-        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+        data
     });
 
   /*setTimeout(() => {
@@ -499,7 +501,7 @@ import { writable } from "svelte/store";
         id="InfoRoomName"
         class="m-2 h3 text-center"
       >
-        {roomName || "not specified!"}
+        {roomName || "loading..."}
       </div>
       <Divider />
       <div class="m-2 h4">About:</div>
@@ -508,7 +510,7 @@ import { writable } from "svelte/store";
         id="InfoDescription"
         class="m-2 h5"
       >
-        {roomDescription || "not specified !"}
+        {roomDescription || "loading..."}
       </div>
       <ListItem on:click={share_link}
         ><Icon path={mdiShare} />

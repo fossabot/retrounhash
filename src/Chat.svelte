@@ -211,7 +211,7 @@
     canAutoScroll = true;
     autoScroll();
   }
-  function emoji() {
+  /*function emoji() {
     if (document.querySelector(".emoji__").innerHTML == "") {
       document.querySelector(".emoji__").innerHTML =
         "<emoji-picker class='light'></emoji-picker>";
@@ -226,7 +226,7 @@
           (document.querySelector("#submit__area__main__").value +=
             event.detail.unicode)
       );
-  }
+  }*/
 
   let base64String = "";
 
@@ -308,7 +308,23 @@
   let isProgActive = true;
   setTimeout(() => {
     isProgActive = false;
-  }, 5000);
+  }, 3000);
+
+  function parseEmoji(e) {
+    if (newMessage == undefined || newMessage == "") {
+      newMessage = " ";
+    }
+    newMessage += e.detail.unicode;
+  }
+
+  function selectEmoji() {
+    var elm = document.querySelector("#emoji");
+    if (elm.style.display == "none") {
+      elm.style.display = "block";
+    } else {
+      elm.style.display = "none";
+    }
+  }
 </script>
 
 <div class="container">
@@ -326,14 +342,21 @@
       on:submit|preventDefault={sendMessage}
       class="fixed-bottom navbar blur"
     >
-      <span class="emoji__" />
+      <span class="emoji__">
+        <emoji-picker
+          class="light"
+          id="emoji"
+          style="display:none;"
+          on:emoji-click={parseEmoji}
+        />
+      </span>
       <div class="input-group mb-2">
         <div class="input-group-prepend">
           <span
             class="input-group-text"
             style="height: 38px;"
             id="emoji_add"
-            on:click={emoji}
+            on:click={selectEmoji}
           >
             <Icon path={mdiEmoticonWinkOutline} />
             <!--i class="fas fa-laugh-wink fa-lg" /-->
