@@ -13,6 +13,7 @@
 
     let showAutoscroll;
     let encryptionValue;
+    let enableSwipe;
 
     if (localStorage.getItem("autoscroll") == "true") {
         showAutoscroll = true;
@@ -20,9 +21,16 @@
         showAutoscroll = false;
     }
 
+    if (localStorage.getItem("swipe") == "true") {
+        enableSwipe = true;
+    } else {
+        enableSwipe = false;
+    }
+
     function saveSettings() {
         localStorage.setItem("autoscroll", showAutoscroll);
         localStorage.setItem("_secret", encryptionValue);
+        localStorage.setItem("swipe", enableSwipe);
     }
 
     let encryptionPlaceholder = localStorage.getItem("_secret") || "";
@@ -57,6 +65,18 @@
                     bind:placeholder={encryptionPlaceholder}
                     >enter your keyword here</TextField
                 >
+            </CardActions>
+        </Card>
+        <Card class="m-2">
+            <CardTitle>Enable swipe gestures ?</CardTitle>
+            <CardText>
+                if you are on a mobile, you can use swipe genstures to open
+                drawers and to navigate with an ease.
+            </CardText>
+            <CardActions>
+                <Switch bind:checked={enableSwipe} inset>
+                    {enableSwipe}
+                </Switch>
             </CardActions>
         </Card>
         <div class="text-center m-3">

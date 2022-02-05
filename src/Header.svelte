@@ -11,8 +11,7 @@
     ListItem,
     Divider,
     Icon,
-    Badge,
-    Avatar,
+    Alert,
     MaterialApp,
   } from "svelte-materialify";
 
@@ -164,14 +163,19 @@
     NavActive = false;
   }
 
-  document.addEventListener("swiped-right", function (e) {
-    NavActive = true;
-  });
+  if (!localStorage.getItem("swipe")) {
+    localStorage.setItem("swipe", "true");
+  }
+  if (localStorage.getItem("swipe") == "true") {
+    document.addEventListener("swiped-right", function (e) {
+      NavActive = true;
+    });
 
-  document.addEventListener("swiped-left", function (e) {
-    InfoState = false;
-    CloseNav();
-  });
+    document.addEventListener("swiped-left", function (e) {
+      InfoState = false;
+      CloseNav();
+    });
+  }
 
   let NameOfTheRecentRoom;
   let roomDescription;
@@ -320,19 +324,29 @@
         );
         console.log(keys);
         db3.user().auth(keys, async () => {
-          await db3
-            .user()
-            .get("info")
-            .get("profile")
-            .get("name")
-            .put(prompt("enter new name"))
-            .then(() => {
-              Swal.fire({
-                icon: "success",
-                title: "done! 🎉",
-                text: "successfully updated room name",
-              });
-            });
+          ToogleInfo();
+          Swal.fire({
+            title: "Enter New Name",
+            input: "text",
+            showCancelButton: true,
+            confirmButtonText: "Change",
+            showLoaderOnConfirm: true,
+            preConfirm: async (response) => {
+              await db3
+                .user()
+                .get("info")
+                .get("profile")
+                .get("name")
+                .put(response)
+                .then(() => {
+                  Swal.fire({
+                    icon: "success",
+                    title: "done! 🎉",
+                    text: "successfully updated room name",
+                  });
+                });
+            },
+          });
         });
       });
   }
@@ -347,21 +361,30 @@
           keyPair,
           JSON.parse(sessionStorage.getItem("pair")).priv
         );
-        console.log(keys);
         db3.user().auth(keys, async () => {
-          await db3
-            .user()
-            .get("info")
-            .get("profile")
-            .get("description")
-            .put(prompt("enter new description"))
-            .then(() => {
-              Swal.fire({
-                icon: "success",
-                title: "done! 🎉",
-                text: "successfully updated description",
-              });
-            });
+          ToogleInfo();
+          Swal.fire({
+            title: "Enter New Description",
+            input: "text",
+            showCancelButton: true,
+            confirmButtonText: "Change",
+            showLoaderOnConfirm: true,
+            preConfirm: async (response) => {
+              await db3
+                .user()
+                .get("info")
+                .get("profile")
+                .get("description")
+                .put(response)
+                .then(() => {
+                  Swal.fire({
+                    icon: "success",
+                    title: "done! 🎉",
+                    text: "successfully updated description",
+                  });
+                });
+            },
+          });
         });
       });
   }
@@ -530,6 +553,7 @@
         on:dblclick={changeRoomDescription}
         id="InfoDescription"
         class="m-2 h5"
+        style="overflow: scroll;"
       >
         {roomDescription || "loading..."}
       </div>
@@ -549,5 +573,10 @@
         </ListItem>
       {/if}
     </List>
+    <Divider />
+    <Alert class="primary-text" text border="left">
+      double tap data to edit it!
+      ( if you're the admin )
+    </Alert>
   </NavigationDrawer>
 </MaterialApp>
