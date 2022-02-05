@@ -31,7 +31,7 @@
   } from "@mdi/js";
   import Gun from "gun";
   import "gun/lib/rindexed";
-import { writable } from "svelte/store";
+  import { writable } from "svelte/store";
 
   const db3 = new Gun({
     peers: [
@@ -205,11 +205,11 @@ import { writable } from "svelte/store";
     .get("profile")
     .get("avatar")
     .on(async (data) => {
-      if(data == undefined || data == "" || !/data:image\/(.*)/.test(data)){
-        data = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      if (data == undefined || data == "" || !/data:image\/(.*)/.test(data)) {
+        data =
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       }
-      document.querySelector("#roomImage").src =
-        data
+      document.querySelector("#roomImage").src = data;
     });
 
   /*setTimeout(() => {
@@ -228,7 +228,7 @@ import { writable } from "svelte/store";
   let items = JSON.parse(localStorage.getItem("items") || "[]");
   function addItem(pub) {
     items = [...items, pub];
-    isInList.set(true)
+    isInList.set(true);
   }
 
   $: {
@@ -241,7 +241,7 @@ import { writable } from "svelte/store";
       items.splice(index, 1);
     }
     localStorage.setItem("items", JSON.stringify(items));
-    isInList.set(false)
+    isInList.set(false);
   }
 
   let InfoState = false;
@@ -252,7 +252,6 @@ import { writable } from "svelte/store";
 
   function LeaveCurrentRoom() {
     remove(localStorage.getItem("channel"));
-    
   }
 
   //var joinRoomValidator = localStorage.getItem("items") || [];
@@ -261,7 +260,7 @@ import { writable } from "svelte/store";
 
   // initialisation
   let changedImage;
-  const isInList = writable(items.includes(localStorage.getItem("channel")))
+  const isInList = writable(items.includes(localStorage.getItem("channel")));
 
   function imageUploaded() {
     var file = document.querySelector("#avatar-changer").files[0];
@@ -366,6 +365,20 @@ import { writable } from "svelte/store";
         });
       });
   }
+
+  let data;
+  async function returnNull(pubb) {
+    await db
+      .get(`~${pubb}`)
+      .get("info")
+      .get("profile")
+      .get("name")
+      .then(async (_data) => {
+        data = _data;
+      });
+
+    return data;
+  }
 </script>
 
 <MaterialApp>
@@ -422,13 +435,21 @@ import { writable } from "svelte/store";
     <List>
       {#if /\/room(.*)/.test(location.pathname)}
         <div class="m-2 h3 text-center">Chats</div>
-        {#each items as item, i (item)}
-          <a href={`/room?c=${item}`}>
-            <ListItem>
-              {item}
-            </ListItem>
-          </a>
-        {/each}
+        {#if !localStorage.getItem("items") || localStorage.getItem("items") == "[]"}
+          <div class="m-2">empty!</div>
+        {:else}
+          {#each items as item, i (item)}
+            {#await returnNull(item)}
+              <ListItem>loading....</ListItem>
+            {:then name}
+              <a href={`/room?c=${item}`}>
+                <ListItem>
+                  {name}
+                </ListItem>
+              </a>
+            {/await}
+          {/each}
+        {/if}
       {:else}
         {#if !$username}
           <div class="text-center">
