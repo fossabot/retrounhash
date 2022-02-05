@@ -71,7 +71,7 @@
     </TextField>
     </div>
     <Alert class="primary-text" text border="left">
-      By signing up or login in you agree to our <a href="/termsOfUse.html">terms of service</a>
+      By signing up or login in you agree to our <a target="_blank" href="https://retrounhash.js.cool/termsOfUse.html">terms of service</a>
     </Alert>
     <Button on:click={login}>Login</Button>
     <Button on:click={signup}>Sign Up</Button>
