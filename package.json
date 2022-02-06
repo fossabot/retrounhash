@@ -11,8 +11,6 @@
     "@fullhuman/postcss-purgecss": "4.1.3",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "@smui/button": "^6.0.0-beta.13",
-    "@smui/card": "^6.0.0-beta.13",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
@@ -31,7 +29,6 @@
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "sirv-cli": "^1.0.0",
-    "smelte": "^1.1.8",
     "svelte-materialify": "^0.3.11",
     "tinro": "^0.6.7"
   }
