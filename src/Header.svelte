@@ -426,6 +426,7 @@
             alt="icon"
             width="30"
             height="30"
+            style="border-radius: 5px;"
             class="d-inline-block align-text-top"
           />
         {/if}
@@ -575,8 +576,7 @@
     </List>
     <Divider />
     <Alert class="primary-text" text border="left">
-      double tap data to edit it!
-      ( if you're the admin )
+      double tap data to edit it! ( if you're the admin )
     </Alert>
   </NavigationDrawer>
 </MaterialApp>
