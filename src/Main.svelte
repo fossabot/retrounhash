@@ -18,8 +18,8 @@
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
-          src="https://i.ibb.co/FztSPsx/images-2-removebg-preview.png"
-          alt="icap"
+          src="images/images-2-removebg-preview.png"
+          alt="visual about decentralisation"
         />
         <CardText>
           <CardTitle>Decentralised</CardTitle>
@@ -39,8 +39,8 @@
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
-          src="Hands - Favorite Image.png"
-          alt=""
+          src="images/Hands - Favorite Image.png"
+          alt="illustration of gallery "
         />
         <div>
           <CardTitle>Send Images!</CardTitle>
@@ -55,8 +55,8 @@
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
-          src="The Band - Speaker 1.png"
-          alt=""
+          src="images/The Band - Speaker 1.png"
+          alt="illustration of a speaker "
         />
         <div>
           <CardTitle>Audio Message</CardTitle>
@@ -71,8 +71,8 @@
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
-          src="Hands - Pinch.png"
-          alt=""
+          src="images/Hands - Pinch.png"
+          alt="hand holding key"
         />
         <div>
           <CardTitle>Secret Room</CardTitle>
@@ -87,8 +87,8 @@
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
-          src="https://opensource.org/files/osi_symbol_0.png"
-          alt=""
+          src="images/open_source_symbol.png"
+          alt="open source logo"
         />
         <div>
           <CardTitle>Open Source</CardTitle>
@@ -111,8 +111,8 @@
         <img
           class="card-img"
           style="height: 100%;width: 100%;"
-          src="https://i.ibb.co/d2Zt1yw/choose-markdown-removebg-preview.png"
-          alt="Card ime cap"
+          src="images/choose-markdown-removebg-preview.png"
+          alt="markdown illustration "
         />
         <div>
           <CardTitle>Markdown Supported</CardTitle>
@@ -131,7 +131,11 @@
       </Card>
     </div>
     <div class="text-center">
-      <img alt="" class="img-fluid" src="Allura - Staying Home.png" />
+      <img
+        alt="two fiends talking"
+        class="img-fluid"
+        src="images/Allura - Staying Home.png"
+      />
     </div>
     <div class="text-center p-3">
       <a href="/chat">
@@ -140,7 +144,7 @@
     </div>
     <div class="text-center footer" style="padding: 20px;margin: 10px;">
       <div class="h5" style="color: white;">
-        <i class="far fa-copyright" /> retrounhash 2022
+        <i class="far fa-copyright" /> retrounhash {new Date().getFullYear()}
       </div>
     </div>
   </main>
