@@ -131,13 +131,19 @@
     localStorage.setItem("_secret", secretKey);
   }*/
 
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('/sw.js').then(function (registration) {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }, function (err) {
-        console.log('ServiceWorker registration failed: ', err);
-      });
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/sw.js").then(
+        function (registration) {
+          console.log(
+            "ServiceWorker registration successful with scope: ",
+            registration.scope
+          );
+        },
+        function (err) {
+          console.log("ServiceWorker registration failed: ", err);
+        }
+      );
     });
   }
 
@@ -408,7 +414,7 @@
   <br /><br /><br />
   <nav
     class="navbar navbar-dark fixed-top blur"
-    style="background: rgba(244, 244, 244, 0.95);"
+    style="background: rgba(83, 158, 138, 0.8);backdrop-filter: blur(2px);"
   >
     <div class="container-fluid">
       <a class="navbar-brand" href="/">

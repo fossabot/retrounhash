@@ -5,8 +5,10 @@
     CardText,
     Button,
     CardActions,
+    Icon,
     MaterialApp,
   } from "svelte-materialify";
+  import { mdiGithub, mdiTwitter } from "@mdi/js";
 </script>
 
 <MaterialApp>
@@ -145,6 +147,14 @@
     <div class="text-center footer" style="padding: 20px;margin: 10px;">
       <div class="h5" style="color: white;">
         <i class="far fa-copyright" /> retrounhash {new Date().getFullYear()}
+      </div>
+      <div>
+        <a class="m-2" href="//github.com/atordvairn/retrounhash">
+          <Icon path={mdiGithub} />
+        </a>
+        <a class="m-2" href="//twitter.com/atordvairn/">
+          <Icon path={mdiTwitter} />
+        </a>
       </div>
     </div>
   </main>
