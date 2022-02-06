@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/public/favicon.ico" height="200" />
+  <img src="/public/favicon.png" height="200" />
 </p>
 
 # [retrounhash](https://retrounhash.js.cool/)
