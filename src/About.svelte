@@ -10,10 +10,13 @@
             <Card class="m-2">
                 <CardTitle>Basic Info</CardTitle>
                 <CardText>
-                    Username: {$username}
+                    Username:
+                    <span style="user-select: all;">
+                        {$username || "not logged in !"}
+                    </span>
                     <br />
                     Public Key:
-                    <code>
+                    <code style="user-select: all;">
                         {JSON.parse(sessionStorage.getItem("pair")).pub}
                     </code>
                 </CardText>
