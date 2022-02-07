@@ -1,14 +1,13 @@
 self.addEventListener('install', function (event) {
-  var CACHE_NAME = 'retrounhash__cache-v4-0-1';
+  var CACHE_NAME = 'retrounhash__cache-v4-0-11';
   var urlsToCache = [
     '/',
-    'https://cdn.jsdelivr.net/gh/john-doherty/swiped-events@master/dist/swiped-events.min.js',
-    //'/build/bundle.js',
-    //'/build/bundle.css',
-    //'/build/bundle.js.map',
+    '/build/bundle.js',
+    '/build/bundle.css',
+    '/build/bundle.js.map',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
-    'https://cdn.jsdelivr.net/npm/sweetalert2@11'
-
+    'https://cdn.jsdelivr.net/npm/sweetalert2@11',
+    'https://cdn.jsdelivr.net/gh/john-doherty/swiped-events@master/dist/swiped-events.min.js'
   ];
 
   self.addEventListener('install', function (event) {
