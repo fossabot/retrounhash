@@ -28,17 +28,19 @@
     }
 
     let data;
+    let mainData;
     async function returnNull(pubb) {
-        await db
+        mainData = await db
             .get(`~${pubb}`)
             .get("info")
             .get("profile")
             .get("name")
             .then(async (_data) => {
                 data = _data;
+                return data;
             });
 
-        return data;
+        return mainData;
     }
 </script>
 

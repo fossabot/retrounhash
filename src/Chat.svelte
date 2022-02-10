@@ -177,7 +177,7 @@
         .get(`~${key}`)
         .get("chat")
         .get(index) //${userKeys.pub}`)
-        .put(message || "no message specified", null, {
+        .put(message || "lol", null, {
           opt: { cert: certificate },
         });
       //console.log("pub key" + userKeys.pub);
@@ -204,29 +204,11 @@
     const message = user.get("all").set({ what: secret });
     const index = new Date().toISOString();
     getCert(message, index);
-    //db.get("retrounhash/" + channel)
-    //  .get(index)
-    //  .put(message);
+    
     newMessage = "";
     canAutoScroll = true;
     autoScroll();
   }
-  /*function emoji() {
-    if (document.querySelector(".emoji__").innerHTML == "") {
-      document.querySelector(".emoji__").innerHTML =
-        "<emoji-picker class='light'></emoji-picker>";
-    } else {
-      document.querySelector(".emoji__").innerHTML = "";
-    }
-    document
-      .querySelector(".emoji__")
-      .addEventListener(
-        "emoji-click",
-        (event) =>
-          (document.querySelector("#submit__area__main__").value +=
-            event.detail.unicode)
-      );
-  }*/
 
   let base64String = "";
 

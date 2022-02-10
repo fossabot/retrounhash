@@ -197,6 +197,7 @@
       roomName = data;
       if (/\/room(.*)/.test(location.pathname)) {
         document.querySelector("#channelName").innerHTML = " / " + data;
+        document.title = data + " | retrounhash";
       }
     });
 
