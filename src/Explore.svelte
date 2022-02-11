@@ -12,49 +12,35 @@
     import { mdiPostOutline } from "@mdi/js";
     import { user, username, db } from "./user.js";
 
-    let items = JSON.parse(localStorage.getItem("items") || "[]");
-    function addItem(pub) {
-        items = [...items, pub]; //{ name: name, pubKeyRoom: pub}];
-    }
-
-    $: {
-        localStorage.setItem("items", JSON.stringify(items));
-    }
-
-    function remove(arr, item) {
-        for (var i = arr.length; i--; ) {
-            if (arr[i] === item) arr.Dashsplice(i, 1);
-        }
-    }
-
+    //initialisation
     let posts = [];
+    let noPosts;
+
     db.user()
         .get("following")
         .once(async (data) => {
             Object.entries(data).forEach(async (entry) => {
                 const [key, value] = entry;
-                console.log(entry[1]);
+                console.log(entry[0]);
 
-                await db.get(`~${entry[1]}`)
+                if (entry[0] == "#" || entry[0] == "_" || entry[0] == ">" ) {
+                    noPosts = true;
+                } else {
+                    noPosts = false;
+                }
+
+                await db
+                    .get(`~${entry[1]}`)
                     .get("posts")
                     .get("post")
                     .get("all")
                     .map()
                     .once(async (data) => {
-                        posts = [...posts, data];
+                        posts = [data, ...posts];
                         console.log(data);
                     });
             });
         });
-
-    db.user().auth(JSON.parse(sessionStorage.getItem("pair")), () => {
-        db.user()
-            .get("following")
-            .put({
-                key: "mqR2n3OX6oSbXhfc1BcyT10aw1WBDOSYEqiJUvSGmu8.8wqycy6OpZpHXcPtkabTtQQS1P5REIXhGxBsILPhD3U",
-                lol: "iOGC5-QCpOtyLPXRHPA-hK0gyGmDUdBMogdwgUqP2c0.2-hjWktPzgIfgtVBgc0hXi3MeAFvliy4c6N6Uieu_Hw"
-            });
-    });
 </script>
 
 {#if $username}
@@ -68,7 +54,7 @@
             <CardText>
                 <ListItemGroup>
                     <div>
-                        {#if !localStorage.getItem("items") || localStorage.getItem("items") == "[]"}
+                        {#if noPosts}
                             <div class="text-center">
                                 <img
                                     class="img-fluid"

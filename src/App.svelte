@@ -10,6 +10,7 @@
   import About from "./About.svelte";
   import Post from "./Post.svelte";
   import Explore from "./Explore.svelte";
+  import Profile from "./Profile.svelte"
   import { user } from "./user";
 </script>
 
@@ -53,5 +54,9 @@
   <Route path="/Explore">
     <Header />
     <Explore />
+  </Route>
+  <Route path="/User/:pubKey/*" let:meta>
+    <Header />
+    <Profile pub={meta.params.pubKey} />
   </Route>
 </div>
