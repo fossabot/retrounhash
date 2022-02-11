@@ -2,7 +2,9 @@
     import { Card, CardText, CardTitle, MaterialApp } from "svelte-materialify";
     import { user, username } from "./user.js";
 
-    var pubKeyUser = JSON.parse(sessionStorage.getItem("pair")).pub;
+    var pubKeyUser = JSON.parse(sessionStorage.getItem("pair")) || {
+        pub: ''
+    };
     
 </script>
 
@@ -19,9 +21,9 @@
                     </span>
                     <br />
                     Public Key:
-                    <a href={`/User/`+pubKeyUser}>
+                    <a href={`/User/`+pubKeyUser.pub}>
                     <code style="user-select: all;">
-                        {pubKeyUser}
+                        {pubKeyUser.pub}
                     </code>
                     </a>
                 </CardText>
