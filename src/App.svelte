@@ -8,6 +8,8 @@
   import Create from "./Create.svelte";
   import Dash from "./Dash.svelte";
   import About from "./About.svelte";
+  import Post from "./Post.svelte";
+  import Explore from "./Explore.svelte";
   import { user } from "./user";
 </script>
 
@@ -43,5 +45,13 @@
   <Route path="/About">
     <Header />
     <About />
+  </Route>
+  <Route path="/Post">
+    <Header />
+    <Post />
+  </Route>
+  <Route path="/Explore">
+    <Header />
+    <Explore />
   </Route>
 </div>

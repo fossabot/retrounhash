@@ -77,7 +77,7 @@
       ".": {
         // property selector
         ">": new Date(+new Date() - 2 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
-      },
+    
       "-": 1, // filter in reverse
     };*/
 

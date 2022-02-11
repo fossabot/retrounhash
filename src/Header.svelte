@@ -27,6 +27,8 @@
     mdiLogin,
     mdiMenu,
     mdiInformationOutline,
+    mdiPost,
+    mdiGlobeLight,
   } from "@mdi/js";
   import Gun from "gun";
   import "gun/lib/rindexed";
@@ -510,6 +512,12 @@
           >
           <a href="/Create"
             ><ListItem><Icon path={mdiPlus} />Create A Room</ListItem></a
+          >
+          <a href="/Post"
+            ><ListItem><Icon path={mdiPost} />Create A Post</ListItem></a
+          >
+          <a href="/Explore"
+            ><ListItem><Icon path={mdiGlobeLight} />Explore</ListItem></a
           >
           <a href="/Settings"
             ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
