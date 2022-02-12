@@ -1,23 +1,16 @@
 <script>
-    import {
-        Card,
-        CardText,
-        CardActions,
-        CardTitle,
-        TextField,
-        Button,
-        MaterialApp,
-        Textarea,
-    } from "svelte-materialify";
-    import { user, username, db } from "./user.js";
+    import { Card, CardText, Button, MaterialApp } from "svelte-materialify";
+    import { db } from "./user.js";
     export var pub;
 
     //initialisation
     let isFollowing;
     let userName;
     let userAvatar;
+    let isLoading = false;
 
     async function follow() {
+        isLoading = true;
         db.user().auth(JSON.parse(sessionStorage.getItem("pair")), async () => {
             await db
                 .user()
@@ -27,7 +20,9 @@
                     data[userName] = pub;
                     db.user().get("following").put(data);
                 })
-                .then(async () => {});
+                .then(async () => {
+                    isLoading = false;
+                });
         });
         isFollowing = true;
     }
@@ -36,13 +31,10 @@
         .once((data) => {
             userName = data;
             userAvatar = `https://avatars.dicebear.com/api/identicon/${data}.svg?backgroundColor=white`;
-            //document.querySelector("#userName").innerHTML = data;
-            //document.querySelector(
-            //    "#userAvatar"
-            //).src = `https://avatars.dicebear.com/api/identicon/${data}.svg?backgroundColor=white`;
         });
 
     db.user().auth(JSON.parse(sessionStorage.getItem("pair")), async () => {
+        isLoading = true;
         await db
             .user()
             .get("following")
@@ -53,10 +45,13 @@
                     isFollowing = true;
                 }
             })
-            .then(async () => {});
+            .then(async () => {
+                isLoading = false;
+            });
     });
 
     async function unfollow() {
+        isLoading = true;
         db.user().auth(JSON.parse(sessionStorage.getItem("pair")), async () => {
             await db
                 .user()
@@ -66,7 +61,9 @@
                     delete data[userName];
                     db.user().get("following").put(data);
                 })
-                .then(async () => {});
+                .then(async () => {
+                    isLoading = false;
+                });
         });
         isFollowing = false;
     }
@@ -75,7 +72,7 @@
 <MaterialApp>
     <main>
         <div class="h2 m-2 text-center">User's profile</div>
-        <Card class="m-2">
+        <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
             <CardText class="text-center">
                 <img
                     style="border-radius: 5px;"

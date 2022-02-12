@@ -14,7 +14,6 @@
 
     //initialisation
     let posts = [];
-    let noPosts;
     let isLoading = false;
 
     db.user()
@@ -25,12 +24,6 @@
                 const [key, value] = entry;
                 console.log(entry[0]);
 
-                if (entry[0] == "#" || entry[0] == "_" || entry[0] == ">" ) {
-                    noPosts = true;
-                } else {
-                    noPosts = false;
-                }
-
                 await db
                     .get(`~${entry[1]}`)
                     .get("posts")
@@ -40,7 +33,8 @@
                     .once(async (data) => {
                         posts = [data, ...posts];
                         console.log(data);
-                    }).then(()=>{
+                    })
+                    .then(() => {
                         isLoading = false;
                     });
             });
@@ -56,30 +50,16 @@
             </CardTitle>
             <CardText>
                 <ListItemGroup>
-                    <div>
-                        {#if noPosts}
-                            <div class="text-center">
-                                <img
-                                    class="img-fluid"
-                                    src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-concept-3428212-2902554.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="text-center m-3 h3">
-                                no posts! go nd follow someone!
-                            </div>
-                        {/if}
-                        {#each posts as post}
-                            <Card class="m-1">
-                                <CardTitle>
-                                    {post.title}
-                                </CardTitle>
-                                <CardText>
-                                    {post.description}
-                                </CardText>
-                            </Card>
-                        {/each}
-                    </div>
+                    {#each posts as post}
+                        <Card class="m-1">
+                            <CardTitle>
+                                {post.title}
+                            </CardTitle>
+                            <CardText>
+                                {post.description}
+                            </CardText>
+                        </Card>
+                    {/each}
                 </ListItemGroup>
             </CardText>
         </Card>
