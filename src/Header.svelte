@@ -29,6 +29,7 @@
     mdiInformationOutline,
     mdiPost,
     mdiGlobeLight,
+mdiGoogleEarth,
   } from "@mdi/js";
   import Gun from "gun";
   import "gun/lib/rindexed";
@@ -517,7 +518,7 @@
             ><ListItem><Icon path={mdiPost} />Create A Post</ListItem></a
           >
           <a href="/Explore"
-            ><ListItem><Icon path={mdiGlobeLight} />Explore</ListItem></a
+            ><ListItem><Icon path={mdiGoogleEarth} />Explore</ListItem></a
           >
           <a href="/Settings"
             ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
