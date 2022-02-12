@@ -1,8 +1,6 @@
 <script>
     import Gun from "gun";
-    import {
-        downscaleImage
-    } from "./utils"
+    import { downscaleImage } from "./utils";
     import "gun/lib/rindexed";
     import "gun/sea";
     import "gun/lib/radisk";
@@ -33,6 +31,7 @@
 
     async function createRoom() {
         const room = await SEA.pair();
+        isLoading = true;
         localStorage.setItem("channel", room.pub);
         //console.log(room.pub);
         db.user().auth(room, async (dat) => {
@@ -91,6 +90,7 @@
                                         .put(downscaleImage(base64String, 200))
                                         .then(() => {
                                             base64String = "";
+                                            isLoading = false;
                                             console.log("avatar uploaded");
                                             addItem(
                                                 localStorage.getItem("channel")
@@ -124,6 +124,7 @@
 
     let roomName;
     let base64String;
+    let isLoading = false;
 
     function imageUploaded() {
         var file = document.querySelector("#avatar-chooser").files[0];
@@ -142,7 +143,7 @@
 <MaterialApp>
     <main>
         <div class="h2 m-2 text-center">Manage Room</div>
-        <Card class="m-2">
+        <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
             <CardTitle>Create a chat room</CardTitle>
             <CardText>
                 Make a chat room where you are the moderator.

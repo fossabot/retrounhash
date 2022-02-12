@@ -15,10 +15,12 @@
     //initialisation
     let posts = [];
     let noPosts;
+    let isLoading = false;
 
     db.user()
         .get("following")
         .once(async (data) => {
+            isLoading = true;
             Object.entries(data).forEach(async (entry) => {
                 const [key, value] = entry;
                 console.log(entry[0]);
@@ -38,6 +40,8 @@
                     .once(async (data) => {
                         posts = [data, ...posts];
                         console.log(data);
+                    }).then(()=>{
+                        isLoading = false;
                     });
             });
         });
@@ -45,8 +49,7 @@
 
 {#if $username}
     <MaterialApp>
-        <div class="display-2 m-2 text-center" />
-        <Card class="m-2">
+        <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
             <CardTitle class="h2">
                 <Icon path={mdiPostOutline} size="30px" />
                 Posts
