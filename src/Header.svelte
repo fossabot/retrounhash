@@ -29,7 +29,8 @@
     mdiInformationOutline,
     mdiPost,
     mdiGlobeLight,
-mdiGoogleEarth,
+    mdiGoogleEarth,
+mdiSearchWeb,
   } from "@mdi/js";
   import Gun from "gun";
   import "gun/lib/rindexed";
@@ -519,6 +520,9 @@ mdiGoogleEarth,
           >
           <a href="/Explore"
             ><ListItem><Icon path={mdiGoogleEarth} />Explore</ListItem></a
+          >
+          <a href="/Search"
+            ><ListItem><Icon path={mdiSearchWeb} />Search</ListItem></a
           >
           <a href="/Settings"
             ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a

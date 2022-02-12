@@ -5,6 +5,7 @@
   import { username, user } from "./user";
   import debounce from "lodash.debounce";
   import "emoji-picker-element";
+  import { db2 } from "./gunInstance.js";
   import { Icon } from "svelte-materialify";
 
   import "gun/lib/radisk";
@@ -33,13 +34,6 @@
     localStorage: false,
   });
   const db1 = new Gun({
-    peers: peers,
-    radisk: true,
-    axe: true,
-    rindexed: true,
-    localStorage: false,
-  });
-  const db2 = new Gun({
     peers: peers,
     radisk: true,
     axe: true,
