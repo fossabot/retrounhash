@@ -1,5 +1,13 @@
 <script>
-    import { Card, CardText, Button, MaterialApp } from "svelte-materialify";
+    import {
+        Card,
+        CardText,
+        Button,
+        MaterialApp,
+        CardActions,
+        CardSubtitle,
+        CardTitle,
+    } from "svelte-materialify";
     import { db } from "./user.js";
     export var pub;
 
@@ -8,6 +16,8 @@
     let userName;
     let userAvatar;
     let isLoading = false;
+    let isLoading2 = false;
+    let posts = [];
 
     async function follow() {
         isLoading = true;
@@ -50,6 +60,21 @@
             });
     });
 
+    db.get(`~${pub}`)
+        .get("posts")
+        //.get("post")
+        //.get("all")
+        .map()
+        .once(async (data) => {
+            isLoading2 = true;
+            data.user = userName;
+            data.pub = pub;
+            posts = [data, ...posts];
+        })
+        .then(() => {
+            isLoading2 = false;
+        });
+
     async function unfollow() {
         isLoading = true;
         db.user().auth(JSON.parse(sessionStorage.getItem("pair")), async () => {
@@ -85,16 +110,52 @@
                 <span class="h2">
                     {userName}
                 </span>
+                <div class="m-3">
+                    You will see the user's posts in the explore setion atter
+                    you follow him.
+                </div>
             </CardText>
-            <CardText>
-                You will see the user's posts in the explore setion atter you
-                follow him.
+            <CardActions>
                 {#if !isFollowing}
                     <Button on:click={follow}>follow</Button>
                 {:else}
                     <Button on:click={unfollow}>Unfollow</Button>
                 {/if}
-            </CardText>
+            </CardActions>
+        </Card>
+        <br />
+        <Card class="m-2" bind:loading={isLoading2} bind:disabled={isLoading2}>
+            <div class="m-2 p-2 h3">User's posts:</div>
+            {#each posts as post}
+                <Card class="m-2">
+                    <CardTitle>
+                        <a href={`/User/${post.pub}`}>
+                            <img
+                                src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
+                                alt={`${post.user}'s avatar`}
+                                style="border-radius: 5px;"
+                                class="m-1"
+                            />
+                            {post.user}
+                        </a>
+                    </CardTitle>
+                    <CardText>
+                        {post.description}
+                    </CardText>
+                    <CardSubtitle>
+                        {post.date}- {post.time}
+                    </CardSubtitle>
+                </Card>
+            {/each}
+            <div class="text-center m-2 p-2">
+                <hr />
+                <img
+                    class="img-fluid"
+                    alt=""
+                    src="/images/images-removebg-preview.png"
+                />
+                <div class="m-2 h4 ">Looks like you have reached end.</div>
+            </div>
         </Card>
     </main>
 </MaterialApp>

@@ -28,9 +28,8 @@
     mdiMenu,
     mdiInformationOutline,
     mdiPost,
-    mdiGlobeLight,
     mdiGoogleEarth,
-mdiSearchWeb,
+    mdiAccountSearch,
   } from "@mdi/js";
   import Gun from "gun";
   import "gun/lib/rindexed";
@@ -428,6 +427,7 @@ mdiSearchWeb,
             src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
             alt="logo_user"
             width="30"
+            style="border-radius: 5px !important;"
             height="30"
             class="d-inline-block align-text-top"
           />
@@ -437,7 +437,7 @@ mdiSearchWeb,
             alt="icon"
             width="30"
             height="30"
-            style="border-radius: 5px;"
+            style="border-radius: 5px !important;"
             class="d-inline-block align-text-top"
           />
         {/if}
@@ -522,7 +522,7 @@ mdiSearchWeb,
             ><ListItem><Icon path={mdiGoogleEarth} />Explore</ListItem></a
           >
           <a href="/Search"
-            ><ListItem><Icon path={mdiSearchWeb} />Search</ListItem></a
+            ><ListItem><Icon path={mdiAccountSearch} />Search</ListItem></a
           >
           <a href="/Settings"
             ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a

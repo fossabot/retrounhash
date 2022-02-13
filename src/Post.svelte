@@ -29,7 +29,6 @@
         localStorage: false,
     });
 
-    
     let postTitle;
     let postDescription;
     let isLoading = false;
@@ -39,20 +38,35 @@
         db.user().auth(
             JSON.parse(sessionStorage.getItem("pair")),
             async (dat) => {
-                await db
-                    .user()
-                    .get("posts")
-                    //.get("post")
-                    //.get("all")
-                    .get(new Date().toISOString())
-                    .put({
-                        description: postDescription || "failed to add description",
-                    })
-                    .then(async () => {
-                        isLoading = false;
-                        console.log("done");
-                        location.href = "/";
+                try {
+                    await db
+                        .user()
+                        .get("posts")
+                        //.get("post")
+                        //.get("all")
+                        .get(new Date().toISOString())
+                        .put({
+                            description:
+                                postDescription || "no post description",
+                            date: new Date().toLocaleDateString(),
+                            time: new Date().toLocaleTimeString(),
+                        })
+                        .then(async () => {
+                            isLoading = false;
+                            postDescription = "";
+                            Swal.fire({
+                                icon: "success",
+                                title: "post uploaded!",
+                                text: "your post was successfully ploaded to the main network.",
+                            });
+                        });
+                } catch (e) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "oops!",
+                        text: e,
                     });
+                }
             }
         );
     }

@@ -5,41 +5,46 @@
         CardText,
         CardTitle,
         ListItemGroup,
-        ListItem,
+        CardActions,
+        CardSubtitle,
         MaterialApp,
         Icon,
     } from "svelte-materialify";
     import { mdiPostOutline } from "@mdi/js";
     import { user, username, db } from "./user.js";
 
+    import Gun from "gun"
+    
     //initialisation
     let posts = [];
     let isLoading = false;
 
-    db.user()
-        .get("following")
-        .once(async (data) => {
-            isLoading = true;
-            Object.entries(data).forEach(async (entry) => {
-                const [key, value] = entry;
-                console.log(entry);
+    if (user.is) {
+        db.user()
+            .get("following")
+            .once(async (data) => {
+                isLoading = true;
+                Object.entries(data).forEach(async (entry) => {
+                    const [key, value] = entry;
+                    console.log(entry);
 
-                await db
-                    .get(`~${entry[1]}`)
-                    .get("posts")
-                    //.get("post")
-                    //.get("all")
-                    .map()
-                    .once(async (data) => {
-                        data.user = entry[0];
-                        data.pub = entry[1];
-                        posts = [data, ...posts];
-                    })
-                    .then(() => {
-                        isLoading = false;
-                    });
+                    await db
+                        .get(`~${entry[1]}`)
+                        .get("posts")
+                        //.get("post")
+                        //.get("all")
+                        .map()
+                        .once(async (data) => {
+                            data.user = entry[0];
+                            data.pub = entry[1];
+                            posts = [data, ...posts];
+                        })
+                        .then(() => {
+                            isLoading = false;
+                        });
+                });
             });
-        });
+    }
 </script>
 
 {#if user.is}
@@ -67,6 +72,9 @@
                             <CardText>
                                 {post.description}
                             </CardText>
+                            <CardSubtitle>
+                                {post.date}- {post.time}
+                            </CardSubtitle>
                         </Card>
                     {/each}
                 </ListItemGroup>
