@@ -22,7 +22,7 @@
             isLoading = true;
             Object.entries(data).forEach(async (entry) => {
                 const [key, value] = entry;
-                console.log(entry[0]);
+                console.log(entry);
 
                 await db
                     .get(`~${entry[1]}`)
@@ -32,6 +32,7 @@
                     .map()
                     .once(async (data) => {
                         data.user = entry[0];
+                        data.pub = entry[1];
                         posts = [data, ...posts];
                     })
                     .then(() => {
@@ -53,13 +54,15 @@
                     {#each posts as post}
                         <Card class="m-1">
                             <CardTitle>
-                                <img
-                                    src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
-                                    alt={`post by ${post.user}`}
-                                    style="border-radius: 5px"
-                                    class="m-1"
-                                />
-                                {post.user}
+                                <a href={`/User/${post.pub}`}>
+                                    <img
+                                        src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
+                                        alt={`${post.user}'s avatar`}
+                                        style="border-radius: 5px;"
+                                        class="m-1"
+                                    />
+                                    {post.user}
+                                </a>
                             </CardTitle>
                             <CardText>
                                 {post.description}
