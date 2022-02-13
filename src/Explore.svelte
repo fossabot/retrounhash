@@ -27,12 +27,12 @@
                 await db
                     .get(`~${entry[1]}`)
                     .get("posts")
-                    .get("post")
-                    .get("all")
+                    //.get("post")
+                    //.get("all")
                     .map()
                     .once(async (data) => {
+                        data.user = entry[0];
                         posts = [data, ...posts];
-                        console.log(data);
                     })
                     .then(() => {
                         isLoading = false;
@@ -53,7 +53,13 @@
                     {#each posts as post}
                         <Card class="m-1">
                             <CardTitle>
-                                {post.title}
+                                <img
+                                    src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
+                                    alt={`post by ${post.user}`}
+                                    style="border-radius: 5px"
+                                    class="m-1"
+                                />
+                                {post.user}
                             </CardTitle>
                             <CardText>
                                 {post.description}

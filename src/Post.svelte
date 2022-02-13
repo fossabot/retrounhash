@@ -42,11 +42,10 @@
                 await db
                     .user()
                     .get("posts")
-                    .get("post")
-                    .get("all")
+                    //.get("post")
+                    //.get("all")
                     .get(new Date().toISOString())
                     .put({
-                        title: postTitle || "failed to add title",
                         description: postDescription || "failed to add description",
                     })
                     .then(async () => {
@@ -67,22 +66,12 @@
             <CardText>
                 write an inspiring post, or just post some memes from reddit.
                 <br /><br />
-                <TextField
-                    id="roomName"
-                    bind:value={postTitle}
-                    counter="30"
-                    maxLength="30"
-                    minLength="3"
-                    placeholder="tell us what's it all about"
-                >
-                    title of the post
-                </TextField>
                 <Textarea
                     id="description"
                     counter="400"
                     bind:value={postDescription}
                     maxLength="400"
-                    placeholder={`did ya fall in your sleep? or was just taken by aliens?`}
+                    placeholder={`type up the post ..`}
                 >
                     Content of the post
                 </Textarea>
