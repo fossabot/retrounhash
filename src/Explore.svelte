@@ -42,7 +42,7 @@
         });
 </script>
 
-{#if $username}
+{#if user.is}
     <MaterialApp>
         <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
             <CardTitle class="h2">
