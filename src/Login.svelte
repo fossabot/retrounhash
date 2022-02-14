@@ -11,6 +11,7 @@
 
   let username;
   let password;
+  let userName;
   let isLoading = false;
 
   function login(from_snup) {
@@ -35,8 +36,31 @@
                 .get("#user_catalogue_2")
                 .get(hash)
                 .put(pub)
-                .then((ack) => {
-                  return;
+                .then(async (ack) => {
+                  await db
+                    .get(`~${pub}`)
+                    .get("alias")
+                    .once((data) => {
+                      userName = data;
+                    })
+                    .then(() => {
+                      db.user().auth(
+                        JSON.parse(sessionStorage.getItem("pair")),
+                        async () => {
+                          await db
+                            .user()
+                            .get("following")
+                            .once(async (data = {}) => {
+                              console.log(data);
+                              data[userName] = pub;
+                              db.user().get("following").put(data);
+                            })
+                            .then(async () => {
+                              isLoading = false;
+                            });
+                        }
+                      );
+                    });
                 });
 
               return;
