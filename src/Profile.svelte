@@ -8,7 +8,7 @@
         CardSubtitle,
         CardTitle,
     } from "svelte-materialify";
-    import { db } from "./user.js";
+    import { db, username } from "./user.js";
     export var pub;
 
     //initialisation
@@ -39,6 +39,16 @@
     db.get(`~${pub}`)
         .get("alias")
         .once((data) => {
+            if (data == undefined) {
+                Swal.fire({
+                    title: "invalid url",
+                    text: "the url you have entered is incorrect! please try again",
+                    icon: "error",
+                    preConfirm: () => {
+                        location.href = "/";
+                    },
+                });
+            }
             userName = data;
             userAvatar = `https://avatars.dicebear.com/api/identicon/${data}.svg?backgroundColor=white`;
         });
