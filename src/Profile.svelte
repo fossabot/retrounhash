@@ -143,7 +143,9 @@
                         {post.description}
                     </CardText>
                     <CardSubtitle>
-                        {post.date}- {post.time}
+                        {new Date(post.date).toLocaleDateString()}- {new Date(
+                            post.date
+                        ).toLocaleTimeString()}
                     </CardSubtitle>
                 </Card>
             {/each}

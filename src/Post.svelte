@@ -49,8 +49,8 @@
                         .put({
                             description:
                                 postDescription || "no post description",
-                            date: new Date().toLocaleDateString(),
-                            time: new Date().toLocaleTimeString(),
+                            //date: new Date().toLocaleDateString(),
+                            //time: new Date().toLocaleTimeString(),
                             uid: timeSTR
                         })
                         .then(async () => {

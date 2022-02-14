@@ -36,6 +36,7 @@
                         .once(async (data) => {
                             data.user = entry[0];
                             data.pub = entry[1];
+                            data.date = Gun.state.is(data, "description");
                             posts = [data, ...posts];
                         })
                         .then(() => {
@@ -47,8 +48,7 @@
 
     function sharePost(post) {
         navigator.share({
-            title: `${post.user}'s post on retrounhash!`,
-            text: `${post.description}`,
+            text: `Hey!, come and see ${post.user}'s post on retorunhash !`,
             url: `/Post/${post.pub}/${post.uid}`,
         });
     }
@@ -82,9 +82,11 @@
                                 </a>
                             </CardText>
                             <CardSubtitle>
-                                {post.date}- {post.time}
+                                {new Date(post.date).toLocaleDateString()}- {new Date(
+                                    post.date
+                                ).toLocaleTimeString()}
                                 <div class="m-2" on:click={sharePost(post)}>
-                                    <Icon path={mdiShareCircle} />
+                                    <Icon path={mdiShareCircle} /> Share
                                 </div>
                             </CardSubtitle>
                         </Card>

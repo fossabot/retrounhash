@@ -81,9 +81,12 @@
                         {postData.description}
                     </CardText>
                     <CardSubtitle>
-                        {postData.date}- {postData.time}
+                        {new Date(postData.date).toLocaleDateString()}- {new Date(
+                            postData.date
+                        ).toLocaleTimeString()}
+                        
                         <div class="m-2" on:click={sharePost(postData)}>
-                            <Icon path={mdiShareCircle} /> Share this post
+                            <Icon path={mdiShareCircle} /> Share
                         </div>
                     </CardSubtitle>
                 </Card>
