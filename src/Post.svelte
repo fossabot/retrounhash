@@ -1,5 +1,7 @@
 <script>
     import Gun from "gun";
+    import { v4 as uuidv4 } from 'uuid';
+
     import { downscaleImage } from "./utils";
     import "gun/lib/rindexed";
     import "gun/sea";
@@ -39,7 +41,7 @@
             JSON.parse(sessionStorage.getItem("pair")),
             async (dat) => {
                 try {
-                    let timeSTR = new Date().toISOString();
+                    let timeSTR = uuidv4();
                     await db
                         .user()
                         .get("posts")
