@@ -76,10 +76,13 @@
         //.get("all")
         .map()
         .once(async (data) => {
-            isLoading2 = true;
-            data.user = userName;
-            data.pub = pub;
-            posts = [data, ...posts];
+            if (data.description.length >= 401) {
+            } else {
+                isLoading2 = true;
+                data.user = userName;
+                data.pub = pub;
+                posts = [data, ...posts];
+            }
         })
         .then(() => {
             isLoading2 = false;

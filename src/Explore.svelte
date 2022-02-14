@@ -34,10 +34,13 @@
                         //.get("all")
                         .map()
                         .once(async (data) => {
-                            data.user = entry[0];
-                            data.pub = entry[1];
-                            data.date = Gun.state.is(data, "description");
-                            posts = [data, ...posts];
+                            if (data.description.length >= 401) {
+                            } else {
+                                data.user = entry[0];
+                                data.pub = entry[1];
+                                data.date = Gun.state.is(data, "description");
+                                posts = [data, ...posts];
+                            }
                         })
                         .then(() => {
                             isLoading = false;
