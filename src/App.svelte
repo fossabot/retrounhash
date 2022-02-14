@@ -12,6 +12,7 @@
   import Explore from "./Explore.svelte";
   import Profile from "./Profile.svelte";
   import Search from "./Search.svelte";
+  import ViewPost from "./ViewPost.svelte";
   import { user } from "./user";
 </script>
 
@@ -63,5 +64,9 @@
   <Route path="/Search">
     <Header />
     <Search />
+  </Route>
+  <Route path="/Post/:pubKey/:uid/*" let:meta>
+    <Header />
+    <ViewPost pub={meta.params.pubKey} uid={meta.params.uid} />
   </Route>
 </div>

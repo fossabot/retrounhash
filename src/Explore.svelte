@@ -10,11 +10,11 @@
         MaterialApp,
         Icon,
     } from "svelte-materialify";
-    import { mdiPostOutline } from "@mdi/js";
+    import { mdiPostOutline, mdiShareCircle } from "@mdi/js";
     import { user, username, db } from "./user.js";
 
-    import Gun from "gun"
-    
+    import Gun from "gun";
+
     //initialisation
     let posts = [];
     let isLoading = false;
@@ -26,7 +26,6 @@
                 isLoading = true;
                 Object.entries(data).forEach(async (entry) => {
                     const [key, value] = entry;
-                    console.log(entry);
 
                     await db
                         .get(`~${entry[1]}`)
@@ -44,6 +43,14 @@
                         });
                 });
             });
+    }
+
+    function sharePost(post) {
+        navigator.share({
+            title: `${post.user}'s post on retrounhash!`,
+            text: `${post.description}`,
+            url: `/Post/${post.pub}/${post.uid}`,
+        });
     }
 </script>
 
@@ -70,10 +77,15 @@
                                 </a>
                             </CardTitle>
                             <CardText>
-                                {post.description}
+                                <a href={`/Post/${post.pub}/${post.uid}`}>
+                                    {post.description}
+                                </a>
                             </CardText>
                             <CardSubtitle>
                                 {post.date}- {post.time}
+                                <div class="m-2" on:click={sharePost(post)}>
+                                    <Icon path={mdiShareCircle} />
+                                </div>
                             </CardSubtitle>
                         </Card>
                     {/each}

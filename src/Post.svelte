@@ -39,17 +39,19 @@
             JSON.parse(sessionStorage.getItem("pair")),
             async (dat) => {
                 try {
+                    let timeSTR = new Date().toISOString();
                     await db
                         .user()
                         .get("posts")
                         //.get("post")
                         //.get("all")
-                        .get(new Date().toISOString())
+                        .get(timeSTR)
                         .put({
                             description:
                                 postDescription || "no post description",
                             date: new Date().toLocaleDateString(),
                             time: new Date().toLocaleTimeString(),
+                            uid: timeSTR
                         })
                         .then(async () => {
                             isLoading = false;

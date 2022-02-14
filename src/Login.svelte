@@ -36,7 +36,7 @@
                 .get(hash)
                 .put(pub)
                 .then((ack) => {
-                  console.log("cat gen", ack);
+                  return;
                 });
 
               return;
