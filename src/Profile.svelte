@@ -9,7 +9,10 @@
         CardTitle,
     } from "svelte-materialify";
     import { db, username } from "./user.js";
+    import Post from "./comp/post.svelte";
     export var pub;
+
+    import Swal from "sweetalert2";
 
     //initialisation
     let isFollowing;
@@ -140,27 +143,7 @@
         <Card class="m-2" bind:loading={isLoading2} bind:disabled={isLoading2}>
             <div class="m-2 p-2 h3">User's posts:</div>
             {#each posts as post}
-                <Card class="m-2">
-                    <CardTitle>
-                        <a href={`/User/${post.pub}`}>
-                            <img
-                                src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
-                                alt={`${post.user}'s avatar`}
-                                style="border-radius: 5px;"
-                                class="m-1"
-                            />
-                            {post.user}
-                        </a>
-                    </CardTitle>
-                    <CardText>
-                        {post.description}
-                    </CardText>
-                    <CardSubtitle>
-                        {new Date(post.date).toLocaleDateString()}- {new Date(
-                            post.date
-                        ).toLocaleTimeString()}
-                    </CardSubtitle>
-                </Card>
+                <Post {post} />
             {/each}
             <div class="text-center m-2 p-2">
                 <hr />

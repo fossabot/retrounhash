@@ -9,6 +9,8 @@
     MaterialApp,
   } from "svelte-materialify";
 
+  import Swal from "sweetalert2"
+
   let username;
   let password;
   let userName;

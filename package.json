@@ -30,6 +30,7 @@
     "lodash.throttle": "^4.1.1",
     "sirv-cli": "^1.0.0",
     "svelte-materialify": "^0.3.11",
+    "sweetalert2": "^11.4.0",
     "tinro": "^0.6.7",
     "uuid": "^8.3.2"
   }

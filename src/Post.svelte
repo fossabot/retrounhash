@@ -2,6 +2,7 @@
     import Gun from "gun";
     import { v4 as uuidv4 } from 'uuid';
 
+    import Swal from "sweetalert2"
     import { downscaleImage } from "./utils";
     import "gun/lib/rindexed";
     import "gun/sea";
@@ -22,7 +23,7 @@
 
     const db = new Gun({
         peers: [
-            "https://gunjs.herokuapp.com/gun",
+            "http://localhost:8765/gun",
             "https://gun--server.herokuapp.com/gun",
         ],
         axe: true,

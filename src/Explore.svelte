@@ -1,5 +1,6 @@
 <script>
     import Login from "./Login.svelte";
+    import Post from "./comp/post.svelte";
     import {
         Card,
         CardText,
@@ -48,13 +49,6 @@
                 });
             });
     }
-
-    function sharePost(post) {
-        navigator.share({
-            text: `Hey!, come and see ${post.user}'s post on retorunhash !`,
-            url: `/Post/${post.pub}/${post.uid}`,
-        });
-    }
 </script>
 
 {#if user.is}
@@ -67,32 +61,7 @@
             <CardText>
                 <ListItemGroup>
                     {#each posts as post}
-                        <Card class="m-1">
-                            <CardTitle>
-                                <a href={`/User/${post.pub}`}>
-                                    <img
-                                        src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
-                                        alt={`${post.user}'s avatar`}
-                                        style="border-radius: 5px;"
-                                        class="m-1"
-                                    />
-                                    {post.user}
-                                </a>
-                            </CardTitle>
-                            <CardText>
-                                <a href={`/Post/${post.pub}/${post.uid}`}>
-                                    {post.description}
-                                </a>
-                            </CardText>
-                            <CardSubtitle>
-                                {new Date(post.date).toLocaleDateString()}- {new Date(
-                                    post.date
-                                ).toLocaleTimeString()}
-                                <div class="m-2" on:click={sharePost(post)}>
-                                    <Icon path={mdiShareCircle} /> Share
-                                </div>
-                            </CardSubtitle>
-                        </Card>
+                        <Post {post} />
                     {/each}
                 </ListItemGroup>
             </CardText>

@@ -1,6 +1,7 @@
 <script>
   import { username, user, db } from "./user";
   import jq from "jquery";
+  import Swal from "sweetalert2"
   import { downscaleImage } from "./utils";
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -37,7 +38,7 @@
 
   const db3 = new Gun({
     peers: [
-      "https://gunjs.herokuapp.com/gun",
+      "http://localhost:8765/gun",
       "https://gun--server.herokuapp.com/gun",
     ],
     localStorage: false,

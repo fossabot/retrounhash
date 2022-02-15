@@ -59,7 +59,7 @@
                             <div class="text-center">
                                 <img
                                     class="img-fluid"
-                                    src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-concept-3428212-2902554.png"
+                                    src="images/empty-state-concept-3428212-2902554.png"
                                     alt=""
                                 />
                             </div>

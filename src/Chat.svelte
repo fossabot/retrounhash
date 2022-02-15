@@ -23,7 +23,7 @@
   import GUN from "gun";
   import Gun from "gun";
   const peers = [
-    "https://gunjs.herokuapp.com/gun",
+    "http://localhost:8765/gun",
     "https://gun--server.herokuapp.com/gun",
   ];
   const db = new Gun({
