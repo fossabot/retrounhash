@@ -2,3 +2,5 @@
 /public/build/
 /public/global.css
 /package-lock.json
+/yarn.lock
+/radata

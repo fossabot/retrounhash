@@ -20,7 +20,7 @@
 
     const db = new Gun({
         peers: [
-            "https://gunjs.herokuapp.com/gun",
+            "http://localhost:8765/gun",
             "https://gun--server.herokuapp.com/gun",
         ],
         axe: true,

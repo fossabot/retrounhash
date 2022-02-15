@@ -8,6 +8,8 @@
         Dialog,
         MaterialApp,
     } from "svelte-materialify";
+
+    import Swal from "sweetalert2";
     import { user, username } from "./user.js";
 
     function deleteAccount() {
@@ -49,9 +51,9 @@
                             confirmButtonText: "change it",
                             input: "password",
                             preConfirm: (newPass) => {
-                                user.leave()
+                                user.leave();
                                 user.auth(_name, pass, {
-                                    change: newPass
+                                    change: newPass,
                                 });
                             },
                         });
@@ -61,6 +63,7 @@
         });
     }
 </script>
+
 <MaterialApp>
     <main>
         <div class="display-2 m-2 text-center">Account</div>
