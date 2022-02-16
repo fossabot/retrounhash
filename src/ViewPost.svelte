@@ -26,30 +26,29 @@
     };
     let postsReady = false;
 
-    db.user().auth(JSON.parse(sessionStorage.getItem("pair")), async () => {
-        await db
-            .get(`~${pub}`)
-            .get("alias")
-            // .once((data) => {
-
-            //     userAvatar = `https://avatars.dicebear.com/api/identicon/${data}.svg?backgroundColor=white`;
-            // })
-            .then(async (username) => {
-                await db
-                    .get(`~${pub}`)
-                    .get("posts")
-                    //.get("post")
-                    //.get("all")
-                    .get(uid)
-                    .once(async (data) => {
-                        data.user = username;
-                        postData = data;
-                    })
-                    .then(() => {
-                        postsReady = true;
-                    });
-            });
-    });
+    if ($username) {
+        db.user().auth(JSON.parse(sessionStorage.getItem("pair")), async () => {
+            await db
+                .get(`~${pub}`)
+                .get("alias")
+                .once((data) => {})
+                .then(async (username) => {
+                    await db
+                        .get(`~${pub}`)
+                        .get("posts")
+                        //.get("post")
+                        //.get("all")
+                        .get(uid)
+                        .once(async (data) => {
+                            data.user = username;
+                            postData = data;
+                        })
+                        .then(() => {
+                            postsReady = true;
+                        });
+                });
+        });
+    }
 
     function sharePost(post) {
         navigator.share({
@@ -84,10 +83,12 @@
                         {new Date(postData.date).toLocaleDateString()}- {new Date(
                             postData.date
                         ).toLocaleTimeString()}
-                        
-                        <div class="m-2" on:click={sharePost(postData)}>
-                            <Icon path={mdiShareCircle} /> Share
-                        </div>
+
+                        {#if navigator.canShare}
+                            <div class="m-2" on:click={sharePost(postData)}>
+                                <Icon path={mdiShareCircle} /> Share
+                            </div>
+                        {/if}
                     </CardSubtitle>
                 </Card>
             {:else}

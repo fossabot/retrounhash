@@ -11,7 +11,7 @@
     } from "svelte-materialify";
 
     let showAutoscroll;
-    let encryptionValue = localStorage.getItem("_secret");
+    let encryptionValue = localStorage.getItem("_secret") || "";
     let enableSwipe;
     let keyConfigName;
     let enableKey;
