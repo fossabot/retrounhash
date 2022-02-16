@@ -14,11 +14,27 @@
     let showAutoscroll;
     let encryptionValue;
     let enableSwipe;
+    let keyConfigName;
+    let enableKey;
+
+    $: enableKey ||
+        keyConfigName ||
+        enableSwipe ||
+        enableSwipe ||
+        encryptionValue ||
+        showAutoscroll,
+        saveSettings();
 
     if (localStorage.getItem("autoscroll") == "true") {
         showAutoscroll = true;
     } else {
         showAutoscroll = false;
+    }
+
+    if (localStorage.getItem("keyToNav") == "true") {
+        enableKey = true;
+    } else {
+        enableKey = false;
     }
 
     if (localStorage.getItem("swipe") == "true") {
@@ -31,9 +47,19 @@
         localStorage.setItem("autoscroll", showAutoscroll);
         localStorage.setItem("_secret", encryptionValue);
         localStorage.setItem("swipe", enableSwipe);
+        localStorage.setItem("keyToNav", enableKey);
     }
 
     let encryptionPlaceholder = localStorage.getItem("_secret") || "";
+
+    function changeKey() {
+        keyConfigName = "press the new key";
+        document.onkeyup = (e) => {
+            localStorage.setItem("keyToNav__enable", e.keyCode);
+            keyConfigName = `key set as ${e.code}`;
+            location.href = "/";
+        };
+    }
 </script>
 
 <MaterialApp>
@@ -79,8 +105,26 @@
                 </Switch>
             </CardActions>
         </Card>
-        <div class="text-center m-3">
-            <Button on:click={saveSettings}>Save Settings</Button>
+        <Card class="m-2">
+            <CardTitle>Enable key bindings ?</CardTitle>
+            <CardText>
+                if you are on a pc, you can use keys (Ctrl by default) to open
+                drawers and to navigate with an ease.
+            </CardText>
+            <CardActions>
+                <Switch class="m-2" bind:checked={enableKey} inset>
+                    {enableKey}
+                </Switch>
+                {#if enableKey}
+                    <Button class="m-2" on:click={changeKey}>
+                        {keyConfigName || "Change the key"}
+                    </Button>
+                {/if}
+            </CardActions>
+        </Card>
+        <div class="m-2 h4 form-text text-muted text-center">
+            settings are automattically saved
         </div>
+        <div class="p-2" />
     </main>
 </MaterialApp>

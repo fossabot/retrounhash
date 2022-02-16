@@ -1,7 +1,7 @@
 <script>
   import { username, user, db } from "./user";
   import jq from "jquery";
-  import Swal from "sweetalert2"
+  import Swal from "sweetalert2";
   import { downscaleImage } from "./utils";
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -110,22 +110,19 @@
   }*/
 
   if (urlParams.has("c")) {
-    async function greetAtEnter() {
-      /*var name = await db3
+    /*var name = await db3
         .get(`~${urlParams.get("c")}`)
         .get("info")
         .get("profile")
         .get("name")
         .then();*/
 
-      localStorage.setItem("channel", urlParams.get("c"));
-      /*Toast.fire({
+    localStorage.setItem("channel", urlParams.get("c"));
+    /*Toast.fire({
         icon: "success",
         title: "joined " + name + "!",
         timer: 1000,
       });*/
-    }
-    greetAtEnter();
   }
 
   /*if (urlParams.has("s")) {
@@ -135,7 +132,7 @@
     localStorage.setItem("_secret", secretKey);
   }*/
 
-  if ("serviceWorker" in navigator) {
+  /*if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("/sw.js").then(
         function (registration) {
@@ -149,7 +146,7 @@
         }
       );
     });
-  }
+  }*/
 
   var NavActive = false;
 
@@ -412,6 +409,14 @@
       });
 
     return data;
+  }
+
+  if (localStorage.getItem("keyToNav") == 'true') {
+    document.onkeyup = function (event) {
+      if (event.keyCode == localStorage.getItem("keyToNav__enable")) {
+        ToogleNav();
+      }
+    };
   }
 </script>
 
