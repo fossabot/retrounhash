@@ -5,6 +5,7 @@
     import "gun/sea";
     import "gun/lib/radisk";
     import "gun/lib/radix";
+    import compress from "compress-base64";
 
     import {
         Card,
@@ -87,7 +88,15 @@
                                         .get("info")
                                         .get("profile")
                                         .get("avatar")
-                                        .put(downscaleImage(base64String, 200))
+                                        .put(
+                                            await compress(base64String, {
+                                                width: 400,
+                                                type: "image/jpeg", // default
+                                                max: 200, // max size
+                                                min: 20, // min size
+                                                quality: 0.8,
+                                            })
+                                        )
                                         .then(() => {
                                             base64String = "";
                                             isLoading = false;

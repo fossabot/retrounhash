@@ -2,7 +2,7 @@
   import { username, user, db } from "./user";
   import jq from "jquery";
   import Swal from "sweetalert2";
-  import { downscaleImage } from "./utils";
+  import compress from "compress-base64";
 
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -297,7 +297,15 @@
                 .get("info")
                 .get("profile")
                 .get("avatar")
-                .put(changedImage)
+                .put(
+                  await compress(changedImage, {
+                    width: 400,
+                    type: "image/jpeg", // default
+                    max: 200, // max size
+                    min: 20, // min size
+                    quality: 0.8,
+                  })
+                )
                 .then(() => {
                   changedImage = "";
                   Swal.fire({
@@ -411,7 +419,7 @@
     return data;
   }
 
-  if (localStorage.getItem("keyToNav") == 'true') {
+  if (localStorage.getItem("keyToNav") == "true") {
     document.onkeyup = function (event) {
       if (event.keyCode == localStorage.getItem("keyToNav__enable")) {
         ToogleNav();

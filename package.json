@@ -22,6 +22,7 @@
   "dependencies": {
     "@mdi/js": "^6.5.95",
     "axios": "^0.25.0",
+    "compress-base64": "^1.0.2",
     "dompurify": "2.3.4",
     "emoji-picker-element": "^1.10.0",
     "gun": "^0.2020.1235",
