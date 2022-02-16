@@ -9,10 +9,9 @@
         Switch,
         MaterialApp,
     } from "svelte-materialify";
-    import { user, username } from "./user.js";
 
     let showAutoscroll;
-    let encryptionValue;
+    let encryptionValue = localStorage.getItem("_secret");
     let enableSwipe;
     let keyConfigName;
     let enableKey;
@@ -45,7 +44,9 @@
 
     function saveSettings() {
         localStorage.setItem("autoscroll", showAutoscroll);
-        localStorage.setItem("_secret", encryptionValue);
+        if (encryptionValue !== localStorage.getItem("_secret")) {
+            localStorage.setItem("_secret", encryptionValue);
+        }
         localStorage.setItem("swipe", enableSwipe);
         localStorage.setItem("keyToNav", enableKey);
     }
