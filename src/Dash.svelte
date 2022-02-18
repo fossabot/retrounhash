@@ -1,7 +1,7 @@
 <script>
     import Login from "./Login.svelte";
     import { v4 as uuidv4 } from "uuid";
-    import j from "jquery";
+    import Swal from "sweetalert2";
     import compress from "compress-base64";
     import {
         Card,
@@ -53,6 +53,8 @@
     let val = 0;
     let posts = [];
     let base64String;
+    let textRecieved;
+    let altForImg;
 
     if (user.is) {
         db.user()
@@ -84,35 +86,44 @@
         var reader = new FileReader();
         reader.onload = async function () {
             base64String = reader.result;
-
-            var userKeys = JSON.parse(sessionStorage.getItem("pair"));
-            db.user().auth(userKeys, async () => {
-                let timeSTR = uuidv4();
-                await db
-                    .user()
-                    .get("persona")
-                    .get(timeSTR)
-                    .put({
-                        img: await compress(base64String, {
-                            width: 800,
-                            type: "image/jpeg", // default
-                            max: 200, // max size
-                            min: 20, // min size
-                            quality: 0.8,
-                        }),
-                    })
-                    .then(() => {
-                        base64String = "";
-                        console.log("avatar uploaded");
-                    });
+            await Swal.fire({
+                title: "enter a description",
+                input: "text",
+                preConfirm: async (data) => {
+                    altForImg = data;
+                },
+            }).then(() => {
+                var userKeys = JSON.parse(sessionStorage.getItem("pair"));
+                db.user().auth(userKeys, async () => {
+                    let timeSTR = uuidv4();
+                    await db
+                        .user()
+                        .get("persona")
+                        .get(timeSTR)
+                        .put({
+                            img: await compress(base64String, {
+                                width: 800,
+                                type: "image/jpeg", // default
+                                max: 200, // max size
+                                min: 20, // min size
+                                quality: 0.8,
+                            }),
+                            text: altForImg,
+                        })
+                        .then(() => {
+                            base64String = "";
+                            console.log("avatar uploaded");
+                        });
+                });
             });
         };
         reader.readAsDataURL(file);
     }
 
-    function showPersona(img) {
+    function showPersona(post) {
         document.querySelector("#overlay").style.display = "block";
-        document.querySelector("#overlayImg").src = img;
+        document.querySelector("#overlayImg").src = post.img;
+        textRecieved = post.text;
     }
 
     function closeOverlay() {
@@ -190,7 +201,7 @@
             />
             <div cpass="p-2">
                 {#each posts as post}
-                    <ListItem on:click={showPersona(post.img)}>
+                    <ListItem on:click={showPersona(post)}>
                         <img src={post.img} alt="" />
                         {post.user}
                     </ListItem>
@@ -200,6 +211,9 @@
     </Window>
     <div id="overlay" on:click={closeOverlay}>
         <img src="" alt="" id="overlayImg" />
+        <div class="text-center">
+            {textRecieved}
+        </div>
     </div>
 {:else}
     <Login />
