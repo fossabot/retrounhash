@@ -6,12 +6,9 @@
         CardText,
         CardTitle,
         ListItemGroup,
-        CardActions,
-        CardSubtitle,
-        MaterialApp,
         Icon,
     } from "svelte-materialify";
-    import { mdiPostOutline, mdiShareCircle } from "@mdi/js";
+    import { mdiPostOutline } from "@mdi/js";
     import { user, username, db } from "./user.js";
 
     import Gun from "gun";
