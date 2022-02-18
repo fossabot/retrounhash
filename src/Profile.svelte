@@ -147,11 +147,6 @@
             {/each}
             <div class="text-center m-2 p-2">
                 <hr />
-                <img
-                    class="img-fluid"
-                    alt=""
-                    src="/images/images-removebg-preview.png"
-                />
                 <div class="m-2 h4 ">Looks like you have reached end.</div>
             </div>
         </Card>
