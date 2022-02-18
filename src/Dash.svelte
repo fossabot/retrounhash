@@ -215,6 +215,7 @@
         left: 0;
         text-align: center;
         right: 0;
+        backdrop-filter: blur(2px);
         bottom: 0;
         background-color: rgba(
             0,
@@ -231,7 +232,6 @@
         height: 30rem;
         object-fit: cover;
         aspect-ratio: 1/1;
-        border: 1px white dotted;
         border-radius: 5px;
     }
     img {
