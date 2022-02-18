@@ -11,7 +11,7 @@
   import { mdiGithub, mdiTwitter } from "@mdi/js";
 </script>
 
-<MaterialApp>
+<div>
   <main style="min-height: 100vh;">
     <div
       style="display:flex;flex-wrap: wrap;justify-content:center;align-items:center;"
@@ -23,12 +23,10 @@
           src="images/images-2-removebg-preview.png"
           alt="visual about decentralisation"
         />
+        <CardTitle>Decentralised</CardTitle>
         <CardText>
-          <CardTitle>Decentralised</CardTitle>
-          <p class="card-text">
-            Your data in your hands. Synced among peers in real time. No one own
-            the data of this application.
-          </p>
+          Your data in your hands. Synced among peers in real time. No one own
+          the data of this application.
         </CardText>
         <CardActions>
           <a href="/chat">
@@ -145,7 +143,7 @@
       </a>
     </div>
     <div class="text-center footer" style="padding: 20px;margin: 10px;">
-      <div class="h5" style="color: white;">
+      <div class="h5">
         <i class="far fa-copyright" /> retrounhash {new Date().getFullYear()}
       </div>
       <div>
@@ -158,4 +156,4 @@
       </div>
     </div>
   </main>
-</MaterialApp>
+</div>

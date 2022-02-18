@@ -95,7 +95,7 @@
   }
 </script>
 
-<MaterialApp>
+<div>
   <Card bind:disabled={isLoading} bind:loading={isLoading}>
     <div class="container blur" style="padding: 20px;">
       <div class="form m-3 p-2 ">
@@ -135,4 +135,4 @@
       </div>
     </div>
   </Card>
-</MaterialApp>
+</div>

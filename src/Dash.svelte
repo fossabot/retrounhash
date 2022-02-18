@@ -45,7 +45,7 @@
 </script>
 
 {#if $username}
-    <MaterialApp>
+    <div>
         <div class="display-2 m-2 text-center" />
         <Card class="m-2">
             <CardTitle class="h2">
@@ -82,7 +82,7 @@
                 </ListItemGroup>
             </CardText>
         </Card>
-    </MaterialApp>
+    </div>
 {:else}
     <Login />
 {/if}

@@ -52,7 +52,7 @@
 </script>
 
 {#if user.is}
-    <MaterialApp>
+    <div>
         <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
             <CardTitle class="h2">
                 <Icon path={mdiPostOutline} size="30px" />
@@ -66,7 +66,7 @@
                 </ListItemGroup>
             </CardText>
         </Card>
-    </MaterialApp>
+    </div>
 {:else}
     <Login />
 {/if}

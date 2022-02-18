@@ -8,7 +8,7 @@
     
 </script>
 
-<MaterialApp>
+<div>
     <main>
         <div class="h3 m-2 text-center">Info</div>
         {#if $username}
@@ -66,4 +66,4 @@
             </CardText>
         </Card>
     </main>
-</MaterialApp>
+</div>

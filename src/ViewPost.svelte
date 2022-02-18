@@ -60,7 +60,7 @@
 </script>
 
 {#if $username}
-    <MaterialApp>
+    <div>
         <main>
             {#if postsReady}
                 <div class="h2 m-2 text-center">{postData.user}'s post</div>
@@ -95,7 +95,7 @@
                 <div class="m-2 display-4 text-center">Loading...</div>
             {/if}
         </main>
-    </MaterialApp>
+    </div>
 {:else}
     <Login />
 {/if}

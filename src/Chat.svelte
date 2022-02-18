@@ -50,6 +50,7 @@
 
   let scrollBottom;
   let lastScrollTop;
+  let theme;
   let canAutoScroll = true;
   let unreadMessages = false;
 
@@ -198,7 +199,7 @@
     const message = user.get("all").set({ what: secret });
     const index = new Date().toISOString();
     getCert(message, index);
-    
+
     newMessage = "";
     canAutoScroll = true;
     autoScroll();
@@ -301,6 +302,12 @@
       elm.style.display = "none";
     }
   }
+
+  if (localStorage.getItem("theme") == "true") {
+    theme = "dark";
+  } else {
+    theme = "light";
+  }
 </script>
 
 <div class="container">
@@ -316,20 +323,20 @@
       autocomplete="off"
       style="backdrop-filter: blur(10px);background: transparent;"
       on:submit|preventDefault={sendMessage}
-      class="fixed-bottom navbar blur"
+      class="fixed-bottom navbar"
     >
       <span class="emoji__">
         <emoji-picker
-          class="light"
+          class={theme || "light"}
           id="emoji"
           style="display:none;"
           on:emoji-click={parseEmoji}
         />
       </span>
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
+      <div class="input-group mb-2 navbar__bottom">
+        <div class="input-group-prepend navbar__bottom">
           <span
-            class="input-group-text"
+            class="input-group-text navbar__bottom"
             style="height: 38px;"
             id="emoji_add"
             on:click={selectEmoji}
@@ -338,7 +345,7 @@
             <!--i class="fas fa-laugh-wink fa-lg" /-->
           </span>
           <span
-            class="input-group-text"
+            class="input-group-text navbar__bottom"
             style="height: 38px;"
             id="record"
             on:click={record}
@@ -349,7 +356,7 @@
           <label
             style="height: 38px;"
             for="image-send-picker"
-            class="custom-file-upload input-group-text"
+            class="custom-file-upload input-group-text navbar__bottom"
           >
             <Icon path={mdiImageOutline} />
             <!--i class="fas fa-image fa-lg" /-->
@@ -365,18 +372,18 @@
         <input
           style="background: white;"
           id="submit__area__main__"
-          class="form-control"
+          class="form-control navbar__bottom"
           type="text"
           placeholder="Type a message..."
           bind:value={newMessage}
           maxlength="100"
         />
-        <div class="input-group-append">
+        <div class="input-group-append navbar__bottom">
           {#if localStorage.getItem("autoscroll") == "true"}
             <button
               type="button"
               style="height: 38px;"
-              class="btn input-group-text"
+              class="btn input-group-text navbar__bottom"
               on:click={autoScroll}
             >
               <Icon path={mdiArrowDownCircleOutline} />
@@ -386,7 +393,7 @@
           <button
             type="submit"
             style="height: 38px;"
-            class="btn input-group-text"
+            class="btn input-group-text navbar__bottom"
             disabled={!newMessage}
           >
             <Icon path={mdiSendOutline} />
@@ -401,3 +408,11 @@
     </main>
   {/if}
 </div>
+{#if localStorage.getItem("theme") == "true"}
+  <style>
+    .navbar__bottom {
+      background: black !important;
+      color: white !important;
+    }
+  </style>
+{/if}

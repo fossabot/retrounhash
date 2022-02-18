@@ -4,7 +4,6 @@
 }
 
 *{
-  color: black !important;
   user-select: none;
 }
 
@@ -21,7 +20,6 @@ p {
   padding: 7px 17px;
   border-radius: 14px;
   position: relative;
-  color: white;
   text-align: center;
   margin: 0px !important;
 }
@@ -38,7 +36,6 @@ p {
 }
 
 .sent p {
-  color: white;
   align-self: flex-end;
   text-align: right;
   border-bottom-right-radius: 0px;

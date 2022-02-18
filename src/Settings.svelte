@@ -14,6 +14,7 @@
     let encryptionValue = localStorage.getItem("_secret") || "";
     let enableSwipe;
     let keyConfigName;
+    let theme;
     let enableKey;
 
     $: enableKey ||
@@ -21,13 +22,20 @@
         enableSwipe ||
         enableSwipe ||
         encryptionValue ||
-        showAutoscroll,
+        showAutoscroll ||
+        theme,
         saveSettings();
 
     if (localStorage.getItem("autoscroll") == "true") {
         showAutoscroll = true;
     } else {
         showAutoscroll = false;
+    }
+
+    if (localStorage.getItem("theme") == "true") {
+        theme = true;
+    } else {
+        theme = false;
     }
 
     if (localStorage.getItem("keyToNav") == "true") {
@@ -49,6 +57,7 @@
         }
         localStorage.setItem("swipe", enableSwipe);
         localStorage.setItem("keyToNav", enableKey);
+        localStorage.setItem("theme", theme);
     }
 
     let encryptionPlaceholder = localStorage.getItem("_secret") || "";
@@ -63,7 +72,7 @@
     }
 </script>
 
-<MaterialApp>
+<div>
     <main>
         <div class="h2 m-2 text-center">Settings</div>
         <Card class="m-2">
@@ -123,9 +132,20 @@
                 {/if}
             </CardActions>
         </Card>
+        <Card class="m-2">
+            <CardTitle>Enable Dark mode ?</CardTitle>
+            <CardText>
+                Dark more relives stress on eyes. moreover saved battery :)
+            </CardText>
+            <CardActions>
+                <Switch cass="m-2" bind:checked={theme} inset>
+                    {theme}
+                </Switch>
+            </CardActions>
+        </Card>
         <div class="m-2 h4 form-text text-muted text-center">
             settings are automattically saved
         </div>
         <div class="p-2" />
     </main>
-</MaterialApp>
+</div>

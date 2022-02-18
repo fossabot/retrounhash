@@ -77,7 +77,7 @@
     }
 </script>
 
-<MaterialApp>
+<div>
     <main>
         <div class="h2 m-2 text-center">Create a post</div>
         <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
@@ -100,4 +100,4 @@
             </CardActions>
         </Card>
     </main>
-</MaterialApp>
+</div>

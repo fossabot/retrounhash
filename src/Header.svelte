@@ -428,7 +428,7 @@
   }
 </script>
 
-<MaterialApp>
+<div>
   <br /><br /><br />
   <nav
     class="navbar navbar-dark fixed-top blur"
@@ -474,8 +474,8 @@
       </button>
     </div>
   </nav>
-</MaterialApp>
-<MaterialApp>
+</div>
+<div>
   <NavigationDrawer
     style="overflow: auto;height: 100%;position: fixed;z-index: 9999999999;"
     absolute
@@ -613,4 +613,4 @@
       double tap data to edit it! ( if you're the admin )
     </Alert>
   </NavigationDrawer>
-</MaterialApp>
+</div>

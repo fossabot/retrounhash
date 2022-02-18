@@ -1,11 +1,11 @@
 <script>
     import Gun from "gun";
-    import { downscaleImage } from "./utils";
     import "gun/lib/rindexed";
     import "gun/sea";
     import "gun/lib/radisk";
     import "gun/lib/radix";
     import compress from "compress-base64";
+    import Swal from "sweetalert2"
 
     import {
         Card,
@@ -31,89 +31,101 @@
     });
 
     async function createRoom() {
-        const room = await SEA.pair();
-        isLoading = true;
-        localStorage.setItem("channel", room.pub);
-        //console.log(room.pub);
-        db.user().auth(room, async (dat) => {
-            var userKeys = JSON.parse(sessionStorage.getItem("pair"));
-            //console.log("user: " + userKeys.pub);
-            let enc = await SEA.encrypt(room, userKeys.priv);
-            db.user().get("host").get("key").put(enc);
-            const cert = await SEA.certify(
-                "*",
-                { "*": "chat" }, //, "+": "*" },
-                room,
-                null,
-                {
-                    expiry: new Date(
-                        Date.now() +
-                            3600 *
-                                1000 *
-                                24 *
-                                parseInt(document.querySelector("#date")) ||
-                            1000000 //well,
-                    ),
-                    //blacklist: "ban"
-                }
-            );
-            await db
-                .user()
-                .get("certs")
-                .get("chat")
-                .get("certificate")
-                .put(cert)
-                .then(async () => {
-                    console.log("certificate uploaded");
-                    await db
-                        .user()
-                        .get("info")
-                        .get("profile")
-                        .get("name")
-                        .put(document.querySelector("#roomName").value)
-                        .then(async () => {
-                            console.log("name added");
-                            await db
-                                .user()
-                                .get("info")
-                                .get("profile")
-                                .get("description")
-                                .put(
-                                    document.querySelector("#description").value
-                                )
-                                .then(async () => {
-                                    console.log("description added");
-                                    await db
-                                        .user()
-                                        .get("info")
-                                        .get("profile")
-                                        .get("avatar")
-                                        .put(
-                                            await compress(base64String, {
-                                                width: 400,
-                                                type: "image/jpeg", // default
-                                                max: 200, // max size
-                                                min: 20, // min size
-                                                quality: 0.8,
-                                            })
-                                        )
-                                        .then(() => {
-                                            base64String = "";
-                                            isLoading = false;
-                                            console.log("avatar uploaded");
-                                            addItem(
-                                                localStorage.getItem("channel")
-                                            );
-                                            location.href = "/";
-                                        });
-                                });
-                        });
-                });
+        if (base64String) {
+            const room = await SEA.pair();
+            isLoading = true;
+            localStorage.setItem("channel", room.pub);
+            //console.log(room.pub);
+            db.user().auth(room, async (dat) => {
+                var userKeys = JSON.parse(sessionStorage.getItem("pair"));
+                //console.log("user: " + userKeys.pub);
+                let enc = await SEA.encrypt(room, userKeys.priv);
+                db.user().get("host").get("key").put(enc);
+                const cert = await SEA.certify(
+                    "*",
+                    { "*": "chat" }, //, "+": "*" },
+                    room,
+                    null,
+                    {
+                        expiry: new Date(
+                            Date.now() +
+                                3600 *
+                                    1000 *
+                                    24 *
+                                    parseInt(document.querySelector("#date")) ||
+                                1000000 //well,
+                        ),
+                        //blacklist: "ban"
+                    }
+                );
+                await db
+                    .user()
+                    .get("certs")
+                    .get("chat")
+                    .get("certificate")
+                    .put(cert)
+                    .then(async () => {
+                        console.log("certificate uploaded");
+                        await db
+                            .user()
+                            .get("info")
+                            .get("profile")
+                            .get("name")
+                            .put(document.querySelector("#roomName").value)
+                            .then(async () => {
+                                console.log("name added");
+                                await db
+                                    .user()
+                                    .get("info")
+                                    .get("profile")
+                                    .get("description")
+                                    .put(
+                                        document.querySelector("#description")
+                                            .value
+                                    )
+                                    .then(async () => {
+                                        console.log("description added");
 
-            //console.log(
-            //  await db.user().get("certs").get("chat").get(userKeys.pub).then()
-            //);
-        });
+                                        await db
+                                            .user()
+                                            .get("info")
+                                            .get("profile")
+                                            .get("avatar")
+                                            .put(
+                                                await compress(base64String, {
+                                                    width: 400,
+                                                    type: "image/jpeg", // default
+                                                    max: 200, // max size
+                                                    min: 20, // min size
+                                                    quality: 0.8,
+                                                })
+                                            )
+                                            .then(() => {
+                                                base64String = "";
+                                                isLoading = false;
+                                                console.log("avatar uploaded");
+                                                addItem(
+                                                    localStorage.getItem(
+                                                        "channel"
+                                                    )
+                                                );
+                                                location.href = "/";
+                                            });
+                                    });
+                            });
+                    });
+
+                //console.log(
+                //  await db.user().get("certs").get("chat").get(userKeys.pub).then()
+                //);
+            });
+        } else {
+            Swal.fire({
+                title: "please add an image",
+                text: "please add a nice image for your room :)",
+                icon: "error",
+            });
+        }
     }
 
     let items = JSON.parse(localStorage.getItem("items") || "[]");
@@ -149,7 +161,7 @@
     }
 </script>
 
-<MaterialApp>
+<div>
     <main>
         <div class="h2 m-2 text-center">Manage Room</div>
         <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
@@ -207,4 +219,4 @@
             </CardActions>
         </Card>
     </main>
-</MaterialApp>
+</div>

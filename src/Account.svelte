@@ -64,7 +64,7 @@
     }
 </script>
 
-<MaterialApp>
+<div>
     <main>
         <div class="display-2 m-2 text-center">Account</div>
         <Card class="m-2">
@@ -87,4 +87,4 @@
             </CardActions>
         </Card>
     </main>
-</MaterialApp>
+</div>
