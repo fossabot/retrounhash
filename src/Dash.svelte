@@ -15,6 +15,8 @@
         Window,
         WindowItem,
         AppBar,
+        ExpansionPanel,
+        ExpansionPanels,
     } from "svelte-materialify";
     import { mdiChatOutline, mdiDotsCircle } from "@mdi/js";
     import { user, username, db } from "./user.js";
@@ -54,10 +56,11 @@
     let posts = [];
     let base64String;
     let textRecieved;
+    let following_ = [];
     let altForImg;
 
     if (user.is) {
-        db.user()
+        /*db.user()
             .get("following")
             .once(async (data) => {
                 Object.entries(data).forEach(async (entry) => {
@@ -76,6 +79,25 @@
                             posts = [data, ...posts];
                         })
                         .then(() => {});
+                });
+            });*/
+
+        db.user()
+            .get("following")
+            .once(async (data) => {
+                delete data._;
+                Object.entries(data).forEach(async (entry) => {
+                    if (entry["key"] == "#") {
+                    } else {
+                        const [key, value] = entry;
+                        following_ = [
+                            {
+                                name: key,
+                                pub: value,
+                            },
+                            ...following_,
+                        ];
+                    }
                 });
             });
     }
@@ -128,6 +150,24 @@
 
     function closeOverlay() {
         document.querySelector("#overlay").style.display = "none";
+    }
+
+    async function getPersona(pubKey) {
+        let arrayPersona = [];
+        await db
+            .get(`~${pubKey}`)
+            .get("persona")
+            //.get("post")
+            //.get("all")
+            .map()
+            .once(async (data) => {
+                arrayPersona = [data, ...arrayPersona];
+            })
+            .then((data) => {
+                console.log(data);
+            });
+
+        return arrayPersona;
     }
 </script>
 
@@ -199,14 +239,41 @@
                 on:change={imageUploaded}
                 accept="image/jpeg"
             />
-            <div cpass="p-2">
+            <!--div cpass="p-2">
                 {#each posts as post}
                     <ListItem on:click={showPersona(post)}>
                         <img src={post.img} alt="" />
                         {post.user}
                     </ListItem>
                 {/each}
-            </div>
+            </div-->
+            <ExpansionPanels inset class="m-2">
+                {#each following_ as following}
+                    {#if following.name == "#" || following.name == ">"}
+                        <div />
+                    {:else}
+                        <ExpansionPanel>
+                            <div slot="header">
+                                {following.name}
+                            </div>
+                            {#await getPersona(following.pub)}
+                                loading...
+                            {:then data}
+                                <div id="persona__cards">
+                                    {#each data as data}
+                                        <img
+                                            src={data.img}
+                                            on:click={showPersona(data)}
+                                            alt={data.text}
+                                            style="width: 100px !important;height: 100px;"
+                                        />
+                                    {/each}
+                                </div>
+                            {/await}
+                        </ExpansionPanel>
+                    {/if}
+                {/each}
+            </ExpansionPanels>
         </WindowItem>
     </Window>
     <div id="overlay" on:click={closeOverlay}>
@@ -251,5 +318,9 @@
     img {
         border-radius: 5px !important;
         object-fit: cover;
+    }
+    #persona__cards{
+        display: flex;
+        flex-wrap: wrap;
     }
 </style>
