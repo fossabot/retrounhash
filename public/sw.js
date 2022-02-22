@@ -1,14 +1,14 @@
 self.addEventListener('install', function (event) {
-  var CACHE_NAME = 'retrounhash__cache-v4-0-11';
+  var CACHE_NAME = 'retrounhash__cache-v4-0-40';
   var urlsToCache = [
     '/',
     '/build/bundle.js',
-    '/build/bundle.js.map',
+    '/style.css',
     '/build/bundle.css'
   ];
 
   self.addEventListener('install', function (event) {
-    // Perform install steps
+    
     event.waitUntil(
       caches.open(CACHE_NAME)
         .then(function (cache) {
