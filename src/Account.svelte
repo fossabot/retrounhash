@@ -25,7 +25,8 @@
                     input: "text",
                     showCancelButton: true,
                     preConfirm: (password) => {
-                        user.delete(_username, password, console.log);
+                        localStorage.clear();
+                        user.delete(_username, password);
                         user.leave();
                         location.href = "/";
                     },

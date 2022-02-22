@@ -119,30 +119,6 @@
       });
   });
 
-  async function setCert(permission, pass) {
-    permission = "*";
-    pass = "1234";
-    const room = localStorage.getItem("channel") || (await SEA.pair());
-    localStorage.setItem("channel", room.pub);
-    console.log(room.pub);
-    db1.user().auth(room, async (dat) => {
-      var userKeys = JSON.parse(sessionStorage.getItem("pair"));
-      console.log("user: " + userKeys.pub);
-      let enc = await SEA.encrypt(room, pass || "thePassDummy");
-      db1.user().get("host").get("key").put(enc);
-      const cert = await SEA.certify(
-        permission || "*",
-        { "*": "chat" }, //, "+": "*" },
-        room,
-        null,
-        {
-          //blacklist: "ban"
-        }
-      );
-      db1.user().get("certs").get("chat").get("certificate").put(cert);
-    });
-  }
-
   async function getCert(message, index) {
     async function putInChat(message, index) {
       const userKeys = JSON.parse(sessionStorage.getItem("pair"));
@@ -155,19 +131,6 @@
         .get("certificate")
         .then();
 
-      console.log(certificate + "cert");
-
-      // let text = "hello!!";
-      // let hash = await SEA.work(text, null, null, { name: 'SHA-256' })
-
-      /*db2
-        .get(`~${key}`)
-        .get("chat")
-        .get(index)
-        .on((data) => {
-          console.log(data);
-        });*/
-
       db2
         .get(`~${key}`)
         .get("chat")
@@ -175,13 +138,7 @@
         .put(message || "lol", null, {
           opt: { cert: certificate },
         });
-      //console.log("pub key" + userKeys.pub);
     }
-    //if (db2.user().is) {
-    //  console.log("no auth");
-    //  console.log(db2.user().is);
-    //  putInChat();
-    //} else {
 
     const userKeys = JSON.parse(sessionStorage.getItem("pair"));
 

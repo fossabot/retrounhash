@@ -53,6 +53,7 @@
       cancelButtonText: "take me in!",
     }).then((result) => {
       if (result.isConfirmed) {
+        localStorage.clear();
         user.leave();
         username.set("");
       }
@@ -132,21 +133,16 @@
     localStorage.setItem("_secret", secretKey);
   }*/
 
-  /*if ("serviceWorker" in navigator) {
+  if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("/sw.js").then(
-        function (registration) {
-          console.log(
-            "ServiceWorker registration successful with scope: ",
-            registration.scope
-          );
-        },
+        function (registration) {},
         function (err) {
-          console.log("ServiceWorker registration failed: ", err);
+          console.warn(err);
         }
       );
     });
-  }*/
+  }
 
   var NavActive = false;
 
@@ -290,7 +286,6 @@
               keyPair,
               JSON.parse(sessionStorage.getItem("pair")).priv
             );
-            console.log(keys);
             db3.user().auth(keys, async () => {
               await db3
                 .user()
@@ -338,7 +333,6 @@
           keyPair,
           JSON.parse(sessionStorage.getItem("pair")).priv
         );
-        console.log(keys);
         db3.user().auth(keys, async () => {
           ToogleInfo();
           Swal.fire({

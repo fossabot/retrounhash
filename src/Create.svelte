@@ -35,10 +35,8 @@
             const room = await SEA.pair();
             isLoading = true;
             localStorage.setItem("channel", room.pub);
-            //console.log(room.pub);
             db.user().auth(room, async (dat) => {
                 var userKeys = JSON.parse(sessionStorage.getItem("pair"));
-                //console.log("user: " + userKeys.pub);
                 let enc = await SEA.encrypt(room, userKeys.priv);
                 db.user().get("host").get("key").put(enc);
                 const cert = await SEA.certify(
@@ -65,7 +63,6 @@
                     .get("certificate")
                     .put(cert)
                     .then(async () => {
-                        console.log("certificate uploaded");
                         await db
                             .user()
                             .get("info")
@@ -73,7 +70,6 @@
                             .get("name")
                             .put(document.querySelector("#roomName").value)
                             .then(async () => {
-                                console.log("name added");
                                 await db
                                     .user()
                                     .get("info")
@@ -84,7 +80,6 @@
                                             .value
                                     )
                                     .then(async () => {
-                                        console.log("description added");
 
                                         await db
                                             .user()
@@ -103,7 +98,6 @@
                                             .then(() => {
                                                 base64String = "";
                                                 isLoading = false;
-                                                console.log("avatar uploaded");
                                                 addItem(
                                                     localStorage.getItem(
                                                         "channel"
@@ -114,10 +108,6 @@
                                     });
                             });
                     });
-
-                //console.log(
-                //  await db.user().get("certs").get("chat").get(userKeys.pub).then()
-                //);
             });
         } else {
             Swal.fire({

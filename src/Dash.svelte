@@ -130,7 +130,6 @@
                         })
                         .then(() => {
                             base64String = "";
-                            console.log("avatar uploaded");
                         });
                 });
             });
@@ -161,11 +160,14 @@
             .once(async (data) => {
                 arrayPersona = [data, ...arrayPersona];
             })
-            .then((data) => {
-                console.log(data);
-            });
+            .then((data) => {});
 
         return arrayPersona;
+    }
+
+    if (localStorage.getItem("recently_snup") == "true") {
+        localStorage.setItem("keys", sessionStorage.getItem("pair"));
+        localStorage.setItem("recently_snup", "false");
     }
 </script>
 

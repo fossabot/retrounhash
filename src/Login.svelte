@@ -1,22 +1,24 @@
 <script>
   import { user, db } from "./user";
-  import {
-    Button,
-    TextField,
-    Card,
-    Icon,
-    Alert,
-    MaterialApp,
-  } from "svelte-materialify";
-
-  import Swal from "sweetalert2"
+  import { Button, TextField, Card, Alert } from "svelte-materialify";
+  import Swal from "sweetalert2";
 
   let username;
   let password;
   let userName;
   let isLoading = false;
 
+  const toast = Swal.mixin({
+    toast: true,
+    position: "bottom-right",
+    timer: 3000,
+    timerProgressBar: true,
+    showCancelButton: false,
+    showConfirmButton: false,
+  });
+
   function login(from_snup) {
+    localStorage.setItem("recently_snup", "true");
     isLoading = true;
     user.auth(username, password, ({ err }) => {
       if (err) {
@@ -53,7 +55,6 @@
                             .user()
                             .get("following")
                             .once(async (data = {}) => {
-                              console.log(data);
                               data[userName] = pub;
                               db.user().get("following").put(data);
                             })
@@ -64,15 +65,12 @@
                       );
                     });
                 });
-
-              return;
             });
         }
-        Swal.fire({
-          icon: "success",
-          title: "yay 🎉",
-          text: "you're now logged in!",
+        toast.fire({
+          title: "logged in",
         });
+
         isLoading = false;
       }
     });
@@ -91,6 +89,14 @@
       } else {
         login(true);
       }
+    });
+  }
+
+  if (localStorage.getItem("keys")) {
+    db.user().auth(JSON.parse(localStorage.getItem("keys")), () => {
+      toast.fire({
+        title: "logged in"
+      })
     });
   }
 </script>

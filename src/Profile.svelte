@@ -29,7 +29,6 @@
                 .user()
                 .get("following")
                 .once(async (data = {}) => {
-                    console.log(data);
                     data[userName] = pub;
                     db.user().get("following").put(data);
                 })
@@ -98,7 +97,6 @@
                 .user()
                 .get("following")
                 .once(async (data = {}) => {
-                    console.log(data);
                     delete data[userName];
                     db.user().get("following").put(data);
                 })
