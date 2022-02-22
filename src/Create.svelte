@@ -5,7 +5,7 @@
     import "gun/lib/radisk";
     import "gun/lib/radix";
     import compress from "compress-base64";
-    import Swal from "sweetalert2"
+    import Swal from "sweetalert2";
 
     import {
         Card,
@@ -80,21 +80,12 @@
                                             .value
                                     )
                                     .then(async () => {
-
                                         await db
                                             .user()
                                             .get("info")
                                             .get("profile")
                                             .get("avatar")
-                                            .put(
-                                                await compress(base64String, {
-                                                    width: 400,
-                                                    type: "image/jpeg", // default
-                                                    max: 200, // max size
-                                                    min: 20, // min size
-                                                    quality: 0.8,
-                                                })
-                                            )
+                                            .put(base64String)
                                             .then(() => {
                                                 base64String = "";
                                                 isLoading = false;
@@ -149,6 +140,17 @@
         };
         reader.readAsDataURL(file);
     }
+
+    $: base64String,
+        async () => {
+            base64String = await compress(base64String, {
+                width: 400,
+                type: "image/jpeg", // default
+                max: 200, // max size
+                min: 20, // min size
+                quality: 0.7,
+            });
+        };
 </script>
 
 <div>
