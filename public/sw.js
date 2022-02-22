@@ -1,5 +1,5 @@
 self.addEventListener('install', function (event) {
-  var CACHE_NAME = 'retrounhash__cache-v4-0-40';
+  var CACHE_NAME = 'retrounhash__cache-v5-0-40';
   var urlsToCache = [
     '/',
     '/build/bundle.js',

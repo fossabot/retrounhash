@@ -119,13 +119,7 @@
                         .get("persona")
                         .get(timeSTR)
                         .put({
-                            img: await compress(base64String, {
-                                width: 800,
-                                type: "image/jpeg", // default
-                                max: 200, // max size
-                                min: 20, // min size
-                                quality: 0.7,
-                            }),
+                            img: base64String,
                             text: altForImg,
                         })
                         .then(() => {
@@ -136,6 +130,17 @@
         };
         reader.readAsDataURL(file);
     }
+
+    $: base64String,
+        async () => {
+            base64String = await compress(base64String, {
+                width: 400,
+                type: "image/jpeg", // default
+                max: 200, // max size
+                min: 20, // min size
+                quality: 0.7,
+            });
+        };
 
     function showPersona(post) {
         document.querySelector("#overlay").style.display = "block";
