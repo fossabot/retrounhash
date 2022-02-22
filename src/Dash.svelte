@@ -4,9 +4,6 @@
     import Swal from "sweetalert2";
     import compress from "compress-base64";
     import {
-        Card,
-        CardText,
-        CardTitle,
         ListItemGroup,
         ListItem,
         Icon,
@@ -18,25 +15,23 @@
         ExpansionPanel,
         ExpansionPanels,
     } from "svelte-materialify";
-    import { mdiChatOutline, mdiDotsCircle } from "@mdi/js";
+    import {
+        mdiCalendar,
+        mdiChatOutline,
+        mdiCloseCircle,
+        mdiDotsCircle,
+    } from "@mdi/js";
+
     import { user, username, db } from "./user.js";
 
     let items = JSON.parse(localStorage.getItem("items") || "[]");
-    function addItem(pub) {
-        items = [...items, pub]; //{ name: name, pubKeyRoom: pub}];
-    }
 
     $: {
         localStorage.setItem("items", JSON.stringify(items));
     }
 
-    function remove(arr, item) {
-        for (var i = arr.length; i--; ) {
-            if (arr[i] === item) arr.Dashsplice(i, 1);
-        }
-    }
-
     let data;
+    let arrayPersona = [];
     let mainData;
     async function returnNull(pubb) {
         mainData = await db
@@ -55,9 +50,10 @@
     let val = 0;
     let posts = [];
     let base64String;
-    let textRecieved;
+    let textRecieved = "";
     let following_ = [];
     let altForImg;
+    let dateOfThePersona;
 
     if (user.is) {
         /*db.user()
@@ -128,7 +124,7 @@
                                 type: "image/jpeg", // default
                                 max: 200, // max size
                                 min: 20, // min size
-                                quality: 0.8,
+                                quality: 0.7,
                             }),
                             text: altForImg,
                         })
@@ -146,6 +142,10 @@
         document.querySelector("#overlay").style.display = "block";
         document.querySelector("#overlayImg").src = post.img;
         textRecieved = post.text;
+        dateOfThePersona =
+            new Date(Gun.state.is(post, "img")).toLocaleDateString() +
+            " - " +
+            new Date(Gun.state.is(post, "img")).toLocaleTimeString();
     }
 
     function closeOverlay() {
@@ -153,12 +153,10 @@
     }
 
     async function getPersona(pubKey) {
-        let arrayPersona = [];
+        arrayPersona = [];
         await db
-            .get(`~${pubKey}`)
+            .user(pubKey)
             .get("persona")
-            //.get("post")
-            //.get("all")
             .map()
             .once(async (data) => {
                 arrayPersona = [data, ...arrayPersona];
@@ -239,14 +237,6 @@
                 on:change={imageUploaded}
                 accept="image/jpeg"
             />
-            <!--div cpass="p-2">
-                {#each posts as post}
-                    <ListItem on:click={showPersona(post)}>
-                        <img src={post.img} alt="" />
-                        {post.user}
-                    </ListItem>
-                {/each}
-            </div-->
             <ExpansionPanels inset class="m-2">
                 {#each following_ as following}
                     {#if following.name == "#" || following.name == ">"}
@@ -276,10 +266,21 @@
             </ExpansionPanels>
         </WindowItem>
     </Window>
-    <div id="overlay" on:click={closeOverlay}>
+    <div id="overlay">
         <img src="" alt="" id="overlayImg" />
-        <div class="text-center">
-            {textRecieved}
+        {#if textRecieved.length <= 100}
+            <div class="text-center">
+                {textRecieved}
+            </div>
+        {/if}
+        <div>
+            <span class="p-1 m-2" on:click={closeOverlay}>
+                <Icon path={mdiCloseCircle} size="36px" />
+            </span>
+            <span class="p-1 m-2">
+                <Icon path={mdiCalendar} size="36px" />
+                {dateOfThePersona || "error"}
+            </span>
         </div>
     </div>
 {:else}
@@ -296,7 +297,7 @@
         left: 0;
         text-align: center;
         right: 0;
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(3px);
         bottom: 0;
         background-color: rgba(
             0,
@@ -319,7 +320,7 @@
         border-radius: 5px !important;
         object-fit: cover;
     }
-    #persona__cards{
+    #persona__cards {
         display: flex;
         flex-wrap: wrap;
     }
