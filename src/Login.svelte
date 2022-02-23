@@ -5,9 +5,6 @@
   import { word } from "minifaker";
   import "minifaker/locales/en";
 
-  console.log();
-  console.log(word({ type: "noun" }));
-
   import { mdiEye, mdiEyeOff, mdiReload } from "@mdi/js";
   let username;
   let password;

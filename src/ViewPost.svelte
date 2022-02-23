@@ -2,10 +2,7 @@
     import {
         Card,
         CardText,
-        Button,
         Icon,
-        MaterialApp,
-        CardActions,
         CardSubtitle,
         CardTitle,
     } from "svelte-materialify";
