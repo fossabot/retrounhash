@@ -417,7 +417,9 @@
     document.onkeyup = function (event) {
       if (event.keyCode == localStorage.getItem("keyToNav__enable")) {
         ToogleNav();
-        ToogleInfo();
+        if (isChat) {
+          ToogleInfo();
+        }
       }
     };
   }

@@ -85,14 +85,27 @@
                 Object.entries(data).forEach(async (entry) => {
                     if (entry["key"] == "#") {
                     } else {
-                        const [key, value] = entry;
-                        following_ = [
-                            {
-                                name: key,
-                                pub: value,
-                            },
-                            ...following_,
-                        ];
+                        await db
+                            .user(entry[1])
+                            .get("persona")
+                            .map()
+                            .once(async (data) => {
+                                if (data == undefined) {
+                                    var noPersona = true;
+                                }
+                                return noPersona;
+                            })
+                            .then((noPersona) => {
+                                const [key, value] = entry;
+                                following_ = [
+                                    {
+                                        name: key,
+                                        pub: value,
+                                        hasPersona: noPersona,
+                                    },
+                                    ...following_,
+                                ];
+                            });
                     }
                 });
             });
@@ -248,13 +261,13 @@
                 {#each following_ as following}
                     {#if following.name == "#" || following.name == ">"}
                         <div />
-                    {:else}
+                    {:else if following.hasPersona}
                         <ExpansionPanel>
                             <div slot="header">
                                 {following.name}
                             </div>
                             {#await getPersona(following.pub)}
-                                loading...
+                                empty
                             {:then data}
                                 <div id="persona__cards">
                                     {#each data as data}
@@ -268,6 +281,8 @@
                                 </div>
                             {/await}
                         </ExpansionPanel>
+                    {:else}
+                        ok
                     {/if}
                 {/each}
             </ExpansionPanels>
