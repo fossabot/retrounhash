@@ -1,11 +1,19 @@
 <script>
   import { user, db } from "./user";
-  import { Button, TextField, Card, Alert } from "svelte-materialify";
+  import { Button, TextField, Card, Alert, Icon } from "svelte-materialify";
   import Swal from "sweetalert2";
+  import { word } from "minifaker";
+  import "minifaker/locales/en";
 
+  console.log();
+  console.log(word({ type: "noun" }));
+
+  import { mdiEye, mdiEyeOff, mdiReload } from "@mdi/js";
   let username;
   let password;
+  let passwordType = "password";
   let userName;
+  let eyeIcon = mdiEye;
   let isLoading = false;
 
   const toast = Swal.mixin({
@@ -95,9 +103,23 @@
   if (localStorage.getItem("keys")) {
     db.user().auth(JSON.parse(localStorage.getItem("keys")), () => {
       toast.fire({
-        title: "logged in"
-      })
+        title: "logged in",
+      });
     });
+  }
+
+  function tooglePassSeen() {
+    if (passwordType === "password") {
+      passwordType = "text";
+      eyeIcon = mdiEyeOff;
+    } else {
+      passwordType = "password";
+      eyeIcon = mdiEye;
+    }
+  }
+
+  function generateUsername() {
+    username = word({ type: "adverb" }) + " " + word({ type: "adverb" });
   }
 </script>
 
@@ -114,6 +136,9 @@
             maxlength="20"
             placeholder="JhonDoe1989"
           >
+            <div slot="append" on:click={generateUsername}>
+              <Icon path={mdiReload} />
+            </div>
             Username
           </TextField>
         </div>
@@ -124,8 +149,11 @@
             minlength="8"
             placeholder="************"
             bind:value={password}
-            type="password"
+            bind:type={passwordType}
           >
+            <div slot="append" on:click={tooglePassSeen}>
+              <Icon bind:path={eyeIcon} />
+            </div>
             Password
           </TextField>
         </div>
