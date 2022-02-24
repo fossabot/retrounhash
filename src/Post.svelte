@@ -1,8 +1,8 @@
 <script>
     import Gun from "gun";
-    import { v4 as uuidv4 } from 'uuid';
+    import { v4 as uuidv4 } from "uuid";
 
-    import Swal from "sweetalert2"
+    import Swal from "sweetalert2";
     import { downscaleImage } from "./utils";
     import "gun/lib/rindexed";
     import "gun/sea";
@@ -16,6 +16,7 @@
         CardTitle,
         TextField,
         Button,
+        Switch,
         MaterialApp,
         Textarea,
     } from "svelte-materialify";
@@ -54,7 +55,7 @@
                                 postDescription || "no post description",
                             //date: new Date().toLocaleDateString(),
                             //time: new Date().toLocaleTimeString(),
-                            uid: timeSTR
+                            uid: timeSTR,
                         })
                         .then(async () => {
                             isLoading = false;
@@ -75,6 +76,64 @@
             }
         );
     }
+
+    let getImageUploadSwitchValue;
+    let base64String;
+
+    function imageUploaded() {
+        var file = document.querySelector("#avatar-chooser").files[0];
+
+        var reader = new FileReader();
+        reader.onload = async function () {
+            base64String = reader.result;
+            var userKeys = JSON.parse(sessionStorage.getItem("pair"));
+            db.user().auth(userKeys, async () => {
+                try {
+                    let timeSTR = uuidv4();
+                    await db
+                        .user()
+                        .get("posts")
+                        //.get("post")
+                        //.get("all")
+                        .get(timeSTR)
+                        .put({
+                            description:
+                                postDescription || "no post description",
+                            //date: new Date().toLocaleDateString(),
+                            //time: new Date().toLocaleTimeString(),
+                            uid: timeSTR,
+                        })
+                        .then(async () => {
+                            isLoading = false;
+                            postDescription = "";
+                            Swal.fire({
+                                icon: "success",
+                                title: "post uploaded!",
+                                text: "your post was successfully ploaded to the main network.",
+                            });
+                        });
+                } catch (e) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "oops!",
+                        text: e,
+                    });
+                }
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    $: base64String,
+        async () => {
+            base64String = await compress(base64String, {
+                width: 400,
+                type: "image/jpeg", // default
+                max: 200, // max size
+                min: 20, // min size
+                quality: 0.7,
+            });
+        };
 </script>
 
 <div>
@@ -85,15 +144,38 @@
             <CardText>
                 write an inspiring post, or just post some memes from reddit.
                 <br /><br />
-                <Textarea
-                    id="description"
-                    counter="400"
-                    bind:value={postDescription}
-                    maxLength="400"
-                    placeholder={`type up the post ..`}
-                >
-                    Content of the post
-                </Textarea>
+                {#if !getImageUploadSwitchValue}
+                    <Textarea
+                        id="description"
+                        counter="400"
+                        bind:value={postDescription}
+                        maxLength="400"
+                        placeholder={`type up the post ..`}
+                    >
+                        Content of the post
+                    </Textarea>
+                {/if}
+                <Switch bind:checked={getImageUploadSwitchValue} inset>
+                    upload a picture?
+                </Switch>
+                {#if getImageUploadSwitchValue}
+                    <label for="avatar-chooser" class="p-2">
+                        <img
+                            style="border-radius: 5px;width: 20px !important;height: 20px;"
+                            id="avatarDisplay"
+                            src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
+                            alt="choose your avatar"
+                        />
+                        post a picture.
+                    </label>
+                {/if}
+                <input
+                    type="file"
+                    name="avatar-chooser"
+                    id="avatar-chooser"
+                    on:change={imageUploaded}
+                    accept="image/jpeg"
+                />
             </CardText>
             <CardActions>
                 <Button on:click={createPost}>Create</Button>

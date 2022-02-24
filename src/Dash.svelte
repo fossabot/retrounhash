@@ -77,8 +77,7 @@
                         .then(() => {});
                 });
             });*/
-
-        db.user()
+        /*db.user()
             .get("following")
             .once(async (data) => {
                 delete data._;
@@ -181,6 +180,7 @@
             .then((data) => {});
 
         return arrayPersona;
+    }*/
     }
 
     if (localStorage.getItem("recently_snup") == "true") {
@@ -202,10 +202,10 @@
                         />
                         Chats
                     </Tab>
-                    <Tab>
+                    <!--Tab>
                         <Icon path={mdiDotsCircle} style="margin-right: 5px;" />
                         pērsona
-                    </Tab>
+                    </Tab-->
                 </div>
             </Tabs>
         </div>
@@ -238,7 +238,7 @@
                 {/each}
             </ListItemGroup>
         </WindowItem>
-        <WindowItem>
+        <!--WindowItem>
             <ListItem>
                 <label for="avatar-chooser" class="p-2">
                     <img
@@ -286,9 +286,9 @@
                     {/if}
                 {/each}
             </ExpansionPanels>
-        </WindowItem>
+        </WindowItem-->
     </Window>
-    <div id="overlay">
+    <!--div id="overlay">
         <img src="" alt="" id="overlayImg" />
         {#if textRecieved.length <= 100}
             <div class="text-center">
@@ -304,17 +304,17 @@
                 {dateOfThePersona || "error"}
             </span>
         </div>
-    </div>
+    </div-->
 {:else}
     <Login />
 {/if}
 
 <style>
-    #overlay {
-        position: fixed; /* Sit on top of the page content */
-        display: none; /* Hidden by default */
-        width: 100%; /* Full width (cover the whole page) */
-        height: 100%; /* Full height (cover the whole page) */
+    /*#overlay {
+        position: fixed;
+        display: none; 
+        width: 100%; 
+        height: 100%;
         top: 0;
         left: 0;
         text-align: center;
@@ -326,9 +326,9 @@
             0,
             0,
             0.5
-        ); /* Black background with opacity */
-        z-index: 999999; /* Specify a stack order in case you're using a different order for other elements */
-        cursor: pointer; /* Add a pointer on hover */
+        ); 
+        z-index: 999999; 
+        cursor: pointer;
     }
     #overlayImg {
         margin-top: 5rem;
@@ -337,13 +337,13 @@
         object-fit: cover;
         aspect-ratio: 1/1;
         border-radius: 5px;
-    }
+    }*/
     img {
         border-radius: 5px !important;
         object-fit: cover;
     }
-    #persona__cards {
+    /*#persona__cards {
         display: flex;
         flex-wrap: wrap;
-    }
+    }*/
 </style>
