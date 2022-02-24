@@ -89,29 +89,34 @@
             var userKeys = JSON.parse(sessionStorage.getItem("pair"));
             db.user().auth(userKeys, async () => {
                 try {
-                    let timeSTR = uuidv4();
-                    await db
-                        .user()
-                        .get("posts")
-                        //.get("post")
-                        //.get("all")
-                        .get(timeSTR)
-                        .put({
-                            description:
-                                postDescription || "no post description",
-                            //date: new Date().toLocaleDateString(),
-                            //time: new Date().toLocaleTimeString(),
-                            uid: timeSTR,
-                        })
-                        .then(async () => {
-                            isLoading = false;
-                            postDescription = "";
-                            Swal.fire({
-                                icon: "success",
-                                title: "post uploaded!",
-                                text: "your post was successfully ploaded to the main network.",
-                            });
-                        });
+                    Swal.fire({
+                        title: "enter any description for the img",
+                        input: "text",
+                        text: "describe the pic the way you want",
+                        preConfirm: async (desc) => {
+                            let timeSTR = uuidv4();
+                            await db
+                                .user()
+                                .get("posts")
+                                //.get("post")
+                                //.get("all")
+                                .get(timeSTR)
+                                .put({
+                                    img: base64String,
+                                    description: desc,
+                                    uid: timeSTR,
+                                })
+                                .then(async () => {
+                                    isLoading = false;
+                                    postDescription = "";
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "post uploaded!",
+                                        text: "your post was successfully ploaded to the main network.",
+                                    });
+                                });
+                        },
+                    });
                 } catch (e) {
                     Swal.fire({
                         icon: "error",
@@ -159,13 +164,14 @@
                     upload a picture?
                 </Switch>
                 {#if getImageUploadSwitchValue}
-                    <label for="avatar-chooser" class="p-2">
+                    <label for="avatar-chooser" class="p-2 text-center m-2">
                         <img
-                            style="border-radius: 5px;width: 20px !important;height: 20px;"
+                            style="border-radius: 5px;width: 40px !important;height: 40px;"
                             id="avatarDisplay"
                             src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
                             alt="choose your avatar"
                         />
+                        <br />
                         post a picture.
                     </label>
                 {/if}
@@ -177,9 +183,11 @@
                     accept="image/jpeg"
                 />
             </CardText>
-            <CardActions>
-                <Button on:click={createPost}>Create</Button>
-            </CardActions>
+            {#if !getImageUploadSwitchValue}
+                <CardActions>
+                    <Button on:click={createPost}>Create</Button>
+                </CardActions>
+            {/if}
         </Card>
     </main>
 </div>

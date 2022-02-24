@@ -333,7 +333,7 @@
           type="text"
           placeholder="Type a message..."
           bind:value={newMessage}
-          maxlength="100"
+          maxlength="98"
         />
         <div class="input-group-append navbar__bottom">
           {#if localStorage.getItem("autoscroll") == "true"}

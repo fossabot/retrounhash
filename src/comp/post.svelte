@@ -32,9 +32,21 @@
         </a>
     </CardTitle>
     <CardText>
-        <a href={`/Post/${post.pub}/${post.uid}`}>
-            {post.description}
-        </a>
+        {#if post.img}
+            <img
+                src={post.img}
+                alt=""
+                class="img-fluid"
+                id="img--main"
+            />
+            <div class="text-center m-2 p-1">
+                {post.description}
+            </div>
+        {:else}
+            <a href={`/Post/${post.pub}/${post.uid}`}>
+                {post.description}
+            </a>
+        {/if}
     </CardText>
     <CardSubtitle>
         {new Date(post.date).toLocaleDateString()}- {new Date(
@@ -47,3 +59,8 @@
         {/if}
     </CardSubtitle>
 </Card>
+<style>
+    #img--main{
+        aspect-ratio: auto;
+    }
+</style>

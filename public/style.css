@@ -68,17 +68,22 @@ time {
   margin: 0 1rem;
 }
 
-img {
+/*img {
   width: 40px;
   height: 40px;
   border-radius: 15px;
   margin: 2px 5px;
+}*/
+
+.msg-img{
+  width: 30px;
+  margin: 10px;
+  border-radius: 5px;
 }
 
 .img-fluid{
-  width: 600px;
-  height: auto;
-  max-height: 800px;
+  height: 300px;
+  border-radius: 5px;
 }
 
 .message:last-child {
