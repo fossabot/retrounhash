@@ -3,7 +3,6 @@
     import { v4 as uuidv4 } from "uuid";
 
     import Swal from "sweetalert2";
-    import { downscaleImage } from "./utils";
     import "gun/lib/rindexed";
     import "gun/sea";
     import "gun/lib/radisk";

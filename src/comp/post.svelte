@@ -7,8 +7,9 @@
         CardTitle,
         Icon,
     } from "svelte-materialify";
-    import { mdiShareCircle } from "@mdi/js";
-    import { username } from "../user";
+    import { mdiShareCircle, mdiTrashCan } from "@mdi/js";
+    import { username, db } from "../user";
+    import Swal from "sweetalert2";
 
     export var post;
 
@@ -16,6 +17,25 @@
         navigator.share({
             text: `Hey!, come and see ${post.user}'s post on retorunhash !`,
             url: `/Post/${post.pub}/${post.uid}`,
+        });
+    }
+
+    async function deletePost(uid) {
+        console.log("called", uid);
+        var userKeys = JSON.parse(sessionStorage.getItem("pair"));
+        db.user().auth(userKeys, async () => {
+            await db
+                .user()
+                .get("posts")
+                .get(uid)
+                .put(null)
+                .then(async () => {
+                    await Swal.fire({
+                        title: "deleted",
+                    }).then(() => {
+                        location.reload();
+                    });
+                });
         });
     }
 </script>
@@ -63,9 +83,11 @@
             </div>
         {/if}
     </CardSubtitle>
-    <CardActions>
+    <CardActions class="m-2 p-2">
         {#if $username == post.user}
-            ok
+            <div on:click={deletePost(post.uid)}>
+                <Icon path={mdiTrashCan} />
+            </div>
         {/if}
     </CardActions>
 </Card>
