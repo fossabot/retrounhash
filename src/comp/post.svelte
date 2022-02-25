@@ -33,14 +33,18 @@
     </CardTitle>
     <CardText>
         {#if post.img}
-            <img
-                src={post.img}
-                alt=""
-                class="img-fluid"
-                id="img--main"
-            />
-            <div class="text-center m-2 p-1">
-                {post.description}
+            <div class="text-center">
+                <a href={`/Post/${post.pub}/${post.uid}`}>
+                    <img
+                        src={post.img}
+                        alt=""
+                        class="img-fluid"
+                        id="img--main"
+                    />
+                    <div class="text-center m-2 p-1">
+                        {post.description}
+                    </div>
+                </a>
             </div>
         {:else}
             <a href={`/Post/${post.pub}/${post.uid}`}>
@@ -59,8 +63,13 @@
         {/if}
     </CardSubtitle>
 </Card>
+
 <style>
-    #img--main{
+    #img--main {
         aspect-ratio: auto;
+        object-fit: cover;
+    }
+    a{
+        text-decoration: none;
     }
 </style>

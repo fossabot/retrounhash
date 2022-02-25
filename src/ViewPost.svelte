@@ -74,7 +74,25 @@
                         </a>
                     </CardTitle>
                     <CardText>
-                        {postData.description}
+                        {#if postData.img}
+                            <div class="text-center">
+                                <a href={`/Post/${postData.pub}/${postData.uid}`}>
+                                    <img
+                                        src={postData.img}
+                                        alt=""
+                                        class="img-fluid"
+                                        id="img--main"
+                                    />
+                                    <div class="text-center m-2 p-1">
+                                        {postData.description}
+                                    </div>
+                                </a>
+                            </div>
+                        {:else}
+                            <a href={`/Post/${postData.pub}/${postData.uid}`}>
+                                {postData.description}
+                            </a>
+                        {/if}
                     </CardText>
                     <CardSubtitle>
                         {new Date(postData.date).toLocaleDateString()}- {new Date(
