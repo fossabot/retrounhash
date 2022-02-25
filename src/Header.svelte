@@ -437,9 +437,7 @@
           <img
             src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
             alt="logo_user"
-            width="30"
-            style="border-radius: 5px !important;"
-            height="30"
+            style="border-radius: 3.5px !important;width: 40px !important;height: 40px !important;"
             class="d-inline-block align-text-top"
           />
         {:else}

@@ -8,6 +8,7 @@
         Icon,
     } from "svelte-materialify";
     import { mdiShareCircle } from "@mdi/js";
+    import { username } from "../user";
 
     export var post;
 
@@ -25,7 +26,7 @@
             <img
                 src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
                 alt={`${post.user}'s avatar`}
-                style="border-radius: 5px;"
+                style="border-radius: 3.5px !important;width: 40px !important;height: 40px !important;"
                 class="m-1"
             />
             {post.user}
@@ -62,6 +63,11 @@
             </div>
         {/if}
     </CardSubtitle>
+    <CardActions>
+        {#if $username == post.user}
+            ok
+        {/if}
+    </CardActions>
 </Card>
 
 <style>
@@ -69,7 +75,7 @@
         aspect-ratio: auto;
         object-fit: cover;
     }
-    a{
+    a {
         text-decoration: none;
     }
 </style>

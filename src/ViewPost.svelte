@@ -23,7 +23,7 @@
     };
     let postsReady = false;
 
-    if ($username) {
+    if (username) {
         db.user().auth(JSON.parse(sessionStorage.getItem("pair")), async () => {
             await db
                 .get(`~${pub}`)
@@ -33,12 +33,12 @@
                     await db
                         .get(`~${pub}`)
                         .get("posts")
-                        //.get("post")
-                        //.get("all")
                         .get(uid)
                         .once(async (data) => {
                             data.user = username;
+                            data.date = Gun.state.is(data, "description");
                             postData = data;
+                            console.log(postData)
                         })
                         .then(() => {
                             postsReady = true;
@@ -67,7 +67,7 @@
                             <img
                                 src={`https://avatars.dicebear.com/api/identicon/${postData.user}.svg?backgroundColor=white`}
                                 alt={`${postData.user}'s avatar`}
-                                style="border-radius: 5px;"
+                                style="border-radius: 3.5px !important;width: 40px !important;height: 40px !important;"
                                 class="m-1"
                             />
                             {postData.user}
@@ -76,7 +76,9 @@
                     <CardText>
                         {#if postData.img}
                             <div class="text-center">
-                                <a href={`/Post/${postData.pub}/${postData.uid}`}>
+                                <a
+                                    href={`/Post/${postData.pub}/${postData.uid}`}
+                                >
                                     <img
                                         src={postData.img}
                                         alt=""
@@ -114,3 +116,13 @@
 {:else}
     <Login />
 {/if}
+
+<style>
+    #img--main {
+        aspect-ratio: auto;
+        object-fit: cover;
+    }
+    a {
+        text-decoration: none;
+    }
+</style>
