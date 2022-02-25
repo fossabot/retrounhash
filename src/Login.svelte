@@ -116,7 +116,7 @@
   }
 
   function generateUsername() {
-    username = word({ type: "adverb" }) + " " + word({ type: "adverb" });
+    username = word({ type: "adjective" }) + "-" + word({ type: "noun" });
   }
 </script>
 
