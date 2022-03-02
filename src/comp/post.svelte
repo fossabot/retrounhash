@@ -1,12 +1,5 @@
 <script>
-    import {
-        Card,
-        CardActions,
-        CardSubtitle,
-        CardText,
-        CardTitle,
-        Icon,
-    } from "svelte-materialify";
+    import { Icon } from "svelte-materialify";
     import { mdiShareCircle, mdiTrashCan } from "@mdi/js";
     import { username, db } from "../user";
     import Swal from "sweetalert2";
@@ -40,19 +33,23 @@
     }
 </script>
 
-<Card class="m-1">
-    <CardTitle>
-        <a href={`/User/${post.pub}`}>
-            <img
-                src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
-                alt={`${post.user}'s avatar`}
-                style="border-radius: 3.5px !important;width: 40px !important;height: 40px !important;"
-                class="m-1"
-            />
-            {post.user}
-        </a>
-    </CardTitle>
-    <CardText>
+<div class="card mb-5 mt-5 w-full bg-base-00 shadow-xl">
+    <div class="card-body">
+        <div class="card-title">
+            <a href={`/User/${post.pub}`} class="flex justify-center">
+                <div class="avatar">
+                    <div class="w-10 mask mask-squircle">
+                        <img
+                            src={`https://avatars.dicebear.com/api/identicon/${post.user}.svg?backgroundColor=white`}
+                            alt={`${post.user}'s avatar`}
+                        />
+                    </div>
+                </div>
+                <span class="mt-2 ml-3">
+                    {post.user}
+                </span>
+            </a>
+        </div>
         {#if post.img}
             <div class="text-center">
                 <a href={`/Post/${post.pub}/${post.uid}`}>
@@ -72,25 +69,25 @@
                 {post.description}
             </a>
         {/if}
-    </CardText>
-    <CardSubtitle>
-        {new Date(post.date).toLocaleDateString()}- {new Date(
-            post.date
-        ).toLocaleTimeString()}
-        {#if navigator.canShare}
-            <div class="m-2" on:click={sharePost(post)}>
-                <Icon path={mdiShareCircle} /> Share
-            </div>
-        {/if}
-    </CardSubtitle>
-    <CardActions class="m-2 p-2">
+    </div>
+    <div class="m-2 p-2">
+        <div class="m-1">
+            {new Date(post.date).toLocaleDateString()}- {new Date(
+                post.date
+            ).toLocaleTimeString()}
+        </div>
         {#if $username == post.user}
-            <div on:click={deletePost(post.uid)}>
+            <span on:click={deletePost(post.uid)}>
                 <Icon path={mdiTrashCan} />
-            </div>
+            </span>
         {/if}
-    </CardActions>
-</Card>
+        {#if navigator.canShare}
+            <span class="m-2" on:click={sharePost(post)}>
+                <Icon path={mdiShareCircle} /> Share
+            </span>
+        {/if}
+    </div>
+</div>
 
 <style>
     #img--main {

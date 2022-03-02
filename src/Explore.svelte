@@ -2,10 +2,6 @@
     import Login from "./Login.svelte";
     import Post from "./comp/post.svelte";
     import {
-        Card,
-        CardText,
-        CardTitle,
-        ListItemGroup,
         Icon,
     } from "svelte-materialify";
     import { mdiPostOutline } from "@mdi/js";
@@ -50,19 +46,19 @@
 
 {#if user.is}
     <div>
-        <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
-            <CardTitle class="h2">
-                <Icon path={mdiPostOutline} size="30px" />
-                Posts
-            </CardTitle>
-            <CardText>
-                <ListItemGroup>
-                    {#each posts as post}
-                        <Post {post} />
-                    {/each}
-                </ListItemGroup>
-            </CardText>
-        </Card>
+        <div class="card mb-5 mt-5 w-full rounded-m shadow-xl">
+            <div class="card-body">
+                <div class="card-title text-center">
+                    <Icon path={mdiPostOutline} size="30px" />
+                    <div class="text-xl regular-case">
+                        Posts
+                    </div>
+                </div>
+                {#each posts as post}
+                    <Post {post} />
+                {/each}
+            </div>
+        </div>
     </div>
 {:else}
     <Login />
