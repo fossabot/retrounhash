@@ -1,91 +1,81 @@
 <script>
-    import {
-        Card,
-        CardText,
-        CardActions,
-        CardTitle,
-        Button,
-        Dialog,
-        MaterialApp,
-    } from "svelte-materialify";
-
     import Swal from "sweetalert2";
     import { user, username } from "./user.js";
 
+    const persistUsername = username;
+
     function deleteAccount() {
-        Swal.fire({
+        /*Swal.fire({
             title: "enter your username",
             input: "text",
             showCancelButton: true,
             confirmButtonText: "next",
             showLoaderOnConfirm: true,
-            preConfirm: (_username) => {
-                Swal.fire({
-                    title: "enter your password",
-                    input: "text",
-                    showCancelButton: true,
-                    preConfirm: (password) => {
-                        localStorage.clear();
-                        user.delete(_username, password);
-                        user.leave();
-                        location.href = "/";
-                    },
+            preConfirm: (_username) => {*/
+        Swal.fire({
+            title: "Delete it ?",
+            icon: "warning",
+            confirmButtonText: "destroy",
+            showCancelButton: true,
+            preConfirm: () => {
+                user.delete(JSON.parse(sessionStorage.getItem("pair")), () => {
+                    user.leave();
                 });
+                localStorage.clear();
+                location.href = "/";
             },
         });
+        /*},
+        });*/
     }
 
     function changePassword() {
-        Swal.fire({
+        /* Swal.fire({
             title: "enter your username",
             input: "text",
             confirmButtonText: "next",
             showCancelButton: true,
-            preConfirm: (_name) => {
-                Swal.fire({
-                    title: "enter your password",
-                    input: "password",
-                    confirmButtonText: "next",
-                    preConfirm: (pass) => {
-                        Swal.fire({
-                            title: "enter new password",
-                            confirmButtonText: "change it",
-                            input: "password",
-                            preConfirm: (newPass) => {
-                                user.leave();
-                                user.auth(_name, pass, {
-                                    change: newPass,
-                                });
-                            },
-                        });
-                    },
+            preConfirm: (_name) => {*/
+        Swal.fire({
+            title: "enter new password",
+            confirmButtonText: "change it",
+            input: "password",
+            preConfirm: (newPass) => {
+                user.auth(JSON.parse(sessionStorage.getItem("pair")), {
+                    change: newPass,
                 });
             },
         });
+        /*},
+        });*/
     }
 </script>
 
 <div>
     <main>
-        <div class="display-2 m-2 text-center">Account</div>
-        <Card class="m-2">
-            <CardTitle>Delete my account</CardTitle>
-            <CardText>
-                After this action, your account will be permanently deleted and
-                will stand no way to recover.
-            </CardText>
-            <CardActions>
-                <Button on:click={deleteAccount}>Delete my account</Button>
-            </CardActions>
-        </Card>
-        <Card class="m-2">
-            <CardTitle>Change your password</CardTitle>
-            <CardText>
+        <div class="text-xl text-center regular-case">Account</div>
+        <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="card-title">Delete my account</div>
+                After this action, your account will be permanently deleted and will
+                stand no way to recover.
+            </div>
+            <div class="m-2">
+                <button class="btn btn-danger m-2" on:click={deleteAccount}
+                    >Delete my account</button
+                >
+            </div>
+        </div>
+        <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="card-title">Change your password</div>
                 here, you can change tour password and have a new one :)
-            </CardText>
-            <CardActions>
-                <Button on:click={changePassword}>Change Password</Button>
-            </CardActions>
-        </Card>
+            </div>
+            <div class="m-2">
+                <button class="btn btn-warning m-2" on:click={changePassword}
+                    >Change Password</button
+                >
+            </div>
+        </div>
     </main>
 </div>

@@ -1,69 +1,61 @@
 <script>
-    import { Card, CardText, CardTitle, MaterialApp } from "svelte-materialify";
     import { user, username } from "./user.js";
 
     var pubKeyUser = JSON.parse(sessionStorage.getItem("pair")) || {
-        pub: ''
+        pub: "",
     };
-    
 </script>
 
 <div>
     <main>
-        <div class="h3 m-2 text-center">Info</div>
+        <h1 class="text-center text-xl normal-case">Info</h1>
         {#if $username}
-            <Card class="m-2">
-                <CardTitle>Basic Info</CardTitle>
-                <CardText>
+            <div class="card w-full m-4 bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <div class="card-title">Basic Info</div>
                     Username:
                     <span style="user-select: all;">
                         {$username || "not logged in !"}
                     </span>
                     <br />
                     Public Key:
-                    <a href={`/User/`+pubKeyUser.pub}>
-                    <code style="user-select: all;">
-                        {pubKeyUser.pub}
-                    </code>
+                    <a href={`/User/` + pubKeyUser.pub}>
+                        <code style="user-select: all;">
+                            {pubKeyUser.pub}
+                        </code>
                     </a>
-                </CardText>
-            </Card>
-        {/if}
-        <Card class="m-2">
-            <CardTitle>Attribution</CardTitle>
-            <CardText>
-                <div class="m-3 h4">
-                    Some libraries and frameworks this application uses.
                 </div>
+            </div>
+        {/if}
+        <div class="card w-full m-4 bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="card-title">Attribution</div>
+                <div>Some libraries and frameworks this application uses.</div>
                 <a href="https://github.com/amark/gun"
                     ><img
                         alt="amark/gun"
-                        class="img-fluid"
                         src="https://gh-card.dev/repos/amark/gun.svg?fullname="
                     /></a
                 ><br />
                 <a href="https://github.com/TheComputerM/svelte-materialify"
                     ><img
                         alt=""
-                        class="img-fluid"
                         src="https://gh-card.dev/repos/TheComputerM/svelte-materialify.svg?fullname="
                     /></a
                 ><br />
                 <a href="https://github.com/AlexxNB/tinro"
                     ><img
                         alt=""
-                        class="img-fluid"
                         src="https://gh-card.dev/repos/AlexxNB/tinro.svg"
                     /></a
                 ><br />
                 <a href="https://github.com/Templarian/MaterialDesign-JS"
                     ><img
                         alt=""
-                        class="img-fluid"
                         src="https://gh-card.dev/repos/Templarian/MaterialDesign-JS.svg"
                     /></a
                 ><br />
-            </CardText>
-        </Card>
+            </div>
+        </div>
     </main>
 </div>

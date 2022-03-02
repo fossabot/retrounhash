@@ -1,6 +1,5 @@
 <script>
   import { user, db } from "./user";
-  import { Button, TextField, Card, Alert, Icon } from "svelte-materialify";
   import Swal from "sweetalert2";
   import { word } from "minifaker";
   import "minifaker/locales/en";
@@ -121,49 +120,43 @@
 </script>
 
 <div>
-  <Card bind:disabled={isLoading} bind:loading={isLoading}>
-    <div class="container blur" style="padding: 20px;">
+  <div class="card w-650 m-4 bg-base-100 shadow-xl">
+    <div class="container p-2 w-600">
       <div class="form m-3 p-2 ">
         <div class="mb-3">
-          <TextField
+          <input
             name="Username"
-            counter="20"
+            class="input input-bordered input-success w-full"
             bind:value={username}
             minlength="3"
             maxlength="20"
-            placeholder="JhonDoe1989"
-          >
-            <div slot="append" on:click={generateUsername}>
-              <Icon path={mdiReload} />
-            </div>
-            Username
-          </TextField>
+            placeholder="Mark Willson"
+          />
+          <!--span on:click={generateUsername}>
+            <Icon path={mdiReload} />
+          </span-->
         </div>
         <div class="mb-3">
-          <TextField
+          <input
+            class="input input-bordered input-success w-full"
             name="Password"
-            counter="8"
-            minlength="8"
             placeholder="************"
             bind:value={password}
-            bind:type={passwordType}
-          >
-            <div slot="append" on:click={tooglePassSeen}>
-              <Icon bind:path={eyeIcon} />
-            </div>
-            Password
-          </TextField>
+            type="password"
+          />
+          <!--span on:click={tooglePassSeen}>
+            <Icon bind:path={eyeIcon} />
+          </span-->
         </div>
-        <Alert class="primary-text" text border="left">
-          By signing up or login in you agree to our <a
-            target="_blank"
-            href="https://retrounhash.js.cool/termsOfUse.html"
+        <div class="alert shadow-m m-1 p-1">
+          By signing up or login in you agree to our
+          <a target="_blank" href="https://retrounhash.js.cool/termsOfUse.html"
             >terms of service</a
           >
-        </Alert>
-        <Button on:click={login}>Login</Button>
-        <Button on:click={signup}>Sign Up</Button>
+        </div>
+        <button class="btn btn-primary m-2" on:click={login}>Login</button>
+        <button class="btn btn-secondary m-2" on:click={signup}>Sign Up</button>
       </div>
     </div>
-  </Card>
+  </div>
 </div>

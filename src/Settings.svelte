@@ -1,15 +1,4 @@
 <script>
-    import {
-        Card,
-        TextField,
-        CardText,
-        CardActions,
-        CardTitle,
-        Button,
-        Switch,
-        MaterialApp,
-    } from "svelte-materialify";
-
     let showAutoscroll;
     let encryptionValue = localStorage.getItem("_secret") || "";
     let enableSwipe;
@@ -60,7 +49,7 @@
         localStorage.setItem("theme", theme);
     }
 
-    let encryptionPlaceholder = localStorage.getItem("_secret") || "";
+    let encryptionPlaceholder = localStorage.getItem("_secret") || false;
 
     function changeKey() {
         keyConfigName = "press the new key";
@@ -72,80 +61,91 @@
     }
 </script>
 
-<div>
-    <main>
-        <div class="h2 m-2 text-center">Settings</div>
-        <Card class="m-2">
-            <CardTitle>Show autoscroll?</CardTitle>
-            <CardText>
-                the autoscroll button apears next to the send button and help in
-                going down the message list quickly.
-            </CardText>
-            <CardActions>
-                <Switch bind:checked={showAutoscroll} inset>
-                    {showAutoscroll}
-                </Switch>
-            </CardActions>
-        </Card>
-        <Card class="m-2">
-            <CardTitle>Custom Encryption</CardTitle>
-            <CardText>
-                you can encrypt your messages with custom encryption keys so
-                that only you and someone with the same key will be able to see
-                your messages.
-            </CardText>
-            <CardActions>
-                <TextField
-                    bind:value={encryptionValue}
-                    counter="10"
-                    bind:placeholder={encryptionPlaceholder}
-                    >enter your keyword here</TextField
-                >
-            </CardActions>
-        </Card>
-        <Card class="m-2">
-            <CardTitle>Enable swipe gestures ?</CardTitle>
-            <CardText>
-                if you are on a mobile, you can use swipe genstures to open
-                drawers and to navigate with an ease.
-            </CardText>
-            <CardActions>
-                <Switch bind:checked={enableSwipe} inset>
-                    {enableSwipe}
-                </Switch>
-            </CardActions>
-        </Card>
-        <Card class="m-2">
-            <CardTitle>Enable key bindings ?</CardTitle>
-            <CardText>
-                if you are on a pc, you can use keys (Ctrl by default) to open
-                drawers and to navigate with an ease.
-            </CardText>
-            <CardActions>
-                <Switch class="m-2" bind:checked={enableKey} inset>
-                    {enableKey}
-                </Switch>
-                {#if enableKey}
-                    <Button class="m-2" on:click={changeKey}>
-                        {keyConfigName || "Change the key"}
-                    </Button>
-                {/if}
-            </CardActions>
-        </Card>
-        <Card class="m-2">
-            <CardTitle>Enable Dark mode ?</CardTitle>
-            <CardText>
-                Dark more relives stress on eyes. moreover saved battery :)
-            </CardText>
-            <CardActions>
-                <Switch cass="m-2" bind:checked={theme} inset>
-                    {theme}
-                </Switch>
-            </CardActions>
-        </Card>
-        <div class="m-2 h4 form-text text-muted text-center">
-            settings are automattically saved
+<div class="text-xl text-center regular-case">Settings</div>
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="card-title">Show autoscroll?</div>
+        the autoscroll button apears next to the send button and help in going down
+        the message list quickly.
+        <div class="m-2">
+            <input
+                type="checkbox"
+                bind:checked={showAutoscroll}
+                class="toggle"
+            />
+            <span class="p-2">
+                {showAutoscroll}
+            </span>
         </div>
-        <div class="p-2" />
-    </main>
+    </div>
+</div>
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="card-title">Custom Encryption</div>
+        you can encrypt your messages with custom encryption keys so that only you
+        and someone with the same key will be able to see your messages.
+    </div>
+    <div class="m-2">
+        <input
+            bind:value={encryptionValue}
+            class="input w-full input-bordered input-success m-1"
+            placeholder="enter the encryption key"
+        />
+        <br />
+        {#if encryptionPlaceholder}
+            <div class="m-2 text-m">
+                current key is : <code>{encryptionPlaceholder}</code>
+            </div>
+        {/if}
+    </div>
+</div>
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="card-title">Enable swipe gestures ?</div>
+        if you are on a mobile, you can use swipe genstures to open drawers and to
+        navigate with an ease.
+        <div class="m-2">
+            <input type="checkbox" bind:checked={enableSwipe} class="toggle" />
+            <span class="p-2">
+                {enableSwipe}
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="card-title">Enable key bindings ?</div>
+        if you are on a pc, you can use keys (Ctrl by default) to open drawers and
+        to navigate with an ease.
+        <div class="m-2">
+            <input type="checkbox" bind:checked={enableKey} class="toggle" />
+            <span class="p-2">
+                {enableKey}
+            </span>
+            {#if enableKey}
+                <button class="btn btn-info m-1" on:click={changeKey}>
+                    {keyConfigName || "Change the key"}
+                </button>
+            {/if}
+        </div>
+    </div>
+</div>
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="card-title">Enable Dark mode ?</div>
+
+        Dark more relives stress on eyes. moreover saves battery :)
+
+        <div class="m-2">
+            <input type="checkbox" bind:checked={theme} class="toggle" />
+            <span class="p-2">
+                {theme}
+            </span>
+        </div>
+    </div>
+    <div class="m-2 h4 form-text text-muted text-center">
+        settings are automattically saved
+    </div>
+    <span class="p-2" />
 </div>

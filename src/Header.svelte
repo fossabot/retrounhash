@@ -426,61 +426,102 @@
 </script>
 
 <div>
-  <br /><br /><br />
-  <nav
-    class="navbar navbar-dark fixed-top blur"
-    style="background: rgba(83, 158, 138, 0.8);backdrop-filter: blur(2px);"
-  >
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">
-        {#if $username}
-          <img
-            src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
-            alt="logo_user"
-            style="border-radius: 3.5px !important;width: 40px !important;height: 40px !important;"
-            class="d-inline-block align-text-top"
-          />
-        {:else}
-          <img
-            src="/favicon.ico"
-            alt="icon"
-            width="30"
-            height="30"
-            style="border-radius: 5px !important;"
-            class="d-inline-block align-text-top"
-          />
-        {/if}
-      </a>
-      <div class="text-center h5">
-        retrounhash<span id="channelName" />
-      </div>
-      {#if isChat}
-        <button class="navbar-toggler" type="button" on:click={ToogleInfo}>
-          <Icon path={mdiInformationOutline} />
-        </button>
-      {/if}
-      <button
-        class="navbar-toggler"
-        type="button"
-        aria-label="Toggle navigation"
-        on:click={ToogleNav}
-      >
-        <Icon path={mdiMenu} />
+  <!--div class="navbar bg-base-100 mb-40 shadow-xl rounded-box">
+    <div class="navbar-start">
+      <button class="btn btn-square btn-ghost" on:click={ToogleNav}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block w-5 h-5 stroke-current"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          /></svg
+        >
       </button>
     </div>
-  </nav>
+      <div class="avatar">
+        <div class="w-10 mask mask-squircle">
+          {#if $username}
+            <img
+              src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
+              alt="logo_user"
+            />
+          {:else}
+            <img src="/favicon.ico" alt="icon" width="30" height="30" />
+          {/if}
+        </div>
+    </div>
+    <div class="navbar-center normal-case text-xl">
+      retrounhash<span id="channelName" />
+    </div>
+    {#if isChat}
+      <div class="navbar-end">
+        <button on:click={ToogleInfo}>
+          <Icon path={mdiInformationOutline} />
+        </button>
+      </div>
+    {/if}
+  </div-->
+
+  <div class="navbar mb-3 shadow-xl rounded-box">
+    <div class="flex-1">
+      <a href="/" class="btn btn-ghost normal-case text-xl">
+        retrounhash<span id="channelName" />
+      </a>
+    </div>
+    <div class="flex-none">
+      {#if isChat}
+        <div class="navbar-end">
+          <button on:click={ToogleInfo}>
+            <Icon path={mdiInformationOutline} />
+          </button>
+        </div>
+      {/if}
+      <div class="dropdown dropdown-end">
+        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            {#if $username}
+              <img
+                src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
+                alt="logo_user"
+              />
+            {:else}
+              <img src="/favicon.ico" alt="icon" width="30" height="30" />
+            {/if}
+          </div>
+        </label>
+        <ul
+          tabindex="0"
+          class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+        >
+          {#if $username}
+            <li><a href="/Account">Profile</a></li>
+            <li><a href="/Create">Create Room</a></li>
+            <li><a href="/Post">Create Post</a></li>
+            <li><a href="/Search">Search user</a></li>
+            <li><a href="/Explore">Explore</a></li>
+            <li><a href="/Settings">Settings</a></li>
+          {/if}
+          <li><a href="/About">About</a></li>
+          {#if $username}
+            <li><span on:click={signout}>Logout</span></li>
+          {/if}
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 <div>
-  <NavigationDrawer
-    style="overflow: auto;height: 100%;position: fixed;z-index: 9999999999;"
-    absolute
-    bind:active={NavActive}
-  >
+  <!--NavigationDrawer absolute bind:active={NavActive}>
     <List>
       {#if /\/room(.*)/.test(location.pathname)}
-        <div class="m-2 h3 text-center">Chats</div>
+        <div>Chats</div>
         {#if !localStorage.getItem("items") || localStorage.getItem("items") == "[]"}
-          <div class="m-2">empty!</div>
+          <div>empty!</div>
         {:else}
           {#each items as item, i (item)}
             {#await returnNull(item)}
@@ -496,13 +537,8 @@
         {/if}
       {:else}
         {#if !$username}
-          <div class="text-center">
-            <img
-              style="width: 100px !important;"
-              class="img-fluid"
-              src="/favicon.ico"
-              alt="site logo"
-            />
+          <div>
+            <img src="/favicon.ico" alt="site logo" />
           </div>
           <a href="/chat"><ListItem><Icon path={mdiLogin} /> Login</ListItem></a
           >
@@ -511,9 +547,8 @@
           >
         {/if}
         {#if $username}
-          <div class="text-center">
+          <div>
             <img
-              style="width: 100px !important;height: 100px;"
               src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
               alt=""
             />
@@ -545,22 +580,12 @@
         {/if}
       {/if}
     </List>
-  </NavigationDrawer>
-  <NavigationDrawer
-    style="overflow: auto;height: 100%;position: fixed;z-index: 9999999999;"
-    absolute
-    bind:active={InfoState}
-  >
+  </NavigationDrawer-->
+  <NavigationDrawer absolute bind:active={InfoState}>
     <List>
-      <div class="text-center">
+      <div>
         <label for="avatar-changer">
-          <img
-            src=""
-            id="roomImage"
-            alt=""
-            style="object-fit: cover;width: 100px !important;height: 100px !important;border-radius: 5px;"
-            class="img-fluid"
-          />
+          <img src="" id="roomImage" alt="" />
         </label>
         <input
           type="file"
@@ -570,21 +595,12 @@
           accept="image/jpeg"
         />
       </div>
-      <div
-        on:dblclick={changeRoomName}
-        id="InfoRoomName"
-        class="m-2 h3 text-center"
-      >
+      <div on:dblclick={changeRoomName} id="InfoRoomName">
         {roomName || "loading..."}
       </div>
       <Divider />
-      <div class="m-2 h4">About:</div>
-      <div
-        on:dblclick={changeRoomDescription}
-        id="InfoDescription"
-        class="m-2 h5"
-        style="overflow: scroll;"
-      >
+      <div>About:</div>
+      <div on:dblclick={changeRoomDescription} id="InfoDescription">
         {roomDescription || "loading..."}
       </div>
       <ListItem on:click={share_link}
@@ -604,8 +620,6 @@
       {/if}
     </List>
     <Divider />
-    <Alert class="primary-text" text border="left">
-      double tap data to edit it! ( if you're the admin )
-    </Alert>
+    <Alert>double tap data to edit it! ( if you're the admin )</Alert>
   </NavigationDrawer>
 </div>
