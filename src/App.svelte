@@ -14,7 +14,7 @@
   import Profile from "./Profile.svelte";
   import Search from "./Search.svelte";
   import ViewPost from "./ViewPost.svelte";
-  import { username as user } from "./user";
+  import { username } from "./user";
 
   let theme;
 
@@ -26,15 +26,11 @@
 </script>
 
 <MaterialApp {theme}>
-  {#if user}
+  {#if $username}
     <div class="app">
       <Route path="/">
         <Header />
-        {#if user}
-          <Dash />
-        {:else}
-          <Main />
-        {/if}
+        <Dash />
       </Route>
       <Route path="/chat">
         <Header />

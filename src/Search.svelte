@@ -1,16 +1,7 @@
 <script>
     import Login from "./Login.svelte";
-    import {
-        Card,
-        CardText,
-        CardTitle,
-        CardActions,
-        TextField,
-        Button,
-        MaterialApp,
-        Icon,
-    } from "svelte-materialify";
-    import { mdiPostOutline } from "@mdi/js";
+    import { Icon } from "svelte-materialify";
+    import { mdiBadgeAccountHorizontalOutline, mdiPostOutline } from "@mdi/js";
     import { username } from "./user.js";
     import { db2 } from "./gunInstance";
 
@@ -57,52 +48,53 @@
 </script>
 
 {#if $username}
-    <div>
-        <div class="display-2 m-2 text-center" />
-        <Card class="m-2">
-            <CardTitle>
+    <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="card-title">
                 <Icon path={mdiPostOutline} size="30px" />
                 Search users
-            </CardTitle>
-            <CardText class="h2">enter public key of the user</CardText>
-            <CardActions>
-                <TextField bind:value={pubKey}>
-                    Paste the public key here
-                </TextField>
-            </CardActions>
-        </Card>
-        <Card
-            bind:disabled={isLoading}
-            bind:loading={isLoading}
-            class="p-2 text-center"
-        >
-            <CardTitle>User Information</CardTitle>
+            </div>
+        </div>
+        <div class="m-4 text-xl">Enter the public key of the user</div>
+        <div class="m-2">
+            <input
+                class="input w-full input-bordered input-secondary"
+                placeholder="enter the public key of the user"
+                bind:value={pubKey}
+            />
+        </div>
+    </div>
+    <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl text-center">
+        <div class="card-body">
+            <div class="card-title">User Information</div>
             {#if userName}
-                <img
-                    src={`https://avatars.dicebear.com/api/identicon/${userName}.svg?backgroundColor=white`}
-                    alt=""
-                    style="border-radius: 5px !important;"
-                />
-                <br />
-                <div class="m-2 h3">
+                <div class="text-center">
+                    <div class="avatar">
+                        <div class="w-24 mask mask-squircle">
+                            <img
+                                src={`https://avatars.dicebear.com/api/identicon/${userName}.svg?backgroundColor=white`}
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 text-xl text-center">
                     {userName}
                 </div>
-                <a href={`/User/${pubKey}`}>
-                    <Button>
-                        see {userName}'s profile
-                    </Button>
+                <a class="btn btn-success" href={`/User/${pubKey}`}>
+                    see profile
                 </a>
-                <Button on:click={shareProfile}>
-                    Share {userName}'s profile
-                </Button>
+                <button class="btn btn-info" on:click={shareProfile}>
+                    Share profile 
+                </button>
             {:else}
-                <div class="m-2 h3 p-1">user not found</div>
+                <div class="m-2 text-xl camelcase">user not found</div>
                 <br />
-                <div class="form-text">
+                <div class="text-m text-center">
                     try entering the exact public key of the user to find
                 </div>
             {/if}
-        </Card>
+        </div>
     </div>
 {:else}
     <Login />

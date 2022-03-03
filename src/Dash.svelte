@@ -12,15 +12,8 @@
         Window,
         WindowItem,
         AppBar,
-        ExpansionPanel,
-        ExpansionPanels,
     } from "svelte-materialify";
-    import {
-        mdiCalendar,
-        mdiChatOutline,
-        mdiCloseCircle,
-        mdiDotsCircle,
-    } from "@mdi/js";
+    import { mdiChatOutline } from "@mdi/js";
 
     import { user, username, db } from "./user.js";
 
@@ -184,7 +177,10 @@
     }
 
     if (localStorage.getItem("recently_snup") == "true") {
-        localStorage.setItem("keys", sessionStorage.getItem("pair"));
+        if (sessionStorage.getItem("pair") == null) {
+        } else {
+            localStorage.setItem("keys", sessionStorage.getItem("pair"));
+        }
         localStorage.setItem("recently_snup", "false");
     }
 </script>
@@ -337,12 +333,12 @@
         object-fit: cover;
         aspect-ratio: 1/1;
         border-radius: 5px;
-    }*/
+    }
     img {
         border-radius: 5px !important;
         object-fit: cover;
     }
-    /*#persona__cards {
+    #persona__cards {
         display: flex;
         flex-wrap: wrap;
     }*/

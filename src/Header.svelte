@@ -134,7 +134,7 @@
 
   let NameOfTheRecentRoom;
   let roomDescription;
-  let roomName;
+  let roomName = "";
 
   //async function computeName() {
   db3
@@ -143,9 +143,8 @@
     .get("profile")
     .get("name")
     .on(async (data) => {
-      roomName = data;
       if (/\/room(.*)/.test(location.pathname)) {
-        document.querySelector("#channelName").innerHTML = " / " + data;
+        roomName = data;
         document.title = data + " | retrounhash";
       }
     });
@@ -380,12 +379,15 @@
 <div class="navbar mb-3 shadow-xl rounded-box">
   <div class="flex-1">
     <a href="/" class="btn btn-ghost normal-case text-xl">
-      retrounhash<span id="channelName" />
+      retrounhash 
+      {#if roomName && roomName !== ""}
+         / {roomName}
+      {/if}
     </a>
   </div>
   <div class="flex-none">
     {#if isChat}
-      <div class="navbar-end">
+      <div class="navbar-end m-2">
         <button on:click={ToogleInfo}>
           <Icon path={mdiInformationOutline} />
         </button>
@@ -427,7 +429,7 @@
   </div>
 </div>
 
-<NavigationDrawer absolute bind:active={InfoState}>
+<NavigationDrawer fixed bind:active={InfoState}>
   <div class="p-2">
     <div>
       <label for="avatar-changer" class="text-center">
@@ -447,7 +449,7 @@
       />
     </div>
     <div
-      class="text-center text-m"
+      class="text-center text-xl regular-case"
       on:dblclick={changeRoomName}
       id="InfoRoomName"
     >
@@ -479,7 +481,7 @@
     {/if}
   </div>
   <hr />
-  <div class="alert shadow-lg">
+  <div class="alert shadow-lg m-1">
     double tap data to edit it! ( if you're the admin )
   </div>
 </NavigationDrawer>

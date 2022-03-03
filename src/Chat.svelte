@@ -278,9 +278,8 @@
     </main>
     <form
       autocomplete="off"
-      style="backdrop-filter: blur(10px);background: transparent;"
       on:submit|preventDefault={sendMessage}
-      class="fixed-bottom navbar"
+      class="navbar backdrop-blur-sm"
     >
       <span class="emoji__">
         <emoji-picker
@@ -290,71 +289,55 @@
           on:emoji-click={parseEmoji}
         />
       </span>
-      <div class="input-group mb-2 navbar__bottom">
-        <div class="input-group-prepend navbar__bottom">
+      <div class="">
+        <div>
           <span
-            class="input-group-text navbar__bottom"
+            class="m-1"
             style="height: 38px;"
             id="emoji_add"
             on:click={selectEmoji}
           >
             <Icon path={mdiEmoticonWinkOutline} />
-            <!--i class="fas fa-laugh-wink fa-lg" /-->
           </span>
-          <span
-            class="input-group-text navbar__bottom"
-            style="height: 38px;"
-            id="record"
-            on:click={record}
-          >
+          <span class="m-1" style="height: 38px;" id="record" on:click={record}>
             <Icon path={mdiMicrophoneOutline} />
-            <!--i class="fas fa-microphone-alt fa-lg" /-->
           </span>
-          <label
-            style="height: 38px;"
-            for="image-send-picker"
-            class="custom-file-upload input-group-text navbar__bottom"
-          >
+          <label class="m-1" style="height: 38px;" for="image-send-picker">
             <Icon path={mdiImageOutline} />
-            <!--i class="fas fa-image fa-lg" /-->
           </label>
           <input
             type="file"
             name=""
             id="image-send-picker"
             on:change={imageUploaded}
-            accept="image/*"
+            accept="image/jpeg"
+            class="hidden"
           />
         </div>
         <input
-          style="background: white;"
           id="submit__area__main__"
-          class="form-control navbar__bottom"
+          class="input input-bordered"
           type="text"
           placeholder="Type a message..."
           bind:value={newMessage}
           maxlength="98"
         />
-        <div class="input-group-append navbar__bottom">
+        <div class="">
           {#if localStorage.getItem("autoscroll") == "true"}
             <button
+              class="m-1 btn btn-ghost"
               type="button"
-              style="height: 38px;"
-              class="btn input-group-text navbar__bottom"
               on:click={autoScroll}
             >
               <Icon path={mdiArrowDownCircleOutline} />
-              <!--i class="fas fa-angle-down fa-lg" /-->
             </button>
           {/if}
           <button
             type="submit"
-            style="height: 38px;"
-            class="btn input-group-text navbar__bottom"
+            class="m-1 btn btn-ghost"
             disabled={!newMessage}
           >
             <Icon path={mdiSendOutline} />
-            <!--i class="fas fa-angle-double-right fa-2x" /-->
           </button>
         </div>
       </div>
@@ -365,11 +348,12 @@
     </main>
   {/if}
 </div>
-{#if localStorage.getItem("theme") == "true"}
-  <style>
-    .navbar__bottom {
-      background: black !important;
-      color: white !important;
-    }
-  </style>
-{/if}
+
+<style>
+  .navbar {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+</style>
