@@ -1,25 +1,11 @@
 <script>
-    import Gun from "gun";
     import { v4 as uuidv4 } from "uuid";
 
     import Swal from "sweetalert2";
-    import "gun/lib/rindexed";
+    /*import "gun/lib/rindexed";
     import "gun/sea";
     import "gun/lib/radisk";
     import "gun/lib/radix";
-
-    import {
-        Card,
-        CardText,
-        CardActions,
-        CardTitle,
-        TextField,
-        Button,
-        Switch,
-        MaterialApp,
-        Textarea,
-    } from "svelte-materialify";
-    import { user, username } from "./user.js";
 
     const db = new Gun({
         peers: [
@@ -30,9 +16,10 @@
         rindexed: true,
         radisk: true,
         localStorage: false,
-    });
+    });*/
 
-    let postTitle;
+    import { db } from "./user"
+
     let postDescription;
     let isLoading = false;
 
@@ -97,11 +84,9 @@
                             await db
                                 .user()
                                 .get("posts")
-                                //.get("post")
-                                //.get("all")
                                 .get(timeSTR)
                                 .put({
-                                    img: base64String,
+                                    img: await base64String,
                                     description: desc,
                                     uid: timeSTR,
                                 })
@@ -133,9 +118,9 @@
             base64String = await compress(base64String, {
                 width: 400,
                 type: "image/jpeg", // default
-                max: 200, // max size
+                max: 100, // max size
                 min: 20, // min size
-                quality: 0.7,
+                quality: 0.5,
             });
         };
 </script>
@@ -143,35 +128,41 @@
 <div>
     <main>
         <div class="h2 m-2 text-center">Create a post</div>
-        <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
-            <CardTitle>Create a post your followers will see</CardTitle>
-            <CardText>
+        <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="card-title">
+                    Create a post your followers will see
+                </div>
                 write an inspiring post, or just post some memes from reddit.
                 <br /><br />
                 {#if !getImageUploadSwitchValue}
-                    <Textarea
-                        id="description"
-                        counter="400"
+                    <textarea
+                        class="textarea bordered textarea-accent"
+                        id="postDescription"
                         bind:value={postDescription}
-                        maxLength="400"
-                        placeholder={`type up the post ..`}
-                    >
-                        Content of the post
-                    </Textarea>
+                        maxlength="400"
+                        placeholder="type up the post .."
+                    />
                 {/if}
-                <Switch bind:checked={getImageUploadSwitchValue} inset>
-                    upload a picture?
-                </Switch>
+                <label for="uploadedSwitch"> upload picture ? </label>
+                <input
+                    type="checkbox"
+                    bind:checked={getImageUploadSwitchValue}
+                    class="toggle toggle-primary"
+                    id="uploadedSwitch"
+                />
                 {#if getImageUploadSwitchValue}
-                    <label for="avatar-chooser" class="p-2 text-center m-2">
-                        <img
-                            style="border-radius: 5px;width: 40px !important;height: 40px;"
-                            id="avatarDisplay"
-                            src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
-                            alt="choose your avatar"
-                        />
+                    <label for="avatar-chooser" class="p-2 m-2">
+                        <div class="avatar">
+                            <div class="w-24 mask mask-squircle">
+                                <img
+                                    src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
                         <br />
-                        post a picture.
+                        <div class="m-1 text-l p-1">post picture.</div>
                     </label>
                 {/if}
                 <input
@@ -180,13 +171,16 @@
                     id="avatar-chooser"
                     on:change={imageUploaded}
                     accept="image/jpeg"
+                    class="hidden"
                 />
-            </CardText>
-            {#if !getImageUploadSwitchValue}
-                <CardActions>
-                    <Button on:click={createPost}>Create</Button>
-                </CardActions>
-            {/if}
-        </Card>
+                {#if !getImageUploadSwitchValue}
+                    <div class="m-1 p-1">
+                        <button class="btn btn-success" on:click={createPost}
+                            >Create</button
+                        >
+                    </div>
+                {/if}
+            </div>
+        </div>
     </main>
 </div>

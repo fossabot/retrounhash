@@ -6,17 +6,6 @@
     import "gun/lib/radix";
     import compress from "compress-base64";
     import Swal from "sweetalert2";
-
-    import {
-        Card,
-        CardText,
-        CardActions,
-        CardTitle,
-        TextField,
-        Button,
-        MaterialApp,
-        Textarea,
-    } from "svelte-materialify";
     import { user, username } from "./user.js";
 
     const db = new Gun({
@@ -41,7 +30,7 @@
                 db.user().get("host").get("key").put(enc);
                 const cert = await SEA.certify(
                     "*",
-                    { "*": "chat" }, //, "+": "*" },
+                    { "*": "chat" },
                     room,
                     null,
                     {
@@ -155,21 +144,24 @@
 
 <div>
     <main>
-        <div class="h2 m-2 text-center">Manage Room</div>
-        <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
-            <CardTitle>Create a chat room</CardTitle>
-            <CardText>
+        <div class="m-4 text-xl text-center">Manage Room</div>
+        <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="card-title">Create Chat Room</div>
                 Make a chat room where you are the moderator.
                 <br />
                 <br />
                 <div class="text-center">
-                    <label for="avatar-chooser">
-                        <img
-                            style="border-radius: 5px;width: 100px !important;height: 100px;object-fit: cover;"
-                            id="avatarDisplay"
-                            src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
-                            alt="choose your avatar"
-                        />
+                    <label for="avatar-chooser" class="text-center w-full">
+                        <div class="avatar">
+                            <div class="w-24 mask mask-squircle">
+                                <img
+                                    id="avatarDisplay"
+                                    src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
+                                    alt="choose room avatar"
+                                />
+                            </div>
+                        </div>
                         <br />
                         Choose The Pic For your Room
                     </label>
@@ -180,35 +172,38 @@
                     id="avatar-chooser"
                     on:change={imageUploaded}
                     accept="image/jpeg"
+                    class="hidden"
                 />
                 <br /><br />
-                <TextField
+                <input
+                    type="text"
+                    class="input input-bordered w-full max-w-xs"
                     id="roomName"
                     bind:value={roomName}
-                    counter="30"
                     maxLength="30"
                     minLength="3"
                     placeholder={`${$username}'s space`}
-                >
-                    Name Of The Room
-                </TextField>
-                <Textarea
+                />
+                <textarea
+                    class="textarea textarea-bordered"
                     id="description"
-                    counter="400"
                     maxLength="400"
                     placeholder={`explain why the person should join ${
                         roomName || "this room"
                     }`}
+                />
+                <input
+                    class="input input-bodered w-full max-w-xs"
+                    id="data"
+                    type="number"
+                    placeholder="self destruction after n days."
+                />
+            </div>
+            <div class="m-2">
+                <button class="btn btn-success" on:click={createRoom}
+                    >Create</button
                 >
-                    Description for the room
-                </Textarea>
-                <TextField placeholder="365" id="data" type="number">
-                    Number of days to retain write permission (optional)
-                </TextField>
-            </CardText>
-            <CardActions>
-                <Button on:click={createRoom}>Create</Button>
-            </CardActions>
-        </Card>
+            </div>
+        </div>
     </main>
 </div>

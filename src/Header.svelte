@@ -6,32 +6,15 @@
 
   const urlParams = new URLSearchParams(window.location.search);
 
-  import {
-    NavigationDrawer,
-    List,
-    ListItem,
-    Divider,
-    Icon,
-    Alert,
-    MaterialApp,
-  } from "svelte-materialify";
+  import { NavigationDrawer, Icon } from "svelte-materialify";
 
   import {
-    mdiAccount,
-    mdiPlus,
     mdiShare,
-    mdiLogout,
-    mdiCog,
     mdiContentSave,
     mdiEject,
-    mdiInformation,
-    mdiLogin,
-    mdiMenu,
     mdiInformationOutline,
-    mdiPost,
-    mdiGoogleEarth,
-    mdiAccountSearch,
   } from "@mdi/js";
+
   import Gun from "gun";
   import "gun/lib/rindexed";
   import { writable } from "svelte/store";
@@ -91,39 +74,8 @@
     });
   }
 
-  /*async function initRoom() {
-    CloseNav();
-    await Swal.fire({
-      title: "Enter the room to join or create",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off",
-      },
-      showCancelButton: true,
-      confirmButtonText: "join",
-      showLoaderOnConfirm: true,
-      preConfirm: (NameOfTheRoom) => {
-        localStorage.setItem("channel", NameOfTheRoom);
-        location.href = "/";
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    });
-  }*/
-
   if (urlParams.has("c")) {
-    /*var name = await db3
-        .get(`~${urlParams.get("c")}`)
-        .get("info")
-        .get("profile")
-        .get("name")
-        .then();*/
-
     localStorage.setItem("channel", urlParams.get("c"));
-    /*Toast.fire({
-        icon: "success",
-        title: "joined " + name + "!",
-        timer: 1000,
-      });*/
   }
 
   /*if (urlParams.has("s")) {
@@ -425,39 +377,13 @@
   }
 </script>
 
-<div>
-  <!--div class="navbar bg-base-100 mb-40 shadow-xl rounded-box">
-    <div class="navbar-start">
-      <button class="btn btn-square btn-ghost" on:click={ToogleNav}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-5 h-5 stroke-current"
-          ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          /></svg
-        >
-      </button>
-    </div>
-      <div class="avatar">
-        <div class="w-10 mask mask-squircle">
-          {#if $username}
-            <img
-              src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
-              alt="logo_user"
-            />
-          {:else}
-            <img src="/favicon.ico" alt="icon" width="30" height="30" />
-          {/if}
-        </div>
-    </div>
-    <div class="navbar-center normal-case text-xl">
+<div class="navbar mb-3 shadow-xl rounded-box">
+  <div class="flex-1">
+    <a href="/" class="btn btn-ghost normal-case text-xl">
       retrounhash<span id="channelName" />
-    </div>
+    </a>
+  </div>
+  <div class="flex-none">
     {#if isChat}
       <div class="navbar-end">
         <button on:click={ToogleInfo}>
@@ -465,25 +391,10 @@
         </button>
       </div>
     {/if}
-  </div-->
-
-  <div class="navbar mb-3 shadow-xl rounded-box">
-    <div class="flex-1">
-      <a href="/" class="btn btn-ghost normal-case text-xl">
-        retrounhash<span id="channelName" />
-      </a>
-    </div>
-    <div class="flex-none">
-      {#if isChat}
-        <div class="navbar-end">
-          <button on:click={ToogleInfo}>
-            <Icon path={mdiInformationOutline} />
-          </button>
-        </div>
-      {/if}
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full">
+    <div class="dropdown dropdown-end">
+      <label tabindex="0" class="btn btn-ghost btn-circle avatar" for="">
+        <div class="avatar">
+          <div class="w-10 mask mask-squircle">
             {#if $username}
               <img
                 src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
@@ -493,133 +404,82 @@
               <img src="/favicon.ico" alt="icon" width="30" height="30" />
             {/if}
           </div>
-        </label>
-        <ul
-          tabindex="0"
-          class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-        >
-          {#if $username}
-            <li><a href="/Account">Profile</a></li>
-            <li><a href="/Create">Create Room</a></li>
-            <li><a href="/Post">Create Post</a></li>
-            <li><a href="/Search">Search user</a></li>
-            <li><a href="/Explore">Explore</a></li>
-            <li><a href="/Settings">Settings</a></li>
-          {/if}
-          <li><a href="/About">About</a></li>
-          {#if $username}
-            <li><span on:click={signout}>Logout</span></li>
-          {/if}
-        </ul>
-      </div>
+        </div>
+      </label>
+      <ul
+        tabindex="0"
+        class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+      >
+        {#if $username}
+          <li><a href="/Account">Profile</a></li>
+          <li><a href="/Create">Create Room</a></li>
+          <li><a href="/Post">Create Post</a></li>
+          <li><a href="/Search">Search user</a></li>
+          <li><a href="/Explore">Explore</a></li>
+          <li><a href="/Settings">Settings</a></li>
+        {/if}
+        <li><a href="/About">About</a></li>
+        {#if $username}
+          <li><span on:click={signout}>Logout</span></li>
+        {/if}
+      </ul>
     </div>
   </div>
 </div>
-<div>
-  <!--NavigationDrawer absolute bind:active={NavActive}>
-    <List>
-      {#if /\/room(.*)/.test(location.pathname)}
-        <div>Chats</div>
-        {#if !localStorage.getItem("items") || localStorage.getItem("items") == "[]"}
-          <div>empty!</div>
-        {:else}
-          {#each items as item, i (item)}
-            {#await returnNull(item)}
-              <ListItem>loading....</ListItem>
-            {:then name}
-              <a href={`/room?c=${item}`}>
-                <ListItem>
-                  {name}
-                </ListItem>
-              </a>
-            {/await}
-          {/each}
-        {/if}
-      {:else}
-        {#if !$username}
-          <div>
-            <img src="/favicon.ico" alt="site logo" />
+
+<NavigationDrawer absolute bind:active={InfoState}>
+  <div class="p-2">
+    <div>
+      <label for="avatar-changer" class="text-center">
+        <div class="avatar text-center">
+          <div class="w-25 mask mask-squircle">
+            <img src="" id="roomImage" alt="" />
           </div>
-          <a href="/chat"><ListItem><Icon path={mdiLogin} /> Login</ListItem></a
-          >
-          <a href="/About"
-            ><ListItem><Icon path={mdiInformation} /> About</ListItem></a
-          >
-        {/if}
-        {#if $username}
-          <div>
-            <img
-              src={`https://avatars.dicebear.com/api/identicon/${$username}.svg?backgroundColor=white`}
-              alt=""
-            />
-          </div>
-          <a href="/Account"
-            ><ListItem><Icon path={mdiAccount} /> Account</ListItem></a
-          >
-          <a href="/Create"
-            ><ListItem><Icon path={mdiPlus} />Create A Room</ListItem></a
-          >
-          <a href="/Post"
-            ><ListItem><Icon path={mdiPost} />Create A Post</ListItem></a
-          >
-          <a href="/Explore"
-            ><ListItem><Icon path={mdiGoogleEarth} />Explore</ListItem></a
-          >
-          <a href="/Search"
-            ><ListItem><Icon path={mdiAccountSearch} />Search</ListItem></a
-          >
-          <a href="/Settings"
-            ><ListItem><Icon path={mdiCog} /> Settings</ListItem></a
-          >
-          <ListItem on:click={signout}
-            ><Icon path={mdiLogout} />Sign Out</ListItem
-          >
-          <a href="/About"
-            ><ListItem><Icon path={mdiInformation} /> About</ListItem></a
-          >
-        {/if}
-      {/if}
-    </List>
-  </NavigationDrawer-->
-  <NavigationDrawer absolute bind:active={InfoState}>
-    <List>
-      <div>
-        <label for="avatar-changer">
-          <img src="" id="roomImage" alt="" />
-        </label>
-        <input
-          type="file"
-          name="avatar-changer"
-          id="avatar-changer"
-          on:change={imageUploaded}
-          accept="image/jpeg"
-        />
-      </div>
-      <div on:dblclick={changeRoomName} id="InfoRoomName">
-        {roomName || "loading..."}
-      </div>
-      <Divider />
-      <div>About:</div>
-      <div on:dblclick={changeRoomDescription} id="InfoDescription">
-        {roomDescription || "loading..."}
-      </div>
-      <ListItem on:click={share_link}
-        ><Icon path={mdiShare} />
-        Share Link
-      </ListItem>
-      {#if !$isInList}
-        <ListItem on:click={JoinCurrentRoom}>
-          <Icon path={mdiContentSave} />
-          Join This Room
-        </ListItem>
-      {:else}
-        <ListItem on:click={LeaveCurrentRoom}>
-          <Icon path={mdiEject} />
-          Leave This Room
-        </ListItem>
-      {/if}
-    </List>
-    <Divider />
-    <Alert>double tap data to edit it! ( if you're the admin )</Alert>
-  </NavigationDrawer>
-</div>
+        </div>
+      </label>
+      <input
+        type="file"
+        name="avatar-changer"
+        id="avatar-changer"
+        on:change={imageUploaded}
+        accept="image/jpeg"
+        class="hidden"
+      />
+    </div>
+    <div
+      class="text-center text-m"
+      on:dblclick={changeRoomName}
+      id="InfoRoomName"
+    >
+      {roomName || "loading..."}
+    </div>
+    <hr />
+    <div class="pl-1 m-1">About:</div>
+    <div
+      class="p-1 text-s"
+      on:dblclick={changeRoomDescription}
+      id="InfoDescription"
+    >
+      {roomDescription || "loading..."}
+    </div>
+    <button class="btn btn-info m-1" on:click={share_link}
+      ><Icon path={mdiShare} />
+      Share Link
+    </button>
+    {#if !$isInList}
+      <button class="btn btn-success m-1" on:click={JoinCurrentRoom}>
+        <Icon path={mdiContentSave} />
+        Join This Room
+      </button>
+    {:else}
+      <button class="btn btn-error m-1" on:click={LeaveCurrentRoom}>
+        <Icon path={mdiEject} />
+        Leave This Room
+      </button>
+    {/if}
+  </div>
+  <hr />
+  <div class="alert shadow-lg">
+    double tap data to edit it! ( if you're the admin )
+  </div>
+</NavigationDrawer>

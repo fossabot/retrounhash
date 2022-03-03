@@ -1,13 +1,4 @@
 <script>
-    import {
-        Card,
-        CardText,
-        Button,
-        MaterialApp,
-        CardActions,
-        CardSubtitle,
-        CardTitle,
-    } from "svelte-materialify";
     import { db, username } from "./user.js";
     import Post from "./comp/post.svelte";
     export var pub;
@@ -111,45 +102,46 @@
     }
 </script>
 
-<div>
-    <main>
-        <div class="h2 m-2 text-center">User's profile</div>
-        <Card bind:disabled={isLoading} bind:loading={isLoading} class="m-2">
-            <CardText class="text-center">
-                <img
-                    style="border-radius: 3.5px !important;width: 40px !important;height: 40px !important;"
-                    src={userAvatar}
-                    alt="userAvatar"
-                    id="userAvatar"
-                    class="m-2"
-                />
-                <br />
-                <span class="h2">
-                    {userName}
-                </span>
-                <div class="m-3">
-                    You will see the user's posts in the explore setion atter
-                    you follow him.
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="card-title text-xl regular-case">
+            {userName}'s profile
+        </div>
+        <div class="text-center">
+            <div class="avatar">
+                <div class="w-24 mask mask-squircle">
+                    <img src={userAvatar} alt="userAvatar" id="userAvatar" />
                 </div>
-            </CardText>
-            <CardActions>
-                {#if !isFollowing}
-                    <Button on:click={follow}>follow</Button>
-                {:else}
-                    <Button on:click={unfollow}>Unfollow</Button>
-                {/if}
-            </CardActions>
-        </Card>
-        <br />
-        <Card class="m-2">
-            <div class="m-2 p-2 h3">User's posts:</div>
-            {#each posts as post}
-                <Post {post} />
-            {/each}
-            <div class="text-center m-2 p-2">
-                <hr />
-                <div class="m-2 h4 ">Looks like you have reached end.</div>
             </div>
-        </Card>
-    </main>
+        </div>
+        <br />
+        <span class="text-l text-center">
+            {userName}
+        </span>
+        <div class="m-3">
+            You will see the user's posts in the explore setion atter you follow
+            him.
+        </div>
+    </div>
+    <div class="m-2">
+        {#if !isFollowing}
+            <button class="btn btn-success" on:click={follow}>follow</button>
+        {:else}
+            <button class="btn btn-warning" on:click={unfollow}>Unfollow</button
+            >
+        {/if}
+    </div>
+</div>
+<br />
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="m-2 p-2 text-xl">User's posts:</div>
+        {#each posts as post}
+            <Post {post} />
+        {/each}
+        <div class="text-center m-2 p-2">
+            <hr />
+            <div class="m-2 p-2">Looks like you have reached end.</div>
+        </div>
+    </div>
 </div>

@@ -71,7 +71,7 @@
             <input
                 type="checkbox"
                 bind:checked={showAutoscroll}
-                class="toggle"
+                class="toggle toggle-primary"
             />
             <span class="p-2">
                 {showAutoscroll}
@@ -105,7 +105,7 @@
         if you are on a mobile, you can use swipe genstures to open drawers and to
         navigate with an ease.
         <div class="m-2">
-            <input type="checkbox" bind:checked={enableSwipe} class="toggle" />
+            <input type="checkbox" bind:checked={enableSwipe} class="toggle toggle-primary" />
             <span class="p-2">
                 {enableSwipe}
             </span>
@@ -119,7 +119,7 @@
         if you are on a pc, you can use keys (Ctrl by default) to open drawers and
         to navigate with an ease.
         <div class="m-2">
-            <input type="checkbox" bind:checked={enableKey} class="toggle" />
+            <input type="checkbox" bind:checked={enableKey} class="toggle toggle-primary" />
             <span class="p-2">
                 {enableKey}
             </span>
@@ -138,7 +138,7 @@
         Dark more relives stress on eyes. moreover saves battery :)
 
         <div class="m-2">
-            <input type="checkbox" bind:checked={theme} class="toggle" />
+            <input type="checkbox" bind:checked={theme} class="toggle toggle-primary" />
             <span class="p-2">
                 {theme}
             </span>

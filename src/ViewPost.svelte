@@ -1,15 +1,6 @@
 <script>
-    import {
-        Card,
-        CardText,
-        Icon,
-        CardSubtitle,
-        CardTitle,
-    } from "svelte-materialify";
     import Login from "./Login.svelte";
-
-    import { mdiShareCircle } from "@mdi/js";
-
+    import Post from "./comp/post.svelte";
     import { db, user, username } from "./user.js";
     export var pub;
     export var uid;
@@ -28,7 +19,6 @@
             await db
                 .get(`~${pub}`)
                 .get("alias")
-                .once((data) => {})
                 .then(async (username) => {
                     await db
                         .get(`~${pub}`)
@@ -38,7 +28,7 @@
                             data.user = username;
                             data.date = Gun.state.is(data, "description");
                             postData = data;
-                            console.log(postData)
+                            console.log(postData);
                         })
                         .then(() => {
                             postsReady = true;
@@ -46,83 +36,15 @@
                 });
         });
     }
-
-    function sharePost(post) {
-        navigator.share({
-            title: `${postData.user}'s post on retrounhash!`,
-            text: `${postData.description}`,
-            url: `/Post/${post.pub}/${post.uid}`,
-        });
-    }
 </script>
 
 {#if $username}
-    <div>
-        <main>
-            {#if postsReady}
-                <div class="h2 m-2 text-center">{postData.user}'s post</div>
-                <Card class="m-1">
-                    <CardTitle>
-                        <a href={`/User/${postData.pub}`}>
-                            <img
-                                src={`https://avatars.dicebear.com/api/identicon/${postData.user}.svg?backgroundColor=white`}
-                                alt={`${postData.user}'s avatar`}
-                                style="border-radius: 3.5px !important;width: 40px !important;height: 40px !important;"
-                                class="m-1"
-                            />
-                            {postData.user}
-                        </a>
-                    </CardTitle>
-                    <CardText>
-                        {#if postData.img}
-                            <div class="text-center">
-                                <a
-                                    href={`/Post/${postData.pub}/${postData.uid}`}
-                                >
-                                    <img
-                                        src={postData.img}
-                                        alt=""
-                                        class="img-fluid"
-                                        id="img--main"
-                                    />
-                                    <div class="text-center m-2 p-1">
-                                        {postData.description}
-                                    </div>
-                                </a>
-                            </div>
-                        {:else}
-                            <a href={`/Post/${postData.pub}/${postData.uid}`}>
-                                {postData.description}
-                            </a>
-                        {/if}
-                    </CardText>
-                    <CardSubtitle>
-                        {new Date(postData.date).toLocaleDateString()}- {new Date(
-                            postData.date
-                        ).toLocaleTimeString()}
-
-                        {#if navigator.canShare}
-                            <div class="m-2" on:click={sharePost(postData)}>
-                                <Icon path={mdiShareCircle} /> Share
-                            </div>
-                        {/if}
-                    </CardSubtitle>
-                </Card>
-            {:else}
-                <div class="m-2 display-4 text-center">Loading...</div>
-            {/if}
-        </main>
-    </div>
+    {#if postsReady}
+        <div class="text-xl text-center">{postData.user}'s post</div>
+        <Post post={postData} />
+    {:else}
+        <div class="m-2 display-4 text-center">Loading...</div>
+    {/if}
 {:else}
     <Login />
 {/if}
-
-<style>
-    #img--main {
-        aspect-ratio: auto;
-        object-fit: cover;
-    }
-    a {
-        text-decoration: none;
-    }
-</style>
