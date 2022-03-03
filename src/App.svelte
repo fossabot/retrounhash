@@ -25,7 +25,7 @@
   }
 </script>
 
-<MaterialApp {theme}>
+<MaterialApp {theme} class={`${theme}`}>
   {#if $username}
     <div class="app">
       <Route path="/">
@@ -87,3 +87,9 @@
     </Route>
   {/if}
 </MaterialApp>
+
+<style lang="postcss" global>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+</style>
