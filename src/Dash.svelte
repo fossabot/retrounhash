@@ -41,140 +41,6 @@
     }
 
     let val = 0;
-    let posts = [];
-    let base64String;
-    let textRecieved = "";
-    let following_ = [];
-    let altForImg;
-    let dateOfThePersona;
-
-    if (user.is) {
-        /*db.user()
-            .get("following")
-            .once(async (data) => {
-                Object.entries(data).forEach(async (entry) => {
-                    const [key, value] = entry;
-
-                    await db
-                        .get(`~${entry[1]}`)
-                        .get("persona")
-                        //.get("post")
-                        //.get("all")
-                        .map()
-                        .once(async (data) => {
-                            data.user = entry[0];
-                            data.pub = entry[1];
-                            //data.date = Gun.state.is(data, "description");
-                            posts = [data, ...posts];
-                        })
-                        .then(() => {});
-                });
-            });*/
-        /*db.user()
-            .get("following")
-            .once(async (data) => {
-                delete data._;
-                Object.entries(data).forEach(async (entry) => {
-                    if (entry["key"] == "#") {
-                    } else {
-                        await db
-                            .user(entry[1])
-                            .get("persona")
-                            .map()
-                            .once(async (data) => {
-                                if (data == undefined) {
-                                    var noPersona = true;
-                                }
-                                return noPersona;
-                            })
-                            .then((noPersona) => {
-                                const [key, value] = entry;
-                                following_ = [
-                                    {
-                                        name: key,
-                                        pub: value,
-                                        hasPersona: noPersona,
-                                    },
-                                    ...following_,
-                                ];
-                            });
-                    }
-                });
-            });
-    }
-
-    function imageUploaded() {
-        var file = document.querySelector("#avatar-chooser").files[0];
-
-        var reader = new FileReader();
-        reader.onload = async function () {
-            base64String = reader.result;
-            await Swal.fire({
-                title: "enter a description",
-                input: "text",
-                preConfirm: async (data) => {
-                    altForImg = data;
-                },
-            }).then(() => {
-                var userKeys = JSON.parse(sessionStorage.getItem("pair"));
-                db.user().auth(userKeys, async () => {
-                    let timeSTR = uuidv4();
-                    await db
-                        .user()
-                        .get("persona")
-                        .get(timeSTR)
-                        .put({
-                            img: base64String,
-                            text: altForImg,
-                        })
-                        .then(() => {
-                            base64String = "";
-                        });
-                });
-            });
-        };
-        reader.readAsDataURL(file);
-    }
-
-    $: base64String,
-        async () => {
-            base64String = await compress(base64String, {
-                width: 400,
-                type: "image/jpeg", // default
-                max: 200, // max size
-                min: 20, // min size
-                quality: 0.7,
-            });
-        };
-
-    function showPersona(post) {
-        document.querySelector("#overlay").style.display = "block";
-        document.querySelector("#overlayImg").src = post.img;
-        textRecieved = post.text;
-        dateOfThePersona =
-            new Date(Gun.state.is(post, "img")).toLocaleDateString() +
-            " - " +
-            new Date(Gun.state.is(post, "img")).toLocaleTimeString();
-    }
-
-    function closeOverlay() {
-        document.querySelector("#overlay").style.display = "none";
-    }
-
-    async function getPersona(pubKey) {
-        arrayPersona = [];
-        await db
-            .user(pubKey)
-            .get("persona")
-            .map()
-            .once(async (data) => {
-                arrayPersona = [data, ...arrayPersona];
-            })
-            .then((data) => {});
-
-        return arrayPersona;
-    }*/
-    }
 
     if (localStorage.getItem("recently_snup") == "true") {
         if (sessionStorage.getItem("pair") == null) {
@@ -186,160 +52,34 @@
 </script>
 
 {#if $username}
-    <AppBar>
-        <div slot="title">Dashboard</div>
-        <div slot="extension">
-            <Tabs class="green-text" bind:value={val} fixedTabs>
-                <div slot="tabs">
-                    <Tab>
-                        <Icon
-                            path={mdiChatOutline}
-                            style="margin-right: 5px;"
-                        />
-                        Chats
-                    </Tab>
-                    <!--Tab>
-                        <Icon path={mdiDotsCircle} style="margin-right: 5px;" />
-                        pērsona
-                    </Tab-->
-                </div>
-            </Tabs>
-        </div>
-    </AppBar>
-    <Window value={val}>
-        <WindowItem>
-            <ListItemGroup class="p-3">
-                {#if !localStorage.getItem("items") || localStorage.getItem("items") == "[]"}
-                    <div class="text-center">
-                        <img
-                            class="img-fluid"
-                            src="images/empty-state-concept-3428212-2902554.png"
-                            alt=""
-                        />
-                    </div>
-                    <div class="text-center m-3 h3">
-                        no rooms, yet! Go and make one !
-                    </div>
-                {/if}
-                {#each items as item, i (item)}
-                    {#await returnNull(item)}
-                        <ListItem>loading....</ListItem>
-                    {:then name}
-                        <a href={`/room?c=${item}`}>
-                            <ListItem>
-                                {name}
-                            </ListItem>
-                        </a>
-                    {/await}
-                {/each}
-            </ListItemGroup>
-        </WindowItem>
-        <!--WindowItem>
-            <ListItem>
-                <label for="avatar-chooser" class="p-2">
+    <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="card-title">Dashboard</div>
+            {#if !localStorage.getItem("items") || localStorage.getItem("items") == "[]"}
+                <div class="text-center">
                     <img
-                        style="border-radius: 5px;width: 20px !important;height: 20px;"
-                        id="avatarDisplay"
-                        src="https://i.ibb.co/KxyyLj8/584abe1a2912007028bd932e.png"
-                        alt="choose your avatar"
+                        class="img-fluid"
+                        src="images/empty-state-concept-3428212-2902554.png"
+                        alt=""
                     />
-                    add your pērsona
-                </label>
-            </ListItem>
-            <input
-                type="file"
-                name="avatar-chooser"
-                id="avatar-chooser"
-                on:change={imageUploaded}
-                accept="image/jpeg"
-            />
-            <ExpansionPanels inset class="m-2">
-                {#each following_ as following}
-                    {#if following.name == "#" || following.name == ">"}
-                        <div />
-                    {:else if following.hasPersona}
-                        <ExpansionPanel>
-                            <div slot="header">
-                                {following.name}
-                            </div>
-                            {#await getPersona(following.pub)}
-                                empty
-                            {:then data}
-                                <div id="persona__cards">
-                                    {#each data as data}
-                                        <img
-                                            src={data.img}
-                                            on:click={showPersona(data)}
-                                            alt={data.text}
-                                            style="width: 100px !important;height: 100px;"
-                                        />
-                                    {/each}
-                                </div>
-                            {/await}
-                        </ExpansionPanel>
-                    {:else}
-                        ok
-                    {/if}
-                {/each}
-            </ExpansionPanels>
-        </WindowItem-->
-    </Window>
-    <!--div id="overlay">
-        <img src="" alt="" id="overlayImg" />
-        {#if textRecieved.length <= 100}
-            <div class="text-center">
-                {textRecieved}
-            </div>
-        {/if}
-        <div>
-            <span class="p-1 m-2" on:click={closeOverlay}>
-                <Icon path={mdiCloseCircle} size="36px" />
-            </span>
-            <span class="p-1 m-2">
-                <Icon path={mdiCalendar} size="36px" />
-                {dateOfThePersona || "error"}
-            </span>
+                </div>
+                <div class="text-center m-3 h3">
+                    no rooms, yet! Go and make one !
+                </div>
+            {/if}
+            {#each items as item, i (item)}
+                {#await returnNull(item)}
+                    <ListItem>loading....</ListItem>
+                {:then name}
+                    <a href={`/room?c=${item}`}>
+                        <ListItem>
+                            {name}
+                        </ListItem>
+                    </a>
+                {/await}
+            {/each}
         </div>
-    </div-->
+    </div>
 {:else}
     <Login />
 {/if}
-
-<style>
-    /*#overlay {
-        position: fixed;
-        display: none; 
-        width: 100%; 
-        height: 100%;
-        top: 0;
-        left: 0;
-        text-align: center;
-        right: 0;
-        backdrop-filter: blur(3px);
-        bottom: 0;
-        background-color: rgba(
-            0,
-            0,
-            0,
-            0.5
-        ); 
-        z-index: 999999; 
-        cursor: pointer;
-    }
-    #overlayImg {
-        margin-top: 5rem;
-        width: 30rem;
-        height: 30rem;
-        object-fit: cover;
-        aspect-ratio: 1/1;
-        border-radius: 5px;
-    }
-    img {
-        border-radius: 5px !important;
-        object-fit: cover;
-    }
-    #persona__cards {
-        display: flex;
-        flex-wrap: wrap;
-    }*/
-</style>
