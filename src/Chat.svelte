@@ -28,14 +28,14 @@
   ];
   const db = new Gun({
     peers: peers,
-    radisk: true,
+    radisk: false,
     axe: true,
     rindexed: true,
     localStorage: false,
   });
   const db1 = new Gun({
     peers: peers,
-    radisk: true,
+    radisk: false,
     axe: true,
     rindexed: true,
     localStorage: false,
@@ -279,7 +279,7 @@
     <form
       autocomplete="off"
       on:submit|preventDefault={sendMessage}
-      class="navbar backdrop-blur-sm"
+      class="navbar w-full"
     >
       <span class="emoji__">
         <emoji-picker
@@ -289,57 +289,40 @@
           on:emoji-click={parseEmoji}
         />
       </span>
-      <div class="">
-        <div>
-          <span
-            class="m-1"
-            style="height: 38px;"
-            id="emoji_add"
-            on:click={selectEmoji}
-          >
-            <Icon path={mdiEmoticonWinkOutline} />
-          </span>
-          <span class="m-1" style="height: 38px;" id="record" on:click={record}>
-            <Icon path={mdiMicrophoneOutline} />
-          </span>
-          <label class="m-1" style="height: 38px;" for="image-send-picker">
-            <Icon path={mdiImageOutline} />
-          </label>
-          <input
-            type="file"
-            name=""
-            id="image-send-picker"
-            on:change={imageUploaded}
-            accept="image/jpeg"
-            class="hidden"
-          />
-        </div>
+      <div class="w-full">
+        <span class="m-1" id="emoji_add" on:click={selectEmoji}>
+          <Icon path={mdiEmoticonWinkOutline} />
+        </span>
+        <span class="m-1" id="record" on:click={record}>
+          <Icon path={mdiMicrophoneOutline} />
+        </span>
+        <label class="m-1" for="image-send-picker">
+          <Icon path={mdiImageOutline} />
+        </label>
+        <input
+          type="file"
+          name=""
+          id="image-send-picker"
+          on:change={imageUploaded}
+          accept="image/jpeg"
+          class="hidden"
+        />
         <input
           id="submit__area__main__"
-          class="input input-bordered"
+          class="input w-full input-bordered"
           type="text"
           placeholder="Type a message..."
           bind:value={newMessage}
           maxlength="98"
         />
-        <div class="">
-          {#if localStorage.getItem("autoscroll") == "true"}
-            <button
-              class="m-1 btn btn-ghost"
-              type="button"
-              on:click={autoScroll}
-            >
-              <Icon path={mdiArrowDownCircleOutline} />
-            </button>
-          {/if}
-          <button
-            type="submit"
-            class="m-1 btn btn-ghost"
-            disabled={!newMessage}
-          >
-            <Icon path={mdiSendOutline} />
+        {#if localStorage.getItem("autoscroll") == "true"}
+          <button class="btn btn-ghost" type="button" on:click={autoScroll}>
+            <Icon path={mdiArrowDownCircleOutline} />
           </button>
-        </div>
+        {/if}
+        <button type="submit" class="btn btn-ghost" disabled={!newMessage}>
+          <Icon path={mdiSendOutline} />
+        </button>
       </div>
     </form>
   {:else}
@@ -355,5 +338,6 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    backdrop-filter: blur(8px);
   }
 </style>

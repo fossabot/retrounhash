@@ -11,7 +11,7 @@ const peers = [
 
 export const db2 = new Gun({
     peers: peers,
-    radisk: true,
+    radisk: false,
     axe: true,
     rindexed: true,
     localStorage: false,

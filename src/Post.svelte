@@ -14,7 +14,7 @@
         ],
         axe: true,
         rindexed: true,
-        radisk: true,
+        radisk: false,
         localStorage: false,
     });*/
 
