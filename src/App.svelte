@@ -16,7 +16,7 @@
   import ViewPost from "./ViewPost.svelte";
   import { username } from "./user";
 
-  let theme;
+  let theme = "light";
 
   if (localStorage.getItem("theme") == "true") {
     theme = "dark";
@@ -25,68 +25,70 @@
   }
 </script>
 
-<MaterialApp {theme} class={`${theme}`}>
-  {#if $username}
-    <div class="app">
+<div data-theme={theme}>
+  <MaterialApp {theme} class={`${theme}`}>
+    {#if $username}
+      <div class="app">
+        <Route path="/">
+          <Header />
+          <Dash />
+        </Route>
+        <Route path="/chat">
+          <Header />
+          <Dash />
+        </Route>
+        <Route path="/room">
+          <Header />
+          <Chat />
+        </Route>
+        <Route path="/Account">
+          <Header />
+          <Account />
+        </Route>
+        <Route path="/Settings">
+          <Header />
+          <Settings />
+        </Route>
+        <Route path="/Create">
+          <Header />
+          <Create />
+        </Route>
+        <Route path="/About">
+          <Header />
+          <About />
+        </Route>
+        <Route path="/Post">
+          <Header />
+          <Post />
+        </Route>
+        <Route path="/Explore">
+          <Header />
+          <Explore />
+        </Route>
+        <Route path="/User/:pubKey/*" let:meta>
+          <Header />
+          <Profile pub={meta.params.pubKey} />
+        </Route>
+        <Route path="/Search">
+          <Header />
+          <Search />
+        </Route>
+        <Route path="/Post/:pubKey/:uid/*" let:meta>
+          <Header />
+          <ViewPost pub={meta.params.pubKey} uid={meta.params.uid} />
+        </Route>
+      </div>
+    {:else}
+      <Header />
       <Route path="/">
-        <Header />
-        <Dash />
+        <Main />
       </Route>
       <Route path="/chat">
-        <Header />
         <Dash />
       </Route>
-      <Route path="/room">
-        <Header />
-        <Chat />
-      </Route>
-      <Route path="/Account">
-        <Header />
-        <Account />
-      </Route>
-      <Route path="/Settings">
-        <Header />
-        <Settings />
-      </Route>
-      <Route path="/Create">
-        <Header />
-        <Create />
-      </Route>
-      <Route path="/About">
-        <Header />
-        <About />
-      </Route>
-      <Route path="/Post">
-        <Header />
-        <Post />
-      </Route>
-      <Route path="/Explore">
-        <Header />
-        <Explore />
-      </Route>
-      <Route path="/User/:pubKey/*" let:meta>
-        <Header />
-        <Profile pub={meta.params.pubKey} />
-      </Route>
-      <Route path="/Search">
-        <Header />
-        <Search />
-      </Route>
-      <Route path="/Post/:pubKey/:uid/*" let:meta>
-        <Header />
-        <ViewPost pub={meta.params.pubKey} uid={meta.params.uid} />
-      </Route>
-    </div>
-  {:else}
-    <Header />
-    <Route path="/">
-      <Main />
-    </Route>
-    <Route path="/chat">
-      <Dash />
-    </Route>
-  {/if}
-</MaterialApp>
+    {/if}
+  </MaterialApp>
+</div>
 
 <style lang="postcss" global>
   @tailwind base;
