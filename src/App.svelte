@@ -14,7 +14,7 @@
   import Profile from "./Profile.svelte";
   import Search from "./Search.svelte";
   import ViewPost from "./ViewPost.svelte";
-  import { username } from "./user";
+  import { username, user } from "./user";
 
   let theme = "light";
 
@@ -27,58 +27,62 @@
 
 <div data-theme={theme}>
   <MaterialApp {theme} class={`${theme}`}>
-    {#if $username}
-      <div class="app">
-        <Route path="/">
-          <Header />
+    <!--{#if $username}-->
+    <div class="app">
+      <Route path="/">
+        <Header />
+        {#if $username}
           <Dash />
-        </Route>
-        <Route path="/chat">
-          <Header />
-          <Dash />
-        </Route>
-        <Route path="/room">
-          <Header />
-          <Chat />
-        </Route>
-        <Route path="/Account">
-          <Header />
-          <Account />
-        </Route>
-        <Route path="/Settings">
-          <Header />
-          <Settings />
-        </Route>
-        <Route path="/Create">
-          <Header />
-          <Create />
-        </Route>
-        <Route path="/About">
-          <Header />
-          <About />
-        </Route>
-        <Route path="/Post">
-          <Header />
-          <Post />
-        </Route>
-        <Route path="/Explore">
-          <Header />
-          <Explore />
-        </Route>
-        <Route path="/User/:pubKey/*" let:meta>
-          <Header />
-          <Profile pub={meta.params.pubKey} />
-        </Route>
-        <Route path="/Search">
-          <Header />
-          <Search />
-        </Route>
-        <Route path="/Post/:pubKey/:uid/*" let:meta>
-          <Header />
-          <ViewPost pub={meta.params.pubKey} uid={meta.params.uid} />
-        </Route>
-      </div>
-    {:else}
+        {:else}
+          <Main />
+        {/if}
+      </Route>
+      <Route path="/chat">
+        <Header />
+        <Dash />
+      </Route>
+      <Route path="/room">
+        <Header />
+        <Chat />
+      </Route>
+      <Route path="/Account">
+        <Header />
+        <Account />
+      </Route>
+      <Route path="/Settings">
+        <Header />
+        <Settings />
+      </Route>
+      <Route path="/Create">
+        <Header />
+        <Create />
+      </Route>
+      <Route path="/About">
+        <Header />
+        <About />
+      </Route>
+      <Route path="/Post">
+        <Header />
+        <Post />
+      </Route>
+      <Route path="/Explore">
+        <Header />
+        <Explore />
+      </Route>
+      <Route path="/User/:pubKey/*" let:meta>
+        <Header />
+        <Profile pub={meta.params.pubKey} />
+      </Route>
+      <Route path="/Search">
+        <Header />
+        <Search />
+      </Route>
+      <Route path="/Post/:pubKey/:uid/*" let:meta>
+        <Header />
+        <ViewPost pub={meta.params.pubKey} uid={meta.params.uid} />
+      </Route>
+    </div>
+    <!--{:else}
       <Header />
       <Route path="/">
         <Main />
@@ -86,7 +90,7 @@
       <Route path="/chat">
         <Dash />
       </Route>
-    {/if}
+    {/if}-->
   </MaterialApp>
 </div>
 

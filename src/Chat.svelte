@@ -54,6 +54,8 @@
   let canAutoScroll = true;
   let unreadMessages = false;
 
+  console.log("test");
+
   function autoScroll() {
     setTimeout(() => scrollBottom?.scrollIntoView({ behavior: "auto" }), 50);
     unreadMessages = false;
@@ -326,9 +328,7 @@
       </div>
     </form>
   {:else}
-    <main>
-      <Login />
-    </main>
+    <Login />
   {/if}
 </div>
 
