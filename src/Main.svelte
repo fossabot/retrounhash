@@ -1,13 +1,6 @@
 <script>
-  import {
-    CardTitle,
-    Card,
-    CardText,
-    Button,
-    CardActions,
-    Icon,
-    MaterialApp,
-  } from "svelte-materialify";
+  import { Icon } from "svelte-materialify";
+
   import { mdiGithub, mdiTwitter } from "@mdi/js";
 </script>
 
@@ -16,144 +9,147 @@
     <div
       style="display:flex;flex-wrap: wrap;justify-content:center;align-items:center;"
     >
-      <Card outlined style="max-width:300px;margin: .6rem;">
-        <img
-          class="card-img"
-          style="height: 100%;width: 100%;"
-          src="images/images-2-removebg-preview.png"
-          alt="visual about decentralisation"
-        />
-        <CardTitle>Decentralised</CardTitle>
-        <CardText>
+      <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+          <div class="card-title">Decentralized</div>
+          <figure>
+            <img
+              src="images/images-2-removebg-preview.png"
+              alt="visual about decentralisation"
+            />
+          </figure>
+
           Your data in your hands. Synced among peers in real time. No one own
           the data of this application.
-        </CardText>
-        <CardActions>
-          <a href="/chat">
-            <Button>Get Started</Button>
-          </a>
-        </CardActions>
-      </Card>
 
-      <Card outlined style="max-width:300px;margin: .6rem;">
-        <img
-          class="card-img"
-          style="height: 100%;width: 100%;"
-          src="images/Hands - Favorite Image.png"
-          alt="illustration of gallery "
-        />
-        <div>
-          <CardTitle>Send Images!</CardTitle>
-          <CardText>
+          <div class="m-2">
+            <a href="/chat">
+              <button class="btn btn-primary">Get Started</button>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+          <div class="card-title">Send Images!</div>
+          <figure>
+            <img
+              src="images/Hands - Favorite Image.png"
+              alt="illustration of gallery "
+            />
+          </figure>
+          <div>
             A picture is worth thousand words. Send pics fast, with end to end
             encryption 🔒!
-          </CardText>
+          </div>
         </div>
-      </Card>
+      </div>
 
-      <Card outlined style="max-width:300px;margin: .6rem;">
-        <img
-          class="card-img"
-          style="height: 100%;width: 100%;"
-          src="images/The Band - Speaker 1.png"
-          alt="illustration of a speaker "
-        />
-        <div>
-          <CardTitle>Audio Message</CardTitle>
-          <CardText>
+      <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+          <div class="card-title">Audio Message</div>
+          <figure>
+            <img
+              src="images/The Band - Speaker 1.png"
+              alt="illustration of a speaker "
+            />
+          </figure>
+          <div>
             Send audio messages right from your browser! That too, end to end
             encrypted 🔒.
-          </CardText>
+          </div>
         </div>
-      </Card>
+      </div>
 
-      <Card outlined style="max-width:300px;margin: .6rem;">
-        <img
-          class="card-img"
-          style="height: 100%;width: 100%;"
-          src="images/Hands - Pinch.png"
-          alt="hand holding key"
-        />
-        <div>
-          <CardTitle>Secret Room</CardTitle>
-          <CardText>
-            Want a link based room which no one can use exept you and your
-            friends? We have got you covered!
-          </CardText>
+      <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+          <div class="card-title">
+            Private
+          </div>
+          <figure>
+            <img src="images/cyber-security-illustration-concept-with-characters-data-security-protected-access-control-privacy-data-protection_269730-48-removebg-preview.png" alt="dipiction if privacy " />
+          </figure>
+          <div>
+            the application is not relugated by a central authority, making it more private than any other application.
+          </div>
         </div>
-      </Card>
+      </div>
 
-      <Card outlined style="max-width:300px;margin: .6rem;">
-        <img
-          class="card-img"
-          style="height: 100%;width: 100%;"
-          src="images/open_source_symbol.png"
-          alt="open source logo"
-        />
-        <div>
-          <CardTitle>Open Source</CardTitle>
-          <CardText>
+      <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+          <div class="card-title">Open Source</div>
+          <figure>
+            <img src="images/open_source_symbol.png" alt="open source logo" />
+          </figure>
+          <div>
             The soutce code of this website is open to everyone! Protected by
             the GNU GPLv3.0. everyone is free to modify and distribute the
             software under certian conditions.
-          </CardText>
-          <CardActions>
-            <Button>
+            <div class="m-2">
               <a href="//github.com/atordvairn/retrounhash">
-                See Source On GitHub
+                <button class="btn btn-primary"> See Source On GitHub </button>
               </a>
-            </Button>
-          </CardActions>
+            </div>
+          </div>
         </div>
-      </Card>
+      </div>
 
-      <Card outlined style="max-width:300px;margin: .6rem;">
-        <img
-          class="card-img"
-          style="height: 100%;width: 100%;"
-          src="images/choose-markdown-removebg-preview.png"
-          alt="markdown illustration "
-        />
-        <div>
-          <CardTitle>Markdown Supported</CardTitle>
-          <CardText>
+      <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+          <div class="card-title">Markdown supported</div>
+          <figure>
+            <img
+              src="images/choose-markdown-removebg-preview.png"
+              alt="markdown illustration "
+            />
+          </figure>
+          <div>
             Write formatted text as you write in any other application! *bold*
             _itallic_ `code`
-          </CardText>
-          <CardActions>
-            <Button>
+
+            <div class="m-2">
               <a href="https://markdownguide.org/basic-syntax/">
-                Markdown Guide
+                <button class="btn btn-primary"> Markdown Guide </button>
               </a>
-            </Button>
-          </CardActions>
+            </div>
+          </div>
         </div>
-      </Card>
-    </div>
-    <div class="text-center">
-      <img
-        alt="two fiends talking"
-        class="img-fluid"
-        src="images/Allura - Staying Home.png"
-      />
-    </div>
-    <div class="text-center p-3">
-      <a href="/chat">
-        <Button>Login Or Register</Button>
-      </a>
-    </div>
-    <div class="text-center footer" style="padding: 20px;margin: 10px;">
-      <div class="h5">
-        <i class="far fa-copyright" /> retrounhash {new Date().getFullYear()}
       </div>
-      <div>
-        <a class="m-2" href="//github.com/atordvairn/retrounhash">
-          <Icon path={mdiGithub} />
-        </a>
-        <a class="m-2" href="//twitter.com/atordvairn/">
-          <Icon path={mdiTwitter} />
-        </a>
+
+      <div class="text-center">
+        <img
+          alt="two fiends talking"
+          class="img w-full"
+          src="images/Allura - Staying Home.png"
+        />
       </div>
+      <footer class="footer footer-center p-10 bg-primary text-primary-content">
+        <div>
+          <div class="w-32 text-center avatar">
+            <img
+              class="rounded w-32 mask mask-squircle"
+              alt="logo"
+              src="/images/favicon.png"
+            />
+          </div>
+          <p class="font-bold">
+            retrounhash <br />the decentralized application for encrypted
+            communication.
+          </p>
+          <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
+        </div>
+        <div>
+          <div class="grid grid-flow-col gap-4">
+            <a class="logo" href="//twitter.com/retrounhash">
+              <Icon path={mdiTwitter} size="30px" />
+            </a>
+            <a class="logo" href="//github.com/atordvairn/retrounhash">
+              <Icon path={mdiGithub} size="30px" />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
 </div>

@@ -7,6 +7,7 @@
   import "emoji-picker-element";
   import { db2 } from "./gunInstance.js";
   import { Icon } from "svelte-materialify";
+  import Swal from "sweetalert2";
 
   import "gun/lib/radisk";
   import "gun/lib/radix";
