@@ -105,6 +105,7 @@
               (await SEA.decrypt(data.what, ENCkey)) ||
               (await SEA.decrypt(data.what, "#foo")) ||
               `<i class="fas fa-lock fa-xl"></i> PROTECTED WITH CUSTOM SECRET`,
+            pub: data.pub,
             when: GUN.state.is(data, "what"), // get the internal timestamp for the what property.
           };
 
@@ -156,7 +157,7 @@
       newMessage.toString(),
       localStorage.getItem("_secret") || "#foo"
     );
-    const message = user.get("all").set({ what: secret });
+    const message = user.get("all").set({ what: secret, pub: user.is.pub });
     const index = new Date().toISOString();
     getCert(message, index);
 

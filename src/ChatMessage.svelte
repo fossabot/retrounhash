@@ -1,8 +1,11 @@
 <script>
   import DOMPurify from "dompurify";
+  import { db } from "./user";
 
   export let message;
   export let sender;
+  let userstatus;
+  let pub = message.pub;
 
   const messageClass = message.who === sender ? "sent" : "received";
 
@@ -34,12 +37,24 @@
         .replace(/\!important \;/, "");
     }
   }
+
+  db.user(pub)
+    .get("online")
+    .on((stat) => {
+      if (stat) {
+        userstatus = "online";
+      } else {
+        userstatus = "offline";
+      }
+    });
 </script>
 
 <div class={`message shadow-m ${messageClass}`}>
-  <div class="avatar m-1">
+  <div class={`avatar m-1 ${userstatus}`}>
     <div class="w-9 mask mask-squircle">
-      <img src={avatar} alt="avatar" />
+      <a href={`/User/${pub}`}>
+        <img src={avatar} alt="avatar" />
+      </a>
     </div>
   </div>
   <div class="message-text">
