@@ -42,6 +42,7 @@
     {#if postsReady}
         <div class="text-xl text-center">{postData.user}'s post</div>
         <Post post={postData} />
+        
     {:else}
         <div class="m-2 display-4 text-center">Loading...</div>
     {/if}

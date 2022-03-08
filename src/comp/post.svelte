@@ -14,21 +14,31 @@
     }
 
     async function deletePost(uid) {
-        console.log("called", uid);
-        var userKeys = JSON.parse(sessionStorage.getItem("pair"));
-        db.user().auth(userKeys, async () => {
-            await db
-                .user()
-                .get("posts")
-                .get(uid)
-                .put(null)
-                .then(async () => {
-                    await Swal.fire({
-                        title: "deleted",
-                    }).then(() => {
-                        location.reload();
-                    });
+        Swal.fire({
+            title: "delete the post ?",
+            showCancelButton: true,
+            confirmButtonText: "delete",
+            cancelButtonText: "cancel",
+            icon: "question",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var userKeys = JSON.parse(sessionStorage.getItem("pair"));
+                db.user().auth(userKeys, async () => {
+                    await db
+                        .user()
+                        .get("posts")
+                        .get(uid)
+                        .put(null)
+                        .then(async () => {
+                            await Swal.fire({
+                                title: "deleted",
+                                icon: "success"
+                            }).then(() => {
+                                location.reload();
+                            });
+                        });
                 });
+            }
         });
     }
 </script>

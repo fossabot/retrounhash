@@ -42,7 +42,7 @@
   //db.user().get("online").put(true);
 </script>
 
-<div data-theme={theme}>
+<div data-theme={theme} style="min-height: 100vh;">
   <MaterialApp {theme} class={`${theme}`}>
     <!--{#if $username}-->
     <div class="app">
@@ -52,6 +52,9 @@
           <Dash />
         {:else}
           <Main />
+          <div class="hidden">
+            <Dash />
+          </div>
         {/if}
       </Route>
       <Route path="/chat">
