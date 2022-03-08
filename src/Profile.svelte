@@ -12,6 +12,8 @@
     let isLoading = false;
     let isLoading2 = false;
     let posts = [];
+    let userIsOnline = false;
+    let userstatus;
 
     async function follow() {
         isLoading = true;
@@ -100,6 +102,17 @@
         });
         isFollowing = false;
     }
+
+    db.user(pub)
+        .get("online")
+        .on((stat) => {
+            userIsOnline = stat;
+            if (stat) {
+                userstatus = "online";
+            } else {
+                userstatus = "offline";
+            }
+        });
 </script>
 
 <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
@@ -108,7 +121,7 @@
             {userName}'s profile
         </div>
         <div class="text-center">
-            <div class="avatar">
+            <div class={`avatar ${userstatus}`}>
                 <div class="w-24 mask mask-squircle">
                     <img src={userAvatar} alt="userAvatar" id="userAvatar" />
                 </div>
@@ -117,10 +130,14 @@
         <br />
         <span class="text-l text-center">
             {userName}
+            <br />
+            {#if userIsOnline == true || userIsOnline == false}
+                online: {userIsOnline}
+            {/if}
         </span>
         <div class="m-3">
-            You will see the user's posts in the explore setion atter you follow
-            him.
+            You will see the user's posts in the explore section after you
+            follow them.
         </div>
     </div>
     <div class="m-2">

@@ -14,7 +14,7 @@
   import Profile from "./Profile.svelte";
   import Search from "./Search.svelte";
   import ViewPost from "./ViewPost.svelte";
-  import { username, user } from "./user";
+  import { username, user, db } from "./user";
 
   let theme = "light";
 
@@ -23,6 +23,20 @@
   } else {
     theme = "light";
   }
+
+  window.onbeforeunload = function () {
+    db.user()
+      .get("online")
+      //.get("status")
+      .put(false);
+
+    return confirm("close?");
+  }
+
+  db.user()
+    .get("online")
+    //.get("status")
+    .put(true);
 </script>
 
 <div data-theme={theme}>
