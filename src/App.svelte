@@ -14,7 +14,7 @@
   import Profile from "./Profile.svelte";
   import Search from "./Search.svelte";
   import ViewPost from "./ViewPost.svelte";
-  import Following from "./Following.svelte"
+  import Following from "./Following.svelte";
   import { username, user, db } from "./user";
 
   let theme = "light";
@@ -26,16 +26,20 @@
   }
 
   window.onbeforeunload = function () {
-    db.user()
-      .get("online")
-      .put(false);
+    db.user().get("online").put(false);
 
     return confirm("close?");
-  }
+  };
 
-  db.user()
-    .get("online")
-    .put(true);
+  window.addEventListener("blur", () => {
+    db.user().get("online").put(false);
+  });
+
+  window.addEventListener("focus", () => {
+    db.user().get("online").put(true)
+  });
+
+  //db.user().get("online").put(true);
 </script>
 
 <div data-theme={theme}>
