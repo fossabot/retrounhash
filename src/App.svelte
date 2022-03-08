@@ -14,6 +14,7 @@
   import Profile from "./Profile.svelte";
   import Search from "./Search.svelte";
   import ViewPost from "./ViewPost.svelte";
+  import Following from "./Following.svelte"
   import { username, user, db } from "./user";
 
   let theme = "light";
@@ -27,7 +28,6 @@
   window.onbeforeunload = function () {
     db.user()
       .get("online")
-      //.get("status")
       .put(false);
 
     return confirm("close?");
@@ -35,7 +35,6 @@
 
   db.user()
     .get("online")
-    //.get("status")
     .put(true);
 </script>
 
@@ -94,6 +93,10 @@
       <Route path="/Post/:pubKey/:uid/*" let:meta>
         <Header />
         <ViewPost pub={meta.params.pubKey} uid={meta.params.uid} />
+      </Route>
+      <Route path="/:publicKey/Following/*" let:meta>
+        <Header />
+        <Following pub={meta.params.publicKey} />
       </Route>
     </div>
     <!--{:else}

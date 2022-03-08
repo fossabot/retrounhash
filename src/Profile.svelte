@@ -13,7 +13,9 @@
     let isLoading2 = false;
     let posts = [];
     let userIsOnline = false;
+    let followingCount = 0;
     let userstatus;
+    let userStatusBg;
 
     async function follow() {
         isLoading = true;
@@ -25,11 +27,8 @@
                     data[userName] = pub;
                     db.user().get("following").put(data);
                 })
-                .then(async () => {
-                    isLoading = false;
-                });
+                .then(async () => {});
         });
-        isFollowing = true;
     }
 
     if (username) {
@@ -55,7 +54,7 @@
             await db
                 .user()
                 .get("following")
-                .once(async (data = {}) => {
+                .on(async (data = {}) => {
                     if (data[userName] == null || data[userName] == undefined) {
                         isFollowing = false;
                     } else {
@@ -81,9 +80,7 @@
                     posts = [data, ...posts];
                 }
             })
-            .then(() => {
-                isLoading2 = false;
-            });
+            .then(() => {});
     }
 
     async function unfollow() {
@@ -94,13 +91,10 @@
                 .get("following")
                 .once(async (data = {}) => {
                     delete data[userName];
-                    db.user().get("following").put(data);
+                    await db.user().get("following").put(data);
                 })
-                .then(async () => {
-                    isLoading = false;
-                });
+                .then(async () => {});
         });
-        isFollowing = false;
     }
 
     db.user(pub)
@@ -109,9 +103,28 @@
             userIsOnline = stat;
             if (stat) {
                 userstatus = "online";
+                userStatusBg = "success";
             } else {
                 userstatus = "offline";
+                userStatusBg = "error";
             }
+        });
+
+    db.user(pub)
+        .get("following")
+        .on(async (data = {}) => {
+            db.user(pub)
+                .get("following")
+                .once(async (data = {}) => {
+                    console.log(data);
+                    delete data._;
+                    delete data["#"];
+                    delete data[">"];
+                    Object.values(data).forEach(async (follower) => {
+                        followingCount += 1;
+                    });
+                });
+                followingCount = 0;
         });
 </script>
 
@@ -129,11 +142,18 @@
         </div>
         <br />
         <span class="text-l text-center">
-            {userName}
+            <div class="m-3">
+                {userName}
+            </div>
             <br />
             {#if userIsOnline == true || userIsOnline == false}
-                online: {userIsOnline}
+                <span class={`btn btn-${userStatusBg}`}>
+                    online: {userIsOnline}
+                </span>
             {/if}
+            <a href={`/${pub}/Following/`} class="btn btn-standard">
+                following: {followingCount}
+            </a>
         </span>
         <div class="m-3">
             You will see the user's posts in the explore section after you
