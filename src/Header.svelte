@@ -393,7 +393,7 @@
       {/if}
     </a>
   </div>
-  <div class="flex-none">
+  <div class="flex-none flex">
     {#if isChat}
       <div class="navbar-end m-2">
         <button on:click={ToogleInfo}>
@@ -401,7 +401,7 @@
         </button>
       </div>
     {/if}
-    <div class="dropdown dropdown-end">
+    <div class="dropdown navbar-end dropdown-end">
       <label tabindex="0" class="btn btn-ghost btn-circle avatar" for="">
         <div class="avatar">
           <div class="w-10 mask mask-squircle">
