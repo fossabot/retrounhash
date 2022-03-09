@@ -294,15 +294,21 @@
         />
       </span>
       <span class="w-1/3">
-        <span class="w-1/3" id="emoji_add" on:click={selectEmoji}>
-          <Icon path={mdiEmoticonWinkOutline} />
+        <span class="w-1/3 text-center">
+          <span id="emoji_add" on:click={selectEmoji}>
+            <Icon path={mdiEmoticonWinkOutline} />
+          </span>
         </span>
-        <span class="w-1/3" id="record" on:click={record}>
-          <Icon path={mdiMicrophoneOutline} />
+        <span class="w-1/3 text-center">
+          <span id="record" on:click={record}>
+            <Icon path={mdiMicrophoneOutline} />
+          </span>
         </span>
-        <label class="w-1/3" for="image-send-picker">
-          <Icon path={mdiImageOutline} />
-        </label>
+        <span class="w-1/3 text-center">
+          <label for="image-send-picker">
+            <Icon path={mdiImageOutline} />
+          </label>
+        </span>
         <input
           type="file"
           name=""
@@ -315,18 +321,26 @@
       <span class="w-2/3">
         <input
           id="submit__area__main__"
-          class="input input-bordered w-3/4"
+          class="input input-bordered w-2/4"
           type="text"
           placeholder="Type a message..."
           bind:value={newMessage}
           maxlength="98"
         />
         {#if localStorage.getItem("autoscroll") == "true"}
-          <button class="btn btn-ghost w-1/4" type="button" on:click={autoScroll}>
+          <button
+            class="btn btn-ghost w-1/4"
+            type="button"
+            on:click={autoScroll}
+          >
             <Icon path={mdiArrowDownCircleOutline} />
           </button>
         {/if}
-        <button type="submit" class="btn w-1/4 btn-ghost" disabled={!newMessage}>
+        <button
+          type="submit"
+          class="btn w-1/4 btn-ghost"
+          disabled={!newMessage}
+        >
           <Icon path={mdiSendOutline} />
         </button>
       </span>
