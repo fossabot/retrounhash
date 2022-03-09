@@ -322,7 +322,7 @@
         <span class="w-2/3">
           <input
             id="submit__area__main__"
-            class="input input-bordered"
+            class="input w-full input-bordered"
             type="text"
             placeholder="Type a message..."
             bind:value={newMessage}
