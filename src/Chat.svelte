@@ -283,7 +283,7 @@
     <form
       autocomplete="off"
       on:submit|preventDefault={sendMessage}
-      class="navbar w-full"
+      class="navbar w-full flex"
     >
       <span class="emoji__">
         <emoji-picker
