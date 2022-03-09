@@ -269,6 +269,14 @@
   } else {
     theme = "light";
   }
+
+  let sendButonWidth;
+  if(localStorage.getItem("autoscroll") == "true"){
+    sendButonWidth = "1/3";
+  }else{
+    sendButonWidth = "1/2";
+  }
+
 </script>
 
 <div class="container">
@@ -341,7 +349,7 @@
           {/if}
           <button
             type="submit"
-            class="btn w-auto btn-ghost"
+            class="btn w-{sendButonWidth} btn-ghost"
             disabled={!newMessage}
           >
             <Icon path={mdiSendOutline} />
