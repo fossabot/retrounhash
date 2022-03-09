@@ -293,18 +293,18 @@
           on:emoji-click={parseEmoji}
         />
       </span>
-      <span class="w-1/3">
-        <span class="w-1/3 text-center">
+      <span class="w-1/4">
+        <span class="w-1/3 m-1 text-center">
           <span id="emoji_add" on:click={selectEmoji}>
             <Icon path={mdiEmoticonWinkOutline} />
           </span>
         </span>
-        <span class="w-1/3 text-center">
+        <span class="w-1/3 m-1 text-center">
           <span id="record" on:click={record}>
             <Icon path={mdiMicrophoneOutline} />
           </span>
         </span>
-        <span class="w-1/3 text-center">
+        <span class="w-1/3 m-1 text-center">
           <label for="image-send-picker">
             <Icon path={mdiImageOutline} />
           </label>
@@ -318,31 +318,35 @@
           class="hidden"
         />
       </span>
-      <span class="w-2/3">
-        <input
-          id="submit__area__main__"
-          class="input input-bordered w-2/4"
-          type="text"
-          placeholder="Type a message..."
-          bind:value={newMessage}
-          maxlength="98"
-        />
-        {#if localStorage.getItem("autoscroll") == "true"}
+      <span class="w-3/4">
+        <span class="w-2/3">
+          <input
+            id="submit__area__main__"
+            class="input input-bordered"
+            type="text"
+            placeholder="Type a message..."
+            bind:value={newMessage}
+            maxlength="98"
+          />
+        </span>
+        <span class="w-1/3">
+          {#if localStorage.getItem("autoscroll") == "true"}
+            <button
+              class="btn btn-ghost w-1/2"
+              type="button"
+              on:click={autoScroll}
+            >
+              <Icon path={mdiArrowDownCircleOutline} />
+            </button>
+          {/if}
           <button
-            class="btn btn-ghost w-1/4"
-            type="button"
-            on:click={autoScroll}
+            type="submit"
+            class="btn w-auto btn-ghost"
+            disabled={!newMessage}
           >
-            <Icon path={mdiArrowDownCircleOutline} />
+            <Icon path={mdiSendOutline} />
           </button>
-        {/if}
-        <button
-          type="submit"
-          class="btn w-1/4 btn-ghost"
-          disabled={!newMessage}
-        >
-          <Icon path={mdiSendOutline} />
-        </button>
+        </span>
       </span>
     </form>
   {:else}
