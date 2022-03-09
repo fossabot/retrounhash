@@ -293,13 +293,14 @@
           on:emoji-click={parseEmoji}
         />
       </span>
-        <span class="m-1" id="emoji_add" on:click={selectEmoji}>
+      <span class="w-1/3">
+        <span class="m-1 w-1/3" id="emoji_add" on:click={selectEmoji}>
           <Icon path={mdiEmoticonWinkOutline} />
         </span>
-        <span class="m-1" id="record" on:click={record}>
+        <span class="m-1 w-1/3" id="record" on:click={record}>
           <Icon path={mdiMicrophoneOutline} />
         </span>
-        <label class="m-1" for="image-send-picker">
+        <label class="m-1 w-1/3" for="image-send-picker">
           <Icon path={mdiImageOutline} />
         </label>
         <input
@@ -310,22 +311,25 @@
           accept="image/jpeg"
           class="hidden"
         />
+      </span>
+      <span class="w-2/3">
         <input
           id="submit__area__main__"
-          class="input input-bordered"
+          class="input input-bordered w-3/4"
           type="text"
           placeholder="Type a message..."
           bind:value={newMessage}
           maxlength="98"
         />
         {#if localStorage.getItem("autoscroll") == "true"}
-          <button class="btn btn-ghost" type="button" on:click={autoScroll}>
+          <button class="btn btn-ghost w-1/4" type="button" on:click={autoScroll}>
             <Icon path={mdiArrowDownCircleOutline} />
           </button>
         {/if}
-        <button type="submit" class="btn btn-ghost" disabled={!newMessage}>
+        <button type="submit" class="btn w-1/4 btn-ghost" disabled={!newMessage}>
           <Icon path={mdiSendOutline} />
         </button>
+      </span>
     </form>
   {:else}
     <Login />

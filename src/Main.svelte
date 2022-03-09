@@ -1,6 +1,5 @@
 <script>
   import { Icon } from "svelte-materialify";
-
   import { mdiGithub, mdiTwitter } from "@mdi/js";
 </script>
 

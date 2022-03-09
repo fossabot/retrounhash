@@ -56,9 +56,6 @@ setInterval(() => {
           <Dash />
         {:else}
           <Main />
-          <div class="hidden">
-            <Dash />
-          </div>
         {/if}
       </Route>
       <Route path="/chat">
