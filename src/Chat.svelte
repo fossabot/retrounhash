@@ -361,5 +361,6 @@
     bottom: 0;
     width: 100%;
     backdrop-filter: blur(8px);
+    text-align: center;
   }
 </style>
