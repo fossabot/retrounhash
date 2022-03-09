@@ -33,9 +33,10 @@
       title: "signout ?",
       showCancelButton: true,
       confirmButtonText: "signout",
-      cancelButtonText: "take me in!",
+      cancelButtonText: "cancel ",
     }).then((result) => {
       if (result.isConfirmed) {
+        db.user().get("online").put(false);
         localStorage.clear();
         user.leave();
         username.set("");

@@ -41,7 +41,9 @@
 
   db.user().get("online").put(true);
 
-
+setInterval(() => {
+  db.user().get("lastSeen").put(new Date().toLocaleString())
+}, 1000);
 </script>
 
 <div data-theme={theme} style="min-height: 100vh;">

@@ -16,6 +16,7 @@
     let followingCount = 0;
     let userstatus;
     let userStatusBg;
+    let userLastSeen;
 
     async function follow() {
         isLoading = true;
@@ -124,7 +125,25 @@
                         followingCount += 1;
                     });
                 });
-                followingCount = 0;
+            followingCount = 0;
+        });
+
+    db.user(pub)
+        .get("lastSeen")
+        .on((data) => {
+            var lastSeen = new Date(data);
+            userLastSeen =
+                lastSeen.getDate() +
+                "/" +
+                lastSeen.getMonth() +
+                "/" +
+                lastSeen.getFullYear() +
+                "—" +
+                lastSeen.toLocaleTimeString()/* +
+                ":" +
+                lastSeen.getMinutes() +
+                ":" +
+                lastSeen.getSeconds();*/
         });
 </script>
 
@@ -142,13 +161,17 @@
         </div>
         <br />
         <span class="text-l text-center">
-            <div class="m-3">
+            <div class="m-3 text-xl">
                 {userName}
             </div>
             <br />
             {#if userIsOnline == true || userIsOnline == false}
                 <span class={`btn btn-${userStatusBg}`}>
                     online: {userIsOnline}
+                    {#if !userIsOnline}
+                        <br />
+                        last seen at: {userLastSeen}
+                    {/if}
                 </span>
             {/if}
             <a href={`/${pub}/Following/`} class="btn btn-standard">
