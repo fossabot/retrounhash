@@ -36,10 +36,17 @@
       cancelButtonText: "cancel ",
     }).then((result) => {
       if (result.isConfirmed) {
-        db.user().get("online").put(false);
-        localStorage.clear();
-        user.leave();
-        username.set("");
+        db.user()
+          .get("online")
+          .put(false, ({ err, ok }) => {
+            if (err) {
+              alert(err);
+            } else {
+              localStorage.clear();
+              user.leave();
+              username.set("");
+            }
+          });
       }
     });
   }
@@ -380,9 +387,9 @@
 <div class="navbar mb-3 shadow-xl rounded-box">
   <div class="flex-1">
     <a href="/" class="btn btn-ghost normal-case text-xl">
-      retrounhash 
+      retrounhash
       {#if roomName && roomName !== ""}
-         / {roomName}
+        / {roomName}
       {/if}
     </a>
   </div>

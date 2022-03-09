@@ -1,5 +1,6 @@
 <script>
     import { db, username } from "./user.js";
+    import Login from "./Login.svelte";
     import Post from "./comp/post.svelte";
     export var pub;
 
@@ -139,7 +140,7 @@
                 "/" +
                 lastSeen.getFullYear() +
                 "—" +
-                lastSeen.toLocaleTimeString()/* +
+                lastSeen.toLocaleTimeString(); /* +
                 ":" +
                 lastSeen.getMinutes() +
                 ":" +
@@ -147,61 +148,71 @@
         });
 </script>
 
-<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
-    <div class="card-body">
-        <div class="card-title text-xl regular-case">
-            {userName}'s profile
-        </div>
-        <div class="text-center">
-            <div class={`avatar ${userstatus}`}>
-                <div class="w-24 mask mask-squircle">
-                    <img src={userAvatar} alt="userAvatar" id="userAvatar" />
+{#if $username}
+    <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="card-title text-xl regular-case">
+                {userName}'s profile
+            </div>
+            <div class="text-center">
+                <div class={`avatar ${userstatus}`}>
+                    <div class="w-24 mask mask-squircle">
+                        <img
+                            src={userAvatar}
+                            alt="userAvatar"
+                            id="userAvatar"
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-        <br />
-        <span class="text-l text-center">
-            <div class="m-3 text-xl">
-                {userName}
-            </div>
             <br />
-            {#if userIsOnline == true || userIsOnline == false}
-                <span class={`btn btn-${userStatusBg}`}>
-                    online: {userIsOnline}
-                    {#if !userIsOnline}
-                        <br />
-                        last seen at: {userLastSeen}
-                    {/if}
-                </span>
+            <span class="text-l text-center">
+                <div class="m-3 text-xl">
+                    {userName}
+                </div>
+                <br />
+                {#if userIsOnline == true || userIsOnline == false}
+                    <span class={`btn btn-${userStatusBg}`}>
+                        online: {userIsOnline}
+                        {#if !userIsOnline}
+                            <br />
+                            last seen at: {userLastSeen}
+                        {/if}
+                    </span>
+                {/if}
+                <a href={`/${pub}/Following/`} class="btn btn-standard">
+                    following: {followingCount}
+                </a>
+            </span>
+            <div class="m-3">
+                You will see the user's posts in the explore section after you
+                follow them.
+            </div>
+        </div>
+        <div class="m-2">
+            {#if !isFollowing}
+                <button class="btn btn-success" on:click={follow}>follow</button
+                >
+            {:else}
+                <button class="btn btn-warning" on:click={unfollow}
+                    >Unfollow</button
+                >
             {/if}
-            <a href={`/${pub}/Following/`} class="btn btn-standard">
-                following: {followingCount}
-            </a>
-        </span>
-        <div class="m-3">
-            You will see the user's posts in the explore section after you
-            follow them.
         </div>
     </div>
-    <div class="m-2">
-        {#if !isFollowing}
-            <button class="btn btn-success" on:click={follow}>follow</button>
-        {:else}
-            <button class="btn btn-warning" on:click={unfollow}>Unfollow</button
-            >
-        {/if}
-    </div>
-</div>
-<br />
-<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
-    <div class="card-body">
-        <div class="m-2 p-2 text-xl">User's posts:</div>
-        {#each posts as post}
-            <Post {post} />
-        {/each}
-        <div class="text-center m-2 p-2">
-            <hr />
-            <div class="m-2 p-2">Looks like you have reached end.</div>
+    <br />
+    <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="m-2 p-2 text-xl">User's posts:</div>
+            {#each posts as post}
+                <Post {post} />
+            {/each}
+            <div class="text-center m-2 p-2">
+                <hr />
+                <div class="m-2 p-2">Looks like you have reached end.</div>
+            </div>
         </div>
     </div>
-</div>
+{:else}
+    <Login />
+{/if}

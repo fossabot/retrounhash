@@ -36,7 +36,7 @@
                     isLoading = false;
                 });
         }
-    }, 3000);
+    }, 1000);
 
     function shareProfile() {
         navigator.share({
