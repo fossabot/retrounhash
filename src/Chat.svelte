@@ -293,7 +293,6 @@
           on:emoji-click={parseEmoji}
         />
       </span>
-      <div class="">
         <span class="m-1" id="emoji_add" on:click={selectEmoji}>
           <Icon path={mdiEmoticonWinkOutline} />
         </span>
@@ -313,7 +312,7 @@
         />
         <input
           id="submit__area__main__"
-          class="input w-full input-bordered"
+          class="input input-bordered"
           type="text"
           placeholder="Type a message..."
           bind:value={newMessage}
@@ -327,7 +326,6 @@
         <button type="submit" class="btn btn-ghost" disabled={!newMessage}>
           <Icon path={mdiSendOutline} />
         </button>
-      </div>
     </form>
   {:else}
     <Login />
