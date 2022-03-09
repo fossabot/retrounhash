@@ -294,13 +294,13 @@
         />
       </span>
       <span class="w-1/3">
-        <span class="m-1 w-1/3" id="emoji_add" on:click={selectEmoji}>
+        <span class="w-1/3" id="emoji_add" on:click={selectEmoji}>
           <Icon path={mdiEmoticonWinkOutline} />
         </span>
-        <span class="m-1 w-1/3" id="record" on:click={record}>
+        <span class="w-1/3" id="record" on:click={record}>
           <Icon path={mdiMicrophoneOutline} />
         </span>
-        <label class="m-1 w-1/3" for="image-send-picker">
+        <label class="w-1/3" for="image-send-picker">
           <Icon path={mdiImageOutline} />
         </label>
         <input
