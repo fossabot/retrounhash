@@ -25,11 +25,11 @@
     theme = "light";
   }
 
-  window.onbeforeunload = function () {
+  /*window.onbeforeunload = function () {
     db.user().get("online").put(false);
 
     return confirm("close?");
-  };
+  };*/
 
   window.addEventListener("blur", () => {
     db.user().get("online").put(false);
@@ -39,7 +39,9 @@
     db.user().get("online").put(true)
   });
 
-  //db.user().get("online").put(true);
+  db.user().get("online").put(true);
+
+
 </script>
 
 <div data-theme={theme} style="min-height: 100vh;">
