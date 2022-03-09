@@ -283,7 +283,7 @@
     <form
       autocomplete="off"
       on:submit|preventDefault={sendMessage}
-      class="navbar w-full flex"
+      class="navbar flex"
     >
       <span class="emoji__">
         <emoji-picker
@@ -293,7 +293,7 @@
           on:emoji-click={parseEmoji}
         />
       </span>
-      <div class="w-full">
+      <div class="">
         <span class="m-1" id="emoji_add" on:click={selectEmoji}>
           <Icon path={mdiEmoticonWinkOutline} />
         </span>
