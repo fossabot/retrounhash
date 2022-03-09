@@ -46,8 +46,8 @@ setInterval(() => {
 }, 1000);
 </script>
 
-<div data-theme={theme} style="min-height: 100vh;">
-  <MaterialApp {theme} class={`${theme}`}>
+<div  style="min-height: 100vh;">
+  <MaterialApp {theme} class={``}>
     <!--{#if $username}-->
     <div class="app">
       <Route path="/">

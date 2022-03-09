@@ -43,5 +43,12 @@
       gtag('config', 'G-EJ08WXS79G');
    </script>
 </body>
+<script>
+   if (localStorage.getItem("theme") == "true") {
+      document.querySelector("html").setAttribute("data-theme", "dark")
+   } else {
+      document.querySelector("html").setAttribute("data-theme", "light")
+   }
+</script>
 
 </html>
