@@ -272,7 +272,7 @@
 </script>
 
 {#if $username}
-  <div class="text-center">
+  <div class="text-center w-full">
     <div style="width: 90vw;" class="alert alert-success shadow-lg mb-2">
       <div>
         <svg

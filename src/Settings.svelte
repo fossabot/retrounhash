@@ -10,7 +10,7 @@
         enableSwipe ||
         enableSwipe ||
         encryptionValue ||
-        showAutoscroll ||
+        showAutoscroll,
         saveSettings();
 
     if (localStorage.getItem("autoscroll") == "true") {
