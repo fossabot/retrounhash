@@ -55,19 +55,18 @@
 </script>
 
 <div class="text-xl text-center regular-case">Account</div>
-<div class="card w-full m-4 bg-base-100 shadow-xl">
+<div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
     <div class="card-body">
         <div class="card-title">Basic Info</div>
-        Username:
-        <span style="user-select: all;">
-            {$username || "not logged in !"}
-        </span>
+        Username: {$username || "not logged in !"}
         <br />
         Public Key:
         <a href={`/User/` + pubKeyUser.pub}>
-            <code style="user-select: all;">
-                {pubKeyUser.pub}
-            </code>
+            <div class="mockup-code m-2">
+                <div class="m-2">
+                    {pubKeyUser.pub}
+                </div>
+            </div>
         </a>
     </div>
 </div>

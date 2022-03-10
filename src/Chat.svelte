@@ -271,30 +271,33 @@
   }
 </script>
 
+{#if $username}
+  <div class="text-center">
+    <div style="width: 90vw;" class="alert alert-success shadow-lg mb-2">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current flex-shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          /></svg
+        >
+        <span>
+          Use a different encryption key only your friends know, for the best
+          security. You can have that in the settings under `custom encryption`
+        </span>
+      </div>
+    </div>
+  </div>
+{/if}
 <div class="container">
   {#if $username}
     <main on:scroll={debouncedWatchScroll}>
-      <div class="alert alert-success shadow-lg mb-2">
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="stroke-current flex-shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            /></svg
-          >
-          <span>
-            Use a different encryption key only your friends know, for the best
-            security. You can have that in the settings under `custom
-            encryption`
-          </span>
-        </div>
-      </div>
       {#each messages as message (message.when)}
         <ChatMessage {message} sender={$username} />
       {/each}
@@ -347,11 +350,7 @@
           <Icon path={mdiArrowDownCircleOutline} />
         </button>
       {/if}
-      <button
-        type="submit"
-        class="btn btn-ghost"
-        disabled={!newMessage}
-      >
+      <button type="submit" class="btn btn-ghost" disabled={!newMessage}>
         <Icon path={mdiSendOutline} />
       </button>
     </form>

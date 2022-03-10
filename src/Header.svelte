@@ -29,7 +29,7 @@
   });
 
   function signout() {
-    CloseNav();
+    open = false;
     Swal.fire({
       title: "signout ?",
       showCancelButton: true,

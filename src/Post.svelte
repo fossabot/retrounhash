@@ -1,7 +1,7 @@
 <script>
     import { v4 as uuidv4 } from "uuid";
     import Swal from "sweetalert2";
-    
+
     /*import "gun/lib/rindexed";
     import "gun/sea";
     import "gun/lib/radisk";
@@ -18,8 +18,8 @@
         localStorage: false,
     });*/
 
-    import { db } from "./user"
-import { mdiPostOutline } from "@mdi/js";
+    import { db } from "./user";
+    export var embed;
 
     let postDescription;
     let isLoading = false;
@@ -124,12 +124,21 @@ import { mdiPostOutline } from "@mdi/js";
                 quality: 0.5,
             });
         };*/
+
+    let widthCard;
+    if (embed) {
+        widthCard = "96";
+    } else {
+        widthCard = "full";
+    }
 </script>
 
 <div>
     <main>
-        <div class="text-xl m-2 text-center">write a post</div>
-        <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+        {#if !embed}
+            <div class="text-xl m-2 text-center">write a post</div>
+        {/if}
+        <div class="card mb-5 mt-5 w-{widthCard} bg-base-100 shadow-xl">
             <div class="card-body">
                 <div class="card-title">
                     Create a post your followers will see

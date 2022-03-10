@@ -1,11 +1,12 @@
 <script>
     import Login from "./Login.svelte";
     import Post from "./comp/post.svelte";
-    import Icon from 'mdi-svelte';
+    import Icon from "mdi-svelte";
     import { mdiPostOutline } from "@mdi/js";
     import { user, username, db } from "./user.js";
 
     import Gun from "gun";
+    export var embed;
 
     //initialisation
     let posts = [];
@@ -40,18 +41,25 @@
                 });
             });
     }
+    
+    let widthCard;
+    if (embed) {
+        widthCard = "96";
+    } else {
+        widthCard = "full";
+    }
 </script>
 
 {#if user.is}
     <div>
-        <div class="card mb-5 mt-5 w-full rounded-m shadow-xl">
+        <div class="card mb-5 mt-5 w-{widthCard} rounded-m shadow-xl">
             <div class="card-body">
-                <div class="card-title text-center">
-                    <Icon path={mdiPostOutline} size="30px" />
-                    <div class="text-xl regular-case">
-                        Posts
+                {#if !embed}
+                    <div class="card-title text-center">
+                        <Icon path={mdiPostOutline} size="30px" />
+                        <div class="text-xl regular-case">Posts</div>
                     </div>
-                </div>
+                {/if}
                 {#each posts as post}
                     <Post {post} />
                 {/each}
