@@ -1,7 +1,8 @@
 self.addEventListener('install', function (event) {
-  var CACHE_NAME = 'retrounhash__cache-v6-0-0';
+  var CACHE_NAME = 'retrounhash__cache-v7-0-0';
   var urlsToCache = [
-    '/'
+    '/',
+    "/chat"
   ];
 
   self.addEventListener('install', function (event) {
