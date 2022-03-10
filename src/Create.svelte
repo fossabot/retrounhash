@@ -19,12 +19,16 @@
         localStorage: false,
     });
 
+    let roomName;
+    let base64String;
+    let isLoading = false;
+
     async function createRoom() {
         if (base64String) {
             const room = await SEA.pair();
             isLoading = true;
             localStorage.setItem("channel", room.pub);
-            db.user().auth(room, async (dat) => {
+            await db.user().auth(room, async (dat) => {
                 var userKeys = JSON.parse(sessionStorage.getItem("pair"));
                 let enc = await SEA.encrypt(room, userKeys.priv);
                 db.user().get("host").get("key").put(enc);
@@ -52,6 +56,7 @@
                     .get("certificate")
                     .put(cert)
                     .then(async () => {
+                        console.log("certificate made");
                         await db
                             .user()
                             .get("info")
@@ -59,6 +64,7 @@
                             .get("name")
                             .put(document.querySelector("#roomName").value)
                             .then(async () => {
+                                console.log("name added");
                                 await db
                                     .user()
                                     .get("info")
@@ -69,13 +75,15 @@
                                             .value
                                     )
                                     .then(async () => {
-                                        await db
+                                        console.log("desc added");
+                                        /*await db
                                             .user()
                                             .get("info")
                                             .get("profile")
                                             .get("avatar")
-                                            .put(base64String)
-                                            .then(() => {
+                                            .put(await base64String)
+                                            .then(async () => {
+                                                console.log("base64 added")
                                                 base64String = "";
                                                 isLoading = false;
                                                 addItem(
@@ -84,6 +92,65 @@
                                                     )
                                                 );
                                                 location.href = "/";
+                                            });*/
+
+                                        await db
+                                            .get(
+                                                `~${localStorage.getItem(
+                                                    "channel"
+                                                )}`
+                                            )
+                                            .get("host")
+                                            .get("key")
+                                            .then(async (keyPair) => {
+                                                const keys = await SEA.decrypt(
+                                                    keyPair,
+                                                    JSON.parse(
+                                                        sessionStorage.getItem(
+                                                            "pair"
+                                                        )
+                                                    ).priv
+                                                );
+                                                db.user().auth(
+                                                    keys,
+                                                    async () => {
+                                                        await db
+                                                            .user()
+                                                            .get("info")
+                                                            .get("profile")
+                                                            .get("avatar")
+                                                            .put(
+                                                                await compress(
+                                                                    base64String,
+                                                                    {
+                                                                        width: 400,
+                                                                        type: "image/jpeg", // default
+                                                                        max: 200, // max size
+                                                                        min: 20, // min size
+                                                                        quality: 0.8,
+                                                                    }
+                                                                )
+                                                            )
+                                                            .then(async () => {
+                                                                addItem(
+                                                                    localStorage.getItem(
+                                                                        "channel"
+                                                                    )
+                                                                );
+
+                                                                await Swal.fire(
+                                                                    {
+                                                                        icon: "success",
+                                                                        title: "done! 🎉",
+                                                                        text: "successfully generated room",
+                                                                    }
+                                                                ).then(() => {
+                                                                    location.href =
+                                                                        "/";
+                                                                });
+                                                            });
+                                                    }
+                                                );
                                             });
                                     });
                             });
@@ -113,10 +180,6 @@
         }
     }*/
 
-    let roomName;
-    let base64String;
-    let isLoading = false;
-
     function imageUploaded() {
         var file = document.querySelector("#avatar-chooser").files[0];
 
@@ -130,7 +193,7 @@
         reader.readAsDataURL(file);
     }
 
-    $: base64String,
+    /*$: base64String,
         async () => {
             base64String = await compress(base64String, {
                 width: 400,
@@ -139,7 +202,7 @@
                 min: 20, // min size
                 quality: 0.7,
             });
-        };
+        };*/
 </script>
 
 <div>

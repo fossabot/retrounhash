@@ -13,6 +13,7 @@
     mdiContentSave,
     mdiEject,
     mdiInformationOutline,
+    mdiArrowLeftBoldCircleOutline,
   } from "@mdi/js";
 
   import Gun from "gun";
@@ -118,8 +119,9 @@
   }
 
   let NameOfTheRecentRoom;
-  let roomDescription;
+  let roomDescription = "";
   let roomName = "";
+  let roomImage = "";
 
   //async function computeName() {
   db3
@@ -153,7 +155,7 @@
         data =
           "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       }
-      document.querySelector("#roomImage").src = data;
+      roomImage = data;
     });
 
   /*setTimeout(() => {
@@ -270,10 +272,14 @@
           JSON.parse(sessionStorage.getItem("pair")).priv
         );
         db3.user().auth(keys, async () => {
-          ToogleInfo();
           Swal.fire({
             title: "Enter New Name",
             input: "text",
+            inputAttributes: {
+              autocapitalize: "off",
+              maxlength: "30",
+              maxLength: "30",
+            },
             showCancelButton: true,
             confirmButtonText: "Change",
             showLoaderOnConfirm: true,
@@ -308,10 +314,14 @@
           JSON.parse(sessionStorage.getItem("pair")).priv
         );
         db3.user().auth(keys, async () => {
-          ToogleInfo();
           Swal.fire({
             title: "Enter New Description",
             input: "text",
+            inputAttributes: {
+              autocapitalize: "off",
+              maxlength: "200",
+              maxLength: "200",
+            },
             showCancelButton: true,
             confirmButtonText: "Change",
             showLoaderOnConfirm: true,
@@ -370,10 +380,42 @@
 
 <div class="navbar mb-3 shadow-xl rounded-box">
   <div class="flex-1">
-    <a href="/" class="btn btn-ghost normal-case text-xl">
-      retrounhash
+    <!-- svelte-ignore a11y-invalid-attribute -->
+    <a href="#" class="btn btn-ghost normal-case text-xl">
+      {#if !isChat}
+        <a href="/">retrounhash</a>
+      {:else}
+        <a href="/">
+          <Icon size="30px" path={mdiArrowLeftBoldCircleOutline} />
+        </a>
+      {/if}
       {#if roomName && roomName !== ""}
-        / {roomName}
+        <div
+          class="avatar"
+          on:click={() => {
+            open = true;
+          }}
+        >
+          <div class="mask ml-2 mr-2 w-10 mask-squircle">
+            <img alt="" src={roomImage} />
+          </div>
+        </div>
+        <span
+          class="m-1"
+          on:click={() => {
+            open = true;
+          }}
+        >
+          {#if roomName}
+            {#if !(roomName.length > 31)}
+              {roomName}
+            {:else}
+              <i>room name too big</i>
+            {/if}
+          {:else}
+            <i>error</i>
+          {/if}
+        </span>
       {/if}
     </a>
   </div>
@@ -430,8 +472,8 @@
     <div class="text-center">
       <label for="avatar-changer" class="text-center">
         <div class="avatar text-center">
-          <div class="w-25 mask mask-squircle">
-            <img src="" id="roomImage" alt="" />
+          <div class="w-24 mask mask-squircle">
+            <img src={roomImage} alt="" />
           </div>
         </div>
       </label>
@@ -449,7 +491,15 @@
       on:dblclick={changeRoomName}
       id="InfoRoomName"
     >
-      {roomName || "loading..."}
+      {#if roomName}
+        {#if !(roomName.length > 31)}
+          {roomName}
+        {:else}
+          <i>room name too big</i>
+        {/if}
+      {:else}
+        <i>error</i>
+      {/if}
     </div>
     <hr />
     <div class="pl-1 m-1">About:</div>
@@ -458,7 +508,15 @@
       on:dblclick={changeRoomDescription}
       id="InfoDescription"
     >
-      {roomDescription || "loading..."}
+      {#if roomDescription}
+        {#if !(roomDescription.length > 205)}
+          {roomDescription}
+        {:else}
+          <i>room description too big</i>
+        {/if}
+      {:else}
+        <i>error</i>
+      {/if}
     </div>
     <button class="btn btn-info m-1" on:click={share_link}
       ><Icon path={mdiShare} />
