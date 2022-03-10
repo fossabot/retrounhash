@@ -82,6 +82,7 @@
         "night",
         "coffee",
         "winter",
+        "modern",
     ];
 
     function themeChange(themeName) {
