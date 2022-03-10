@@ -1,7 +1,9 @@
 <script>
     import Login from "./Login.svelte";
+    import Explore from "./Explore.svelte"
     import { mdiLoading, mdiViewDashboard } from "@mdi/js";
     import Icon from "mdi-svelte";
+    import PostPage from "./Post.svelte"
     import { username, db } from "./user.js";
 
     let items = JSON.parse(localStorage.getItem("items") || "[]");
@@ -60,6 +62,8 @@
         }
         localStorage.setItem("recently_snup", "false");
     }
+
+    document.title = "retrounhash";
 </script>
 
 {#if $username}
@@ -104,6 +108,8 @@
             {/each}
         </div>
     </div>
+    <PostPage />
+    <Explore />
 {:else}
     <Login />
 {/if}

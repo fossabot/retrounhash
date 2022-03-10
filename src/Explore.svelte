@@ -55,7 +55,7 @@
                 {#each posts as post}
                     <Post {post} />
                 {/each}
-                <div class="m-2 p-1">
+                <div class="m-2 p-1 text-xl text-center text-center">
                     <hr />
                     Follow more people to see their posts.
                 </div>

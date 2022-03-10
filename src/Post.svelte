@@ -1,7 +1,7 @@
 <script>
     import { v4 as uuidv4 } from "uuid";
-
     import Swal from "sweetalert2";
+    
     /*import "gun/lib/rindexed";
     import "gun/sea";
     import "gun/lib/radisk";
@@ -19,6 +19,7 @@
     });*/
 
     import { db } from "./user"
+import { mdiPostOutline } from "@mdi/js";
 
     let postDescription;
     let isLoading = false;
@@ -113,7 +114,7 @@
         reader.readAsDataURL(file);
     }
 
-    $: base64String,
+    /*$: base64String,
         async () => {
             base64String = await compress(base64String, {
                 width: 400,
@@ -122,12 +123,12 @@
                 min: 20, // min size
                 quality: 0.5,
             });
-        };
+        };*/
 </script>
 
 <div>
     <main>
-        <div class="h2 m-2 text-center">Create a post</div>
+        <div class="text-xl m-2 text-center">write a post</div>
         <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
             <div class="card-body">
                 <div class="card-title">

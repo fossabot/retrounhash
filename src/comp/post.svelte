@@ -1,5 +1,5 @@
 <script>
-    import Icon from 'mdi-svelte';
+    import Icon from "mdi-svelte";
     import { mdiShareCircle, mdiTrashCan } from "@mdi/js";
     import { username, db } from "../user";
     import Swal from "sweetalert2";
@@ -32,7 +32,7 @@
                         .then(async () => {
                             await Swal.fire({
                                 title: "deleted",
-                                icon: "success"
+                                icon: "success",
                             }).then(() => {
                                 location.reload();
                             });
@@ -66,7 +66,7 @@
                     <img
                         src={post.img}
                         alt=""
-                        class="img-fluid"
+                        class="img-fluid rounded"
                         id="img--main"
                     />
                     <div class="text-center m-2 p-1">
@@ -86,16 +86,19 @@
                 post.date
             ).toLocaleTimeString()}
         </div>
-        {#if $username == post.user}
-            <span on:click={deletePost(post.uid)}>
-                <Icon path={mdiTrashCan} />
-            </span>
-        {/if}
-        {#if navigator.canShare}
-            <span class="m-2" on:click={sharePost(post)}>
-                <Icon path={mdiShareCircle} /> Share
-            </span>
-        {/if}
+        <br />
+        <div class="flex">
+            {#if $username == post.user}
+                <elm class="m-2" on:click={deletePost(post.uid)}>
+                    <Icon path={mdiTrashCan} />
+                </elm>
+            {/if}
+            {#if navigator.canShare}
+                <elm class="m-2" on:click={sharePost(post)}>
+                    <Icon path={mdiShareCircle} />
+                </elm>
+            {/if}
+        </div>
     </div>
 </div>
 
