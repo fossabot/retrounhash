@@ -44,7 +44,7 @@
                                     1000 *
                                     24 *
                                     parseInt(document.querySelector("#date")) ||
-                                1000000 //well,
+                                1000000000 //well,
                         ),
                         //blacklist: "ban"
                     }
@@ -245,7 +245,7 @@
                     bind:value={roomName}
                     maxLength="30"
                     minLength="3"
-                    placeholder={`${$username}'s space`}
+                    placeholder={`${$username}'s new space`}
                 />
                 <textarea
                     class="textarea textarea-bordered"
@@ -259,7 +259,7 @@
                     class="input input-bodered w-full max-w-xs"
                     id="data"
                     type="number"
-                    placeholder="self destruction after n days."
+                    placeholder="self destruction after n days. (optional)"
                 />
             </div>
             <div class="m-2">

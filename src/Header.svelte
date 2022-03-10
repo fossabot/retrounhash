@@ -323,8 +323,8 @@
             input: "text",
             inputAttributes: {
               autocapitalize: "off",
-              maxlength: "200",
-              maxLength: "200",
+              maxlength: "400",
+              maxLength: "400",
             },
             showCancelButton: true,
             confirmButtonText: "Change",
@@ -513,7 +513,7 @@
       id="InfoDescription"
     >
       {#if roomDescription}
-        {#if !(roomDescription.length > 205)}
+        {#if !(roomDescription.length > 405)}
           {roomDescription}
         {:else}
           <i>room description too big</i>
