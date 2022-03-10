@@ -153,7 +153,12 @@
       newMessage.toString(),
       localStorage.getItem("_secret") || "#foo"
     );
-    const message = user.get("all").set({ what: secret, pub: user.is.pub });
+    const message = user
+      .get("all")
+      .set({
+        what: secret,
+        pub: JSON.parse(sessionStorage.getItem("pair")).pub,
+      });
     const index = new Date().toISOString();
     getCert(message, index);
 
@@ -273,7 +278,10 @@
 
 {#if $username}
   <div class="text-center w-full">
-    <div style="width: 80vw;margin-left: 10vw;" class=" alert alert-success shadow-lg mb-2">
+    <div
+      style="width: 80vw;margin-left: 10vw;"
+      class=" alert alert-success shadow-lg mb-2"
+    >
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -317,14 +325,14 @@
         />
       </span>
 
-      <span id="emoji_add" on:click={selectEmoji}>
+      <span class="m-1" id="emoji_add" on:click={selectEmoji}>
         <Icon path={mdiEmoticonWinkOutline} />
       </span>
-      <span id="record" on:click={record}>
+      <span class="m-1" id="record" on:click={record}>
         <Icon path={mdiMicrophoneOutline} />
       </span>
 
-      <label for="image-send-picker">
+      <label class="m-1" for="image-send-picker">
         <Icon path={mdiImageOutline} />
       </label>
       <input
