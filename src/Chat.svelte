@@ -6,7 +6,7 @@
   import debounce from "lodash.debounce";
   import "emoji-picker-element";
   import { db2 } from "./gunInstance.js";
-  import Icon from 'mdi-svelte';
+  import Icon from "mdi-svelte";
   import Swal from "sweetalert2";
 
   import "gun/lib/radisk";
@@ -52,7 +52,6 @@
   let theme;
   let canAutoScroll = true;
   let unreadMessages = false;
-
 
   function autoScroll() {
     setTimeout(() => scrollBottom?.scrollIntoView({ behavior: "auto" }), 50);
@@ -203,7 +202,7 @@
       mediaRecorder.start();
       Toast.fire({
         title: "started recording!",
-        timer: 3000
+        timer: 3000,
       });
       const audioChunks = [];
       mediaRecorder.addEventListener("dataavailable", (event) => {
@@ -236,12 +235,11 @@
         mediaRecorder.stop();
         Toast.fire({
           title: "stopped recording!",
-          timer: 3000
+          timer: 3000,
         });
       }, 5000);
     });
   }
-
 
   function parseEmoji(e) {
     if (newMessage == undefined || newMessage == "") {
@@ -266,17 +264,36 @@
   }
 
   let sendButonWidth;
-  if(localStorage.getItem("autoscroll") == "true"){
+  if (localStorage.getItem("autoscroll") == "true") {
     sendButonWidth = "1/3";
-  }else{
+  } else {
     sendButonWidth = "1/2";
   }
-
 </script>
 
 <div class="container">
   {#if $username}
     <main on:scroll={debouncedWatchScroll}>
+      <div class="alert alert-success shadow-lg mb-2">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="stroke-current flex-shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            /></svg
+          >
+          <span>
+            Use a different encryption key only your friends know, for the best security.
+            You can have that in the settings under `custom encryption`
+          </span>
+        </div>
+      </div>
       {#each messages as message (message.when)}
         <ChatMessage {message} sender={$username} />
       {/each}

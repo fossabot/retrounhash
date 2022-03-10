@@ -104,39 +104,16 @@
     });
   }
 
-  var NavActive = false;
-
-  function ToogleNav() {
-    if (NavActive == true) {
-      NavActive = false;
-    } else {
-      NavActive = true;
-    }
-  }
-
-  function ToogleInfo() {
-    if (InfoState == true) {
-      InfoState = false;
-    } else {
-      InfoState = true;
-    }
-  }
-
-  function CloseNav() {
-    NavActive = false;
-  }
-
   if (!localStorage.getItem("swipe")) {
     localStorage.setItem("swipe", "true");
   }
   if (localStorage.getItem("swipe") == "true") {
     document.addEventListener("swiped-right", function (e) {
-      NavActive = true;
+      open = true;
     });
 
     document.addEventListener("swiped-left", function (e) {
-      InfoState = false;
-      CloseNav();
+      open = false;
     });
   }
 
@@ -375,12 +352,19 @@
   if (localStorage.getItem("keyToNav") == "true") {
     document.onkeyup = function (event) {
       if (event.keyCode == localStorage.getItem("keyToNav__enable")) {
-        ToogleNav();
         if (isChat) {
-          ToogleInfo();
+          toogle__nav();
         }
       }
     };
+  }
+
+  function toogle__nav() {
+    if (open == true) {
+      open = false;
+    } else {
+      open = false;
+    }
   }
 </script>
 
@@ -493,7 +477,21 @@
     {/if}
   </div>
   <hr />
-  <div class="alert shadow-lg m-1">
-    double tap data to edit it! ( if you're the admin )
+  <div class="alert alert-success shadow-lg mb-2">
+    <div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="stroke-current flex-shrink-0 h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        /></svg
+      >
+      <span> double tap data to edit it! ( if you're the admin ) </span>
+    </div>
   </div>
 </Drawer>
