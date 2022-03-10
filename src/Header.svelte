@@ -110,11 +110,15 @@
   }
   if (localStorage.getItem("swipe") == "true") {
     document.addEventListener("swiped-right", function (e) {
-      open = true;
+      if (isChat) {
+        open = true;
+      }
     });
 
     document.addEventListener("swiped-left", function (e) {
-      open = false;
+      if (isChat) {
+        open = false;
+      }
     });
   }
 
