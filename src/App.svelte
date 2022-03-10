@@ -1,5 +1,4 @@
 <script>
-  import { MaterialApp } from "svelte-materialify";
   import Chat from "./Chat.svelte";
   import Header from "./Header.svelte";
   import { Route } from "tinro";
@@ -47,8 +46,6 @@ setInterval(() => {
 </script>
 
 <div  style="min-height: 100vh;">
-  <MaterialApp {theme} class={``}>
-    <!--{#if $username}-->
     <div class="app">
       <Route path="/">
         <Header />
@@ -107,16 +104,6 @@ setInterval(() => {
         <Following pub={meta.params.publicKey} />
       </Route>
     </div>
-    <!--{:else}
-      <Header />
-      <Route path="/">
-        <Main />
-      </Route>
-      <Route path="/chat">
-        <Dash />
-      </Route>
-    {/if}-->
-  </MaterialApp>
 </div>
 
 <style lang="postcss" global>

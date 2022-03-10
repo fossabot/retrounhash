@@ -1,5 +1,5 @@
 <script>
-    import { Icon } from "svelte-materialify";
+    import Icon from 'mdi-svelte';
     import { mdiShareCircle, mdiTrashCan } from "@mdi/js";
     import { username, db } from "../user";
     import Swal from "sweetalert2";

@@ -1,9 +1,7 @@
 <script>
     import Login from "./Login.svelte";
     import Post from "./comp/post.svelte";
-    import {
-        Icon,
-    } from "svelte-materialify";
+    import Icon from 'mdi-svelte';
     import { mdiPostOutline } from "@mdi/js";
     import { user, username, db } from "./user.js";
 

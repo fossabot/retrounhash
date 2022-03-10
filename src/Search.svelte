@@ -1,6 +1,6 @@
 <script>
     import Login from "./Login.svelte";
-    import { Icon } from "svelte-materialify";
+    import Icon from 'mdi-svelte';
     import { mdiBadgeAccountHorizontalOutline, mdiPostOutline } from "@mdi/js";
     import { username } from "./user.js";
     import { db2 } from "./gunInstance";

@@ -3,10 +3,9 @@
   import jq from "jquery";
   import Swal from "sweetalert2";
   import compress from "compress-base64";
-
+  import Icon from 'mdi-svelte';
   const urlParams = new URLSearchParams(window.location.search);
-
-  import { NavigationDrawer, Icon } from "svelte-materialify";
+  //import { NavigationDrawer } from "svelte-materialify";
 
   import {
     mdiShare,

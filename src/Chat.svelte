@@ -6,7 +6,7 @@
   import debounce from "lodash.debounce";
   import "emoji-picker-element";
   import { db2 } from "./gunInstance.js";
-  import { Icon } from "svelte-materialify";
+  import Icon from 'mdi-svelte';
   import Swal from "sweetalert2";
 
   import "gun/lib/radisk";
@@ -42,8 +42,6 @@
     localStorage: false,
   });
 
-  import { ProgressLinear } from "svelte-materialify";
-
   const urlParams = new URLSearchParams(window.location.search);
 
   let newMessage;
@@ -55,7 +53,6 @@
   let canAutoScroll = true;
   let unreadMessages = false;
 
-  console.log("test");
 
   function autoScroll() {
     setTimeout(() => scrollBottom?.scrollIntoView({ behavior: "auto" }), 50);
@@ -206,6 +203,7 @@
       mediaRecorder.start();
       Toast.fire({
         title: "started recording!",
+        timer: 3000
       });
       const audioChunks = [];
       mediaRecorder.addEventListener("dataavailable", (event) => {
@@ -238,15 +236,12 @@
         mediaRecorder.stop();
         Toast.fire({
           title: "stopped recording!",
+          timer: 3000
         });
       }, 5000);
     });
   }
 
-  let isProgActive = true;
-  setTimeout(() => {
-    isProgActive = false;
-  }, 3000);
 
   function parseEmoji(e) {
     if (newMessage == undefined || newMessage == "") {
@@ -282,7 +277,6 @@
 <div class="container">
   {#if $username}
     <main on:scroll={debouncedWatchScroll}>
-      <ProgressLinear height="10px" indeterminate bind:active={isProgActive} />
       {#each messages as message (message.when)}
         <ChatMessage {message} sender={$username} />
       {/each}

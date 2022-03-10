@@ -1,21 +1,8 @@
 <script>
     import Login from "./Login.svelte";
-    import { v4 as uuidv4 } from "uuid";
-    import Swal from "sweetalert2";
-    import compress from "compress-base64";
-    import {
-        ListItemGroup,
-        ListItem,
-        Icon,
-        Tabs,
-        Tab,
-        Window,
-        WindowItem,
-        AppBar,
-    } from "svelte-materialify";
-    import { mdiChatOutline } from "@mdi/js";
-
-    import { user, username, db } from "./user.js";
+    import { mdiViewDashboard } from "@mdi/js";
+    import Icon from "mdi-svelte";
+    import {  username, db } from "./user.js";
 
     let items = JSON.parse(localStorage.getItem("items") || "[]");
 
@@ -24,7 +11,6 @@
     }
 
     let data;
-    let arrayPersona = [];
     let mainData;
     async function returnNull(pubb) {
         mainData = await db
@@ -40,7 +26,6 @@
         return mainData;
     }
 
-    let val = 0;
 
     if (localStorage.getItem("recently_snup") == "true") {
         if (sessionStorage.getItem("pair") == null) {
@@ -54,7 +39,9 @@
 {#if $username}
     <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
         <div class="card-body">
-            <div class="card-title">Dashboard</div>
+            <div class="card-title">
+                <Icon path={mdiViewDashboard} /> Dashboard
+            </div>
             {#if !localStorage.getItem("items") || localStorage.getItem("items") == "[]"}
                 <div class="text-center">
                     <img
@@ -69,12 +56,14 @@
             {/if}
             {#each items as item, i (item)}
                 {#await returnNull(item)}
-                    <ListItem>loading....</ListItem>
+                    <div class="m-1 text-md">
+                        loading...
+                    </div>
                 {:then name}
                     <a href={`/room?c=${item}`}>
-                        <ListItem>
+                        <div class="m-1 text-md">
                             {name}
-                        </ListItem>
+                        </div>
                     </a>
                 {/await}
             {/each}
