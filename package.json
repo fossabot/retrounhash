@@ -37,7 +37,7 @@
     "minifaker": "^1.34.0",
     "sass": "^1.49.9",
     "sirv-cli": "^1.0.0",
-    "svelte-materialify": "^0.3.11",
+    "svelte-drawer-component": "^1.2.2",
     "sweetalert2": "^11.4.0",
     "tinro": "^0.6.7",
     "uuid": "^8.3.2"

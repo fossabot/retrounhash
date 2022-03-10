@@ -3,9 +3,10 @@
   import jq from "jquery";
   import Swal from "sweetalert2";
   import compress from "compress-base64";
-  import Icon from 'mdi-svelte';
+  import Icon from "mdi-svelte";
   const urlParams = new URLSearchParams(window.location.search);
-  //import { NavigationDrawer } from "svelte-materialify";
+  import Drawer from "svelte-drawer-component";
+  let open = false;
 
   import {
     mdiShare,
@@ -395,7 +396,11 @@
   <div class="flex-none flex">
     {#if isChat}
       <div class="navbar-end m-2">
-        <button on:click={ToogleInfo}>
+        <button
+          on:click={() => {
+            open = true;
+          }}
+        >
           <Icon path={mdiInformationOutline} />
         </button>
       </div>
@@ -436,9 +441,9 @@
   </div>
 </div>
 
-<NavigationDrawer fixed bind:active={InfoState}>
-  <div class="p-2">
-    <div>
+<Drawer {open} size="80vw" on:clickAway={() => (open = false)}>
+  <div>
+    <div class="text-center">
       <label for="avatar-changer" class="text-center">
         <div class="avatar text-center">
           <div class="w-25 mask mask-squircle">
@@ -491,4 +496,4 @@
   <div class="alert shadow-lg m-1">
     double tap data to edit it! ( if you're the admin )
   </div>
-</NavigationDrawer>
+</Drawer>
