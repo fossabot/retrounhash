@@ -19,6 +19,8 @@
     mdiImageOutline,
     mdiMicrophoneOutline,
     mdiSendOutline,
+    mdiVideo,
+mdiVideoImage,
   } from "@mdi/js";
 
   import GUN from "gun";
@@ -153,12 +155,10 @@
       newMessage.toString(),
       localStorage.getItem("_secret") || "#foo"
     );
-    const message = user
-      .get("all")
-      .set({
-        what: secret,
-        pub: JSON.parse(sessionStorage.getItem("pair")).pub,
-      });
+    const message = user.get("all").set({
+      what: secret,
+      pub: JSON.parse(sessionStorage.getItem("pair")).pub,
+    });
     const index = new Date().toISOString();
     getCert(message, index);
 
@@ -268,12 +268,9 @@
     theme = "light";
   }
 
-  let sendButonWidth;
-  if (localStorage.getItem("autoscroll") == "true") {
-    sendButonWidth = "1/3";
-  } else {
-    sendButonWidth = "1/2";
-  }
+  import { MobileKeyboard, Gif } from "svelte-tenor";
+  let gif;
+  let gifOpen;
 </script>
 
 {#if $username}
@@ -330,6 +327,37 @@
       </span>
       <span class="m-1" id="record" on:click={record}>
         <Icon path={mdiMicrophoneOutline} />
+      </span>
+      <span
+        class="m-1"
+        id="gif"
+        on:click={() => {
+          if (gifOpen == true) {
+            gifOpen = false;
+          } else {
+            gifOpen = true;
+          }
+        }}
+      >
+        <img alt="" style="width: 30px;" src="https://img.icons8.com/material-outlined/50/000000/gif.png"/>
+        {#if gifOpen}
+          <MobileKeyboard
+            key="NUSWFJ1TIPKW"
+            on:click={async ({ detail }) => {
+              gif = detail;
+              const _secret = await GUN.SEA.encrypt(
+                "IMAGE=" + detail.gif,
+                localStorage.getItem("_secret") || "#foo"
+              );
+              const _message = user.get("all").set({ what: _secret });
+              const _index = new Date().toISOString();
+              getCert(_message, _index);
+              newMessage = "";
+              canAutoScroll = true;
+              autoScroll();
+            }}
+          />
+        {/if}
       </span>
 
       <label class="m-1" for="image-send-picker">
