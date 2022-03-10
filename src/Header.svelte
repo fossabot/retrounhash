@@ -385,41 +385,43 @@
 <div class="navbar mb-3 shadow-xl rounded-box">
   <div class="flex-1">
     <!-- svelte-ignore a11y-invalid-attribute -->
-    <a href="#" class="btn btn-ghost normal-case text-xl">
+    <a href="#" class="flex m-2 normal-case text-xl">
       {#if !isChat}
-        <a href="/">retrounhash</a>
+        <a href="/" class="btn btn-ghost text-md">retrounhash</a>
       {:else}
-        <a href="/">
+        <a href="/" class="btn btn-ghost">
           <Icon size="30px" path={mdiArrowLeftBoldCircleOutline} />
         </a>
       {/if}
       {#if roomName && roomName !== ""}
-        <div
-          class="avatar"
-          on:click={() => {
-            open = true;
-          }}
-        >
-          <div class="mask ml-2 mr-2 w-10 mask-squircle">
-            <img alt="" src={roomImage} />
+        <div class="btn btn-ghost normal-case text-xl">
+          <div
+            class="avatar"
+            on:click={() => {
+              open = true;
+            }}
+          >
+            <div class="mask ml-2 mr-2 w-10 mask-squircle">
+              <img alt="" src={roomImage} />
+            </div>
           </div>
-        </div>
-        <span
-          class="m-1"
-          on:click={() => {
-            open = true;
-          }}
-        >
-          {#if roomName}
-            {#if !(roomName.length > 31)}
-              {roomName}
+          <span
+            class="m-1"
+            on:click={() => {
+              open = true;
+            }}
+          >
+            {#if roomName}
+              {#if !(roomName.length > 31)}
+                {roomName}
+              {:else}
+                <i>room name too big</i>
+              {/if}
             {:else}
-              <i>room name too big</i>
+              <i>loading...</i>
             {/if}
-          {:else}
-            <i>error</i>
-          {/if}
-        </span>
+          </span>
+        </div>
       {/if}
     </a>
   </div>
@@ -502,7 +504,7 @@
           <i>room name too big</i>
         {/if}
       {:else}
-        <i>error</i>
+        <i>loading...</i>
       {/if}
     </div>
     <hr />
@@ -519,7 +521,7 @@
           <i>room description too big</i>
         {/if}
       {:else}
-        <i>error</i>
+        <i>loading...</i>
       {/if}
     </div>
     <button class="btn btn-info m-1" on:click={share_link}

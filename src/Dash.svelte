@@ -75,7 +75,7 @@
         style="display:flex;flex-wrap: wrap;justify-content:center;align-items:center;"
     >
         <div>
-            <div class="card w-96 mb-5 mt-5 w-full bg-base-100 shadow-xl">
+            <div style="min-height: 300px;" class="card w-96 mb-5 mt-5 w-full bg-base-100 shadow-xl">
                 <div class="card-body">
                     <div class="card-title">
                         <Icon path={mdiViewDashboard} /> Dashboard
@@ -98,7 +98,7 @@
                             <div class="m-1 text-md">loading...</div>
                         {:then data}
                             <a href={`/room?c=${item}`}>
-                                <div class="m-1 pl-4 w-96 text-md flex items-center">
+                                <div class="m-1 pl-4 w-96 mw-96 text-md flex items-center">
                                     <div class="avatar mr-2">
                                         <div class="mask mask-squircle w-12">
                                             {#await returnImage(item)}
