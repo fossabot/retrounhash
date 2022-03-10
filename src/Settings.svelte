@@ -3,7 +3,6 @@
     let encryptionValue = localStorage.getItem("_secret") || "";
     let enableSwipe;
     let keyConfigName;
-    let theme;
     let enableKey;
 
     $: enableKey ||
@@ -12,19 +11,12 @@
         enableSwipe ||
         encryptionValue ||
         showAutoscroll ||
-        theme,
         saveSettings();
 
     if (localStorage.getItem("autoscroll") == "true") {
         showAutoscroll = true;
     } else {
         showAutoscroll = false;
-    }
-
-    if (localStorage.getItem("theme") == "true") {
-        theme = true;
-    } else {
-        theme = false;
     }
 
     if (localStorage.getItem("keyToNav") == "true") {
@@ -46,7 +38,6 @@
         }
         localStorage.setItem("swipe", enableSwipe);
         localStorage.setItem("keyToNav", enableKey);
-        localStorage.setItem("theme", theme);
     }
 
     let encryptionPlaceholder = localStorage.getItem("_secret") || false;
@@ -58,6 +49,45 @@
             keyConfigName = `key set as ${e.code}`;
             location.href = "/";
         };
+    }
+
+    let current__theme = localStorage.getItem("theme");
+    let theme = [
+        "light",
+        "dark",
+        "cupcake",
+        "bumblebee",
+        "emerald",
+        "corporate",
+        "synthwave",
+        "retro",
+        "cyberpunk",
+        "valentine",
+        "halloween",
+        "garden",
+        "forest",
+        "aqua",
+        "lofi",
+        "pastel",
+        "fantasy",
+        "wireframe",
+        "black",
+        "luxury",
+        "dracula",
+        "cmyk",
+        "autumn",
+        "business",
+        "acid",
+        "lemonade",
+        "night",
+        "coffee",
+        "winter",
+    ];
+
+    function themeChange(themeName) {
+        localStorage.setItem("theme", themeName);
+        document.querySelector("html").setAttribute("data-theme", localStorage.getItem("theme"))
+        current__theme = themeName;
     }
 </script>
 
@@ -141,22 +171,34 @@
 </div>
 <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
     <div class="card-body">
-        <div class="card-title">Enable Dark mode ?</div>
-
-        Dark more relives stress on eyes. moreover saves battery :)
-
+        <div class="card-title">Change theme ?</div>
+        just choose a theme then.
         <div class="m-2">
-            <input
-                type="checkbox"
-                bind:checked={theme}
-                class="toggle toggle-primary"
-            />
-            <span class="p-2">
-                {theme}
-            </span>
+            <!--<div class="dropdown dropdown-top" style="z-index: 99999999;">
+                <label tabindex="0" class="btn m-1">
+                    choose theme
+                </label>
+                <ul
+                    tabindex="0"
+                    class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                >-->
+            {#each theme as theme}
+                <!-- svelte-ignore a11y-invalid-attribute -->
+                <button
+                    class="btn btn-ghost"
+                    on:click={() => {
+                        themeChange(theme);
+                    }}>{theme}</button
+                >
+            {/each}<!--
+                </ul>
+            </div>-->
+            <div class="p-2 m-1">
+               current theme: {current__theme || "none"}
+            </div>
         </div>
     </div>
-    <div class="m-2 h4 form-text text-muted text-center">
+    <div class="m-2 text-xl text-muted text-center">
         settings are automattically saved
     </div>
     <span class="p-2" />

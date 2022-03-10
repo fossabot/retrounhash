@@ -44,10 +44,8 @@
    </script>
 </body>
 <script>
-   if (localStorage.getItem("theme") == "true") {
-      document.querySelector("html").setAttribute("data-theme", "cyberpunk")
-   } else {
-      document.querySelector("html").setAttribute("data-theme", "light")
+   if (localStorage.getItem("theme")) {
+      document.querySelector("html").setAttribute("data-theme", localStorage.getItem("theme"))
    }
 </script>
 
