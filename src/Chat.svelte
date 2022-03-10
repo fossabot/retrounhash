@@ -273,7 +273,7 @@
 
 {#if $username}
   <div class="text-center w-full">
-    <div style="width: 90vw;" class="alert alert-success shadow-lg mb-2">
+    <div style="width: 80vw;margin-left: 10vw;" class=" alert alert-success shadow-lg mb-2">
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"

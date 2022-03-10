@@ -119,8 +119,8 @@
   }
 </script>
 
-<div class="w-full p-4 text-center">
-  <div class="card m-4 bg-base-100 shadow-xl text-center">
+<div class="w-full text-center">
+  <div style="width: 80vw;margin-left: 10vw;" class="card m-2 shadow-xl text-center">
     <div class="p-2">
       <div class="form m-3 p-2 ">
         <div class="mb-3">
