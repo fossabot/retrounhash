@@ -289,8 +289,9 @@
             /></svg
           >
           <span>
-            Use a different encryption key only your friends know, for the best security.
-            You can have that in the settings under `custom encryption`
+            Use a different encryption key only your friends know, for the best
+            security. You can have that in the settings under `custom
+            encryption`
           </span>
         </div>
       </div>
@@ -312,61 +313,47 @@
           on:emoji-click={parseEmoji}
         />
       </span>
-      <span class="w-1/4">
-        <span class="w-1/3 m-1 text-center">
-          <span id="emoji_add" on:click={selectEmoji}>
-            <Icon path={mdiEmoticonWinkOutline} />
-          </span>
-        </span>
-        <span class="w-1/3 m-1 text-center">
-          <span id="record" on:click={record}>
-            <Icon path={mdiMicrophoneOutline} />
-          </span>
-        </span>
-        <span class="w-1/3 m-1 text-center">
-          <label for="image-send-picker">
-            <Icon path={mdiImageOutline} />
-          </label>
-        </span>
-        <input
-          type="file"
-          name=""
-          id="image-send-picker"
-          on:change={imageUploaded}
-          accept="image/jpeg"
-          class="hidden"
-        />
+
+      <span id="emoji_add" on:click={selectEmoji}>
+        <Icon path={mdiEmoticonWinkOutline} />
       </span>
-      <span class="w-3/4">
-        <span class="w-2/3">
-          <input
-            id="submit__area__main__"
-            class="input w-5/6 input-bordered"
-            type="text"
-            placeholder="Type a message..."
-            bind:value={newMessage}
-            maxlength="98"
-          />
-        </span>
-        <span class="w-1/3">
-          {#if localStorage.getItem("autoscroll") == "true"}
-            <button
-              class="btn btn-ghost w-1/2"
-              type="button"
-              on:click={autoScroll}
-            >
-              <Icon path={mdiArrowDownCircleOutline} />
-            </button>
-          {/if}
-          <button
-            type="submit"
-            class="btn w-{sendButonWidth} btn-ghost"
-            disabled={!newMessage}
-          >
-            <Icon path={mdiSendOutline} />
-          </button>
-        </span>
+      <span id="record" on:click={record}>
+        <Icon path={mdiMicrophoneOutline} />
       </span>
+
+      <label for="image-send-picker">
+        <Icon path={mdiImageOutline} />
+      </label>
+      <input
+        type="file"
+        name=""
+        id="image-send-picker"
+        on:change={imageUploaded}
+        accept="image/jpeg"
+        class="hidden"
+      />
+
+      <input
+        id="submit__area__main__"
+        class="input w-5/6 input-bordered"
+        type="text"
+        placeholder="Type a message..."
+        bind:value={newMessage}
+        maxlength="98"
+      />
+
+      {#if localStorage.getItem("autoscroll") == "true"}
+        <button class="btn btn-ghost" type="button" on:click={autoScroll}>
+          <Icon path={mdiArrowDownCircleOutline} />
+        </button>
+      {/if}
+      <button
+        type="submit"
+        class="btn btn-ghost"
+        disabled={!newMessage}
+      >
+        <Icon path={mdiSendOutline} />
+      </button>
     </form>
   {:else}
     <Login />
