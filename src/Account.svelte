@@ -2,6 +2,9 @@
     import Swal from "sweetalert2";
     import { user, username } from "./user.js";
 
+    var pubKeyUser = JSON.parse(sessionStorage.getItem("pair")) || {
+        pub: "",
+    };
     const persistUsername = username;
 
     function deleteAccount() {
@@ -51,9 +54,36 @@
     }
 </script>
 
-<div>
+<div class="text-xl text-center regular-case">Account</div>
+<div class="card w-full m-4 bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="card-title">Basic Info</div>
+        Username:
+        <span style="user-select: all;">
+            {$username || "not logged in !"}
+        </span>
+        <br />
+        Public Key:
+        <a href={`/User/` + pubKeyUser.pub}>
+            <code style="user-select: all;">
+                {pubKeyUser.pub}
+            </code>
+        </a>
+    </div>
+</div>
+<div class="m-4">
     <main>
-        <div class="text-xl text-center regular-case">Account</div>
+        <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="card-title">Change your password</div>
+                here, you can change tour password and have a new one :)
+            </div>
+            <div class="m-2">
+                <button class="btn btn-warning m-2" on:click={changePassword}
+                    >Change Password</button
+                >
+            </div>
+        </div>
         <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
             <div class="card-body">
                 <div class="card-title">Delete my account</div>
@@ -63,17 +93,6 @@
             <div class="m-2">
                 <button class="btn btn-danger m-2" on:click={deleteAccount}
                     >Delete my account</button
-                >
-            </div>
-        </div>
-        <div class="card mb-5 mt-5 w-full bg-base-100 shadow-xl">
-            <div class="card-body">
-                <div class="card-title">Change your password</div>
-                here, you can change tour password and have a new one :)
-            </div>
-            <div class="m-2">
-                <button class="btn btn-warning m-2" on:click={changePassword}
-                    >Change Password</button
                 >
             </div>
         </div>
