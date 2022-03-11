@@ -267,7 +267,7 @@
     theme = "light";
   }
 
-  import { MobileKeyboard, Gif } from "svelte-tenor";
+  import { MobileKeyboard, Gif } from "svelte--gif";
   let gif;
   let gifOpen;
 </script>
