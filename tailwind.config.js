@@ -21,6 +21,17 @@ module.exports = {
           "warning": "#E29003",
           "error": "#F96282",
         },
+        hack: {
+          "primary": "#12A646",
+          "secondary": "#022601",
+          "accent": "#22c55e",
+          "neutral": "#0D0D0D",
+          "base-100": "#022601",
+          "info": "#3ABFF8",
+          "success": "#36D399",
+          "warning": "#ca8a04",
+          "error": "#D91111",
+        },
       },
       "light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"
     ],

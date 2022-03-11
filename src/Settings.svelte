@@ -83,6 +83,7 @@
         "coffee",
         "winter",
         "modern",
+        "hack",
     ];
 
     function themeChange(themeName) {

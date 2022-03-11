@@ -15,9 +15,9 @@
   import ViewPost from "./ViewPost.svelte";
   import Following from "./Following.svelte";
   import { username, user, db } from "./user";
+  import "./themes.css"
 
   let theme = "light";
-
   if (localStorage.getItem("theme") == "true") {
     theme = "dark";
   } else {
