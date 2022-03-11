@@ -17,10 +17,9 @@
     mdiArrowDownCircleOutline,
     mdiEmoticonWinkOutline,
     mdiImageOutline,
+    mdiMessageVideo,
     mdiMicrophoneOutline,
     mdiSendOutline,
-    mdiVideo,
-mdiVideoImage,
   } from "@mdi/js";
 
   import GUN from "gun";
@@ -339,7 +338,7 @@ mdiVideoImage,
           }
         }}
       >
-        <img alt="" style="width: 30px;" src="https://img.icons8.com/material-outlined/50/000000/gif.png"/>
+        <Icon path={mdiMessageVideo} />
         {#if gifOpen}
           <MobileKeyboard
             key="NUSWFJ1TIPKW"
