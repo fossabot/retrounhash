@@ -5,6 +5,7 @@
   export let message;
   export let sender;
   let userstatus;
+  let messageType;
   let pub = message.pub;
 
   const messageClass = message.who === sender ? "sent" : "received";
@@ -15,18 +16,21 @@
 
   function mark(text) {
     if (text.match(/IMAGE\=(.*)/)) {
+      messageType = "img";
       var textMarked = text.replace(
         /IMAGE\=(.*)/,
         "<img class='img-fluid' src='$1' alt='invalid image' />"
       );
       return textMarked;
     } else if (text.match(/AUDIO\=(.*)/)) {
+      messageType = "aud";
       var textMarked = text.replace(
         /AUDIO\=(.*)/,
         '<audio controls><source src="$1" type="audio/mp3">Your browser does not support the audio element.</audio>'
       );
       return textMarked;
     } else {
+      messageType = "txt";
       if (text.length >= 100) {
         return "<i style='color: grey;'>this message is  bigger than standard length</i>";
       }
@@ -52,9 +56,13 @@
 <div class={`message shadow-m ${messageClass}`}>
   <div class={`avatar m-1 ${userstatus}`}>
     <div class="w-9 mask mask-squircle">
-      <a href={`/User/${pub}`}>
+      {#if messageType == "txt"}
+        <a href={`/User/${pub}`}>
+          <img src={avatar} alt="avatar" />
+        </a>
+      {:else}
         <img src={avatar} alt="avatar" />
-      </a>
+      {/if}
     </div>
   </div>
   <div class="message-text">
